@@ -75,6 +75,12 @@ df$x <- seq(start, start %m+% months(nrow(df)-1), by="month")
 df$lagged_y <- lag(df$y)
 df <- df[-1,]
 
+ggplot(df, aes(x,y)) + geom_line() + geom_point() +
+  geom_text(aes(label=x %>% month(label=T) %>% toupper %>% substr(1, 1)), hjust=0, vjust=0) +
+  scale_x_date(breaks=df$x[c(T,F)], labels=format(df$x[c(T,F)], f='%Y-%m')) +
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+  xlab('year-month') + ylab('oil sales')
+
 ggplot(df, aes(x,y, color=month(x, label=T))) + geom_line() + geom_point() +
   geom_text(aes(label=x %>% month(label=T) %>% toupper %>% substr(1, 1)), hjust=0, vjust=0) +
   scale_x_date(breaks=df$x[c(T,F)], labels=format(df$x[c(T,F)], f='%Y-%m')) +
@@ -82,7 +88,29 @@ ggplot(df, aes(x,y, color=month(x, label=T))) + geom_line() + geom_point() +
   xlab('year-month') + ylab('oil sales')
 
 ggplot(df, aes(x=lagged_y, y=y)) + geom_point() + geom_smooth(method='lm',formula=y~x) +
-  xlab('oil sales at t-1') + ylab('oil sales at t')
+  xlab('oil sales at t-1') + ylab('oil sales at t') +
+  ggtitle(cor(df$y, df$lagged_y)) 
 
-cor(df$y, df$lagged_y)
+#EXERCISES
+
+library(reshape2)
+n<-12
+l<-48
+m <- matrix(runif(n*l), ncol=n)
+colnames(m) <- paste('V', 1:n, sep='')
+df <- m %>% as_tibble() %>% melt()
+df$x <- rep(1:l,times=n)
+ggplot(df, aes(x,value)) + geom_line() + geom_point() + facet_wrap(~variable)
+
+m <- matrix(rchisq(n*l, 2, ncp = 0), ncol=n)
+colnames(m) <- paste('V', 1:n, sep='')
+df <- m %>% as_tibble() %>% melt()
+df$x <- rep(1:l,times=n)
+ggplot(df, aes(x,value)) + geom_line() + geom_point() + facet_wrap(~variable)
+
+m <- matrix(rt(n*l, 5), ncol=n)
+colnames(m) <- paste('V', 1:n, sep='')
+df <- m %>% as_tibble() %>% melt()
+df$x <- rep(1:l,times=n)
+ggplot(df, aes(x,value)) + geom_line() + geom_point() + facet_wrap(~variable)
 
