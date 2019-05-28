@@ -1,0 +1,1119 @@
+%% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
+%% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-trabalho-academico.tex,
+%% abntex2-modelo-include-comandos and abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Trabalho Academico (tese de doutorado, dissertacao de
+% mestrado e trabalhos monograficos em geral) em conformidade com 
+% ABNT NBR 14724:2011: Informacao e documentacao - Trabalhos academicos -
+% Apresentacao
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+
+% ---
+% Pacotes básicos 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte. % access \textquotedbl
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\graphicspath{ {./images/} }
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage{amsfonts} %\mathbb{Z}
+\usepackage{siunitx} %\ang for coordinates
+\usepackage{textcomp}     % access \textquotesingle
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+%\tikzstyle{startstop} = [rectangle, rounded corners, text centered, draw=black, fill=red!30]
+%\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+%%\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+%\tikzstyle{process} = [rectangle, text centered, text width=8cm, draw=black, fill=orange!30]
+%\tikzstyle{decision} = [diamond, text centered, text width=6cm, draw=black, fill=green!30]
+%\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=10em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=18em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
+    
+% ---
+		
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+%	 \usepackage[num]{abntex2cite}
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Estimativa da produção de energia de um parque eólico por meio de modelo estocástico}
+\autor{Diogo Friggo}
+\local{Brasil}
+\data{2019}%, v-1.9.6}
+\orientador{Carlo Requião}
+\instituicao{%
+  Universidade Federal do Rio Grande do Sul -- UFRGS
+  \par
+  Trabalho de Diplomação em Engenharia Física}
+\tipotrabalho{Graduação}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\preambulo{O presente trabalho propõe um modelo que represente a estrutura de séries temporais de velocidade de vento de modo a fazer previsões sobre seu comportamento futuro tendo como objetivo estimar a energia que seria gerada por uma turbina eólica.}
+
+% ---
+
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% Inserir a ficha bibliografica
+% ---
+
+% Isto é um exemplo de Ficha Catalográfica, ou ``Dados internacionais de
+% catalogação-na-publicação''. Você pode utilizar este modelo como referência. 
+% Porém, provavelmente a biblioteca da sua universidade lhe fornecerá um PDF
+% com a ficha catalográfica definitiva após a defesa do trabalho. Quando estiver
+% com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
+% o conteúdo de implementação deste arquivo pelo comando abaixo:
+%
+% \begin{fichacatalografica}
+%     \includepdf{fig_ficha_catalografica.pdf}
+% \end{fichacatalografica}
+
+\begin{fichacatalografica}
+	\sffamily
+	\vspace*{\fill}					% Posição vertical
+	\begin{center}					% Minipage Centralizado
+	\fbox{\begin{minipage}[c][8cm]{13.5cm}		% Largura
+	\small
+	\imprimirautor
+	%Sobrenome, Nome do autor
+	
+	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+	\imprimirlocal, \imprimirdata-
+	
+	\hspace{0.5cm} \pageref{LastPage} p. : il. (algumas color.) ; 30 cm.\\
+	
+	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+	
+	\hspace{0.5cm}
+	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+	\imprimirdata.}\\
+	
+	\hspace{0.5cm}
+		1. energia eólica.
+		2. processo estocástico.
+		3. cálculo de Ito.
+		I. Universidade Federal do Rio Grande do Sul.
+		II. Engenharia Física.
+	\end{minipage}}
+	\end{center}
+\end{fichacatalografica}
+% ---
+
+% ---
+% Inserir errata
+% ---
+%\begin{errata}
+%Elemento opcional da \citeonline[4.2.1.2]{NBR14724:2011}. Exemplo:
+
+%\vspace{\onelineskip}
+
+%FERRIGNO, C. R. A. \textbf{Tratamento de neoplasias ósseas apendiculares com
+%reimplantação de enxerto ósseo autólogo autoclavado associado ao plasma
+%rico em plaquetas}: estudo crítico na cirurgia de preservação de membro em
+%cães. 2011. 128 f. Tese (Livre-Docência) - Faculdade de Medicina Veterinária e
+%Zootecnia, Universidade de São Paulo, São Paulo, 2011.
+
+%\begin{table}[htb]
+%\center
+%\footnotesize
+%\begin{tabular}{|p{1.4cm}|p{1cm}|p{3cm}|p{3cm}|}
+%  \hline
+%   \textbf{Folha} & \textbf{Linha}  & \textbf{Onde se lê}  & \textbf{Leia-se}  \\
+%    \hline
+%    1 & 10 & auto-conclavo & autoconclavo\\
+%   \hline
+%\end{tabular}
+%\end{table}
+
+%\end{errata}
+% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \includepdf{folhadeaprovacao_final.pdf}
+%
+\begin{folhadeaprovacao}
+
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+    
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+        \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+   \end{center}
+        
+   %Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+
+   %\assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+   %\assinatura{\textbf{Roberto da Silva} \\ Convidado 1}
+   %\assinatura{\textbf{Rita de Almeida} \\ Convidado 2}
+   %\assinatura{\textbf{Professor} \\ Convidado 3}
+   %\assinatura{\textbf{Professor} \\ Convidado 4}
+      
+   \begin{center}
+    \vspace*{0.5cm}
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+    \vspace*{1cm}
+  \end{center}
+  
+\end{folhadeaprovacao}
+% ---
+
+% ---
+% Dedicatória
+% ---
+%\begin{dedicatoria}
+%   \vspace*{\fill}
+%   \centering
+%   \noindent
+%   \textit{ Este trabalho é dedicado às crianças adultas que,\\
+%   quando pequenas, sonharam em se tornar cientistas.} \vspace*{\fill}
+%\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+%\begin{agradecimentos}
+%Os agradecimentos principais são direcionados à Gerald Weber, Miguel Frasson,
+%Leslie H. Watter, Bruno Parente Lima, Flávio de Vasconcellos Corrêa, Otavio Real
+%Salvador, Renato Machnievscz\footnote{Os nomes dos integrantes do primeiro
+%projeto abn\TeX\ foram extraídos de
+%\url{http://codigolivre.org.br/projects/abntex/}} e todos aqueles que
+%contribuíram para que a produção de trabalhos acadêmicos conforme
+%as normas ABNT com \LaTeX\ fosse possível.
+%
+%Agradecimentos especiais são direcionados ao Centro de Pesquisa em Arquitetura
+%da Informação\footnote{\url{http://www.cpai.unb.br/}} da Universidade de
+%Brasília (CPAI), ao grupo de usuários
+%\emph{latex-br}\footnote{\url{http://groups.google.com/group/latex-br}} e aos
+%novos voluntários do grupo
+%\emph{\abnTeX}\footnote{\url{http://groups.google.com/group/abntex2} e
+%\url{http://www.abntex.net.br/}}~que contribuíram e que ainda
+%contribuirão para a evolução do \abnTeX.
+%
+%\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+%\begin{epigrafe}
+%    \vspace*{\fill}
+%	\begin{flushright}
+%		\textit{``Não vos amoldeis às estruturas deste mundo, \\
+%		mas transformai-vos pela renovação da mente, \\
+%		a fim de distinguir qual é a vontade de Deus: \\
+%		o que é bom, o que Lhe é agradável, o que é perfeito.\\
+%		(Bíblia Sagrada, Romanos 12, 2)}
+%	\end{flushright}
+%\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+Todos os agentes envolvidos no planejamento de um parque eólico precisam determinar, com um certo nível de certeza, quanta energia este parque poderá gerar. Investidores precisam avaliar o risco associado ao financiamento da construção do parque em relação a um retorno futuro. Produtores precisam garantir a sua viabilidade e maximizar a geração a partir de medições que estão sujeitas às diversas variáveis que definem o comportamento do vento no local tais como orografia, rugosidade e clima. Estes também devem considerar variáveis que afetam o desempenho de turbinas tais como temperatura, salinidade e presença de parques vizinhos. Operadores de subestações, por outro lado, precisam ter uma estimativa da produção em resolução horária para que possam atender adequadamente a demanda por energia a qual sabe-se que varia ao longo do dia de maneira previsível e conhecida a partir de dados históricos de consumo por uma dada região.
+
+Atualmente existem metodologias bem estabelecidas na indústria para a estimativa do recurso eólico de longo prazo e da geração de energia de longo prazo. Elas se baseiam no fato de que, a longo prazo, a distribuição de probabilidade da velocidade do vento aproxima-se de uma distribuição de Weibull \cite{weibull} a qual é então convertida em uma distribuição de probabilidade de energia por meio de simulações pelo método de Monte Carlo \cite{portacopos}. Essa distribuição de densidade de probabilidade é a mais difundida na análise de dados de vento \cite{art13},  tendo sido utilizada para estimar tanto o recurso eólico \cite{art14} quanto a produção de energia \cite{art15}.
+
+Tais métodos, no entanto, não se aplicam a estimativas de curto prazo, pois, sob essa resolução temporal, o caráter estocástico do vento predomina não sendo possível reduzir o seu comportamento a uma distribuição de probabilidade estática. É necessário recorrer a outra abordagem para tal estimativa. O presente trabalho propõe a modelagem estocástica do processo físico que rege o comportamento do vento por meio de diferentes métodos, conhecidos e aplicados com sucesso na modelagem de outro processos estocásticos, em particular na área financeira. Tal modelagem permitiria obter uma estimativa da geração de energia em alta resolução temporal (horária, de 10 minutos ou até mesmo continua no tempo). Além disso o trabalho propõe a comparação com os valores de longo prazo obtidos por métodos de força bruta, comuns na indústria. A modelagem se baseará no cálculo de Ito, uma extensão dos métodos do cálculo para descrever processos estocásticos. Estudos dessa natureza geralmente recaem em equações diferenciais estocásticas não solúveis analiticamente. Dessa forma, recorre-se à solução numérica para finalmente encontrar a distribuição de probabilidade de produção de energia em alta resolução temporal.
+
+ \textbf{Palavras-chave}: energia eólica, processo estocástico, cálculo de Ito, Monte Carlo, caos, processo de Wiener
+\end{resumo}
+
+% resumo em inglês
+%\begin{resumo}[Abstract]
+% \begin{otherlanguage*}{english}
+%   This is the english abstract.
+
+%   \vspace{\onelineskip}
+ 
+%   \noindent 
+%   \textbf{Keywords}: latex. abntex. text editoration.
+% \end{otherlanguage*}
+%\end{resumo}
+
+% resumo em francês 
+%\begin{resumo}[Résumé]
+% \begin{otherlanguage*}{french}
+%    Il s'agit d'un résumé en français.
+ 
+%   \textbf{Mots-clés}: latex. abntex. publication de textes.
+% \end{otherlanguage*}
+%\end{resumo}
+
+% resumo em espanhol
+%\begin{resumo}[Resumen]
+% \begin{otherlanguage*}{spanish}
+%   Este es el resumen en español.
+  
+%   \textbf{Palabras clave}: latex. abntex. publicación de textos.
+% \end{otherlanguage*}
+%\end{resumo}
+% ---
+
+% ---
+% inserir lista de ilustrações
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+%\pdfbookmark[0]{\listtablename}{lot}
+%\listoftables*
+%\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[ECMWF] European Center for Medium-Range Weather Forecast
+  \item[NASDAQ] National Association of Securities Dealers Automated Quotations
+  \item[ARMA] Autoregressive Moving-Average
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+%\begin{simbolos}
+  %\item[$ \Gamma $] Letra grega Gama
+  %\item[$ \Lambda $] Lambda
+  %\item[$ \eta $] Letra grega minúscula zeta
+  %\item[$ \mu $] Pertence
+%\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+%\cleardoublepage
+% ---
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+% ----------------------------------------------------------
+% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+% ----------------------------------------------------------
+
+Vamo lá, pra dizer que comecei:
+
+Um modelo que combina tanto um caráter autogressivo quanto de média móvel pode ser descrito da seguinte forma:
+$$ y^{'}_{t} = c + \phi_{1}y^{'}_{t-1} + \dots + \phi_{p}y^{'}_{t-p} + \theta_{1}\varepsilon_{t-1} + \dots + \theta_{q}\varepsilon_{t-q} + \varepsilon_{t}$$
+
+%motivação energia renovável
+
+Ao contrário de outras fontes naturais de energia, tais como a energia hídrica ou solar, a energia eólica apresenta grande variabilidade \cite{thomas}, sendo, portanto, de maior dificuldade a sua previsão e
+adequado dimensionamento de recursos tanto para sua captação quanto distribuição. A construção e operação de um parque eólico é um investimento multimilionário. Dessa forma, é de suma 
+importância que o recurso eólico de um determinado local seja determinado com a maior exatidão possível e que se considere todas as restrições que possam ter qualquer efeito significativo sob tal estimativa.
+
+% GRÁFICO DA VARIABILIDADE DAS FONTES DE ENERGIA DA BÉLGICA AQUI
+
+% citar o meu livro de monte carlo quando mencionar estocástico ou monte carlo
+% citar referência para densidade do ar
+% imagem de caráter estocástico
+Os principais fatores que influem na geração de energia eólica são a densidade do ar e a velocidade do vento. A potência (em watts) gerada por uma turbina é dada pela equação \cite{atlas}:
+
+\begin{equation}
+	P = \frac{1}{2}\rho \frac{\pi D^2}{4}\nu^3C_p\eta
+\end{equation}
+
+%\begin{multline*}$$$$\end{multline*}
+%\begin{multline*}$$\end{multline*}
+
+\begin{flalign*}
+P &= \mbox{potência elétrica na altura do cubo rotor}\left[W\right]&&\\
+\rho &= \mbox{densidade do ar}\left[\frac{kg}{m^3}\right]&&\\
+D &= \mbox{diâmetro do rotor}\left[m\right]&&\\\nonumber
+\nu &= \mbox{velocidade do vento} \left[\frac{m}{s}\right]&&\\\nonumber
+C_p &= \mbox{coeficiente aerodinâmico de potência do rotor}\left[W\right]&&\\\nonumber
+\eta &= \mbox{eficiência do conjunto gerador/transmissão}&&\\\nonumber
+\end{flalign*}
+
+O fato de a potência variar com o cubo da velocidade do vento evidencia a importância da determinação precisa dessa grandeza.
+
+Exceto pela velocidade do vento, os demais parâmetros são controlados ou apresentam pouca variabilidade como a densidade do ar, por exemplo, que é relativamente constante para um dado macroclima. A velocidade do vento, por outro lado, 
+tem caráter estocástico, ou seja, seu comportamento esta associado a um processo aleatório. O conhecimento do passado não permite determinar com absoluta certeza o seu comportamento futuro. No entanto, é possível produzir modelos matemáticos pelos quais se obtém estimativas satisfatórias.
+
+Fenômenos estocásticos são comuns na natureza: o movimento errático que uma partícula macroscópica sofre ao ser 
+imersa num fluído (composto por partículas microscópicas) conhecido como movimento Browniano; o decaimento radiotivo de átomos em que não se sabe em qual momento dado átomo emitirá radiação (conhece-se apenas uma taxa característica de emissão). 
+Exemplos associados a atividade humana também são comuns sendo a evolução temporal do valor de ativos econômicos o exemplo mais marcante e para cujo entendimento se desenvolveu um arcabouço matemático sofisticado. Esse conhecimento pode ser utilizado para estudar quaisquer outros fenômenos estocásticos, tal como a velocidade do vento. O gráfico abaixo evidencia esse comportamento. Pode-se intuir que o gráfico segue o comportamento médio representado pela curva ajustada, mas devido ao caráter estocástico do vento não é possível afirmar qual será o valor de velocidade num intervalo de tempo posterior apenas olhando para os valores anteriores.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{stochastic}
+	\caption{Série temporal de velocidade do vento que evidencia o caráter estocástico do vento. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+\cleardoublepage
+\part{TDEF 2}
+
+\chapter{A série temporal modelo}
+
+Para exemplificar a elaboração do modelo proposto, utilizou-se uma série de dados disponibilizada publicamente pela organização européia ECWMF. Essa série conta com uma vasta gama de grandezas físicas medidas por satélite oriundas de diversas fontes. Esses dados são agregados e tratados de modo a melhorar sua qualidade. Existem diversas outras séries de dados de satélite com o mesmo propósito, tal como a série ERA-Interim (antecessora da ERA 5) ou as séries MERRA e MERRA 2 produzidas pela NASA. No entanto, observa-se que a qualidade da fonte ERA 5 é muito superior. Isso é empiricamente constatado devido a excelente correlação com dados de torres de medição instaladas no solo. Essa melhoria deve-se tanto a melhorias técnicas na assimilação e agregação de dados quanto a maior resolução espacial da série ERA 5: enquanto MERRA e MERRA 2 apresentam uma resolução espacial de 50 km em latitude e longitude, ERA 5 apresenta 30 km. 
+
+A grandeza de interesse para esse trabalho é a velocidade do vento a 100 m de altura em relação ao solo. Essa é a altura disponibilizada pela fonte ERA 5. Outras alturas estão disponíveis mas são obtidas por interpolação e portanto são de qualidade inferior. Essa é uma altura adequada pois a altura do cubo rotor de aerogerados comerciais varia tipicamente entre 80 m e 130 m. 
+
+%Quando necessário as previsões de velocidade podem ser extrapoladas verticalmente por meio de uma lei de potência
+
+A série ERA 5, assim como as outras mencionadas, possuem dados para todo o globo, divindo-o em uma rede de nós com resolução de 30 km x 30 km em latitude e longitude respectivamente. A imagem abaixo exemplifica como esses nós são dispostos. 
+
+%A região nordeste é muito atrativa para construção de parques eólicos devido a alta velocidade média do vento. 
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{rs_era5_nodes2}
+	\caption{Alguns nós da série ERA 5 ao sul de Porto Alegre, Brasil.\newline Google earth V 7.3.2.5776. (14 de Dezembro, 2015). Rio Grande do Sul, Brasil.
+\ang{30} 25\textquotesingle\ 50,42\textquotesingle\textquotesingle\ S, \ang{51} 34\textquotesingle\ 47,07\textquotesingle\textquotesingle\ W, Eye alt 195,76 km.\newline Image Landsat / Copernicus \textcopyright\ Google 2018.}
+\end{figure}
+\FloatBarrier
+
+Cada nó cobre uma vasta região. A velocidade reportada para cada nó é uma média das velocidades da respectiva região. A campanha de medição necessária que antecede a construção de um parque eólico exige a instalação de torres de medição no local. Desse modo, a resolução dessas medições é muito maior do que a oferecida pela série ERA 5. No entanto, os dados de medições de torres não são disponibilizados publicamente. Com base na excelente correlação entre as séries ERA 5 e séries medidas por torres de projetos, acredita-se que o procedimento exposto neste trabalho possa ser aplicado com sucesso em dados medidos por torres em solo ou na nacele dos próprios aerogeradores.
+
+%de tal modo que dados de velocidade do vento, coletados continuamente, .
+
+A maioria dos empreendimentos em energia eólica no país encontra-se na região nordeste, dessa forma, escolheu-se para esse trabalho modelar a previsão do recurso eólico para uma região localizada no sul do estado do Ceará.
+
+Os dados são fornecidos em base horária e compreendem o período de Janeiro de 2000 a Janeiro de 2019. O começo de qualquer análise de séries temporais se dá pelo gráfico dos valores que assume ao longo do tempo. Por meio desse gráfico é possível identificar qualitativamente tendências, sazonalidade, ciclicidade, valores atípicos, caráter estacionário e comportamento da variância:
+
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[width=\textwidth]{dados_inicio}
+%	\caption{dados}
+%\end{figure}
+%\FloatBarrier
+
+\chapter{Caracterização da região}
+
+O nó escolhido encontra-se numa chapada elevada. Na imagem abaixo pode-se perceber o quão elevada a chapada é em relação ao seu redor.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{elevation}
+	\caption{Chapada}
+\end{figure}
+\FloatBarrier
+
+Detalhes da topografia da região pode ser visualizados na imagem abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{elevation2}
+	\caption{Chapada}
+\end{figure}
+\FloatBarrier
+
+%toda a série horária
+%toda a série diária
+%toda a série mensal
+%toda a série 12x24
+%rosa dos ventos
+%ggseasonplot polar
+
+\chapter{Time Series Analysis}
+
+Este trabalho faz uso de um modelo linear estocástico que tem como hipótese que a série temporal sob análise é gerada por uma combinação de choques aleatórios. Essa hipótese foi incialmente proposta por Yule e Walker e extendida por diversos outros autores.
+Na literatura esse modelo é conhecido como modelo autoregressivo com média movel (ARMA, do inglês autoregressive moving-average)
+%parsimony
+
+Um processo estocástico pode ser visto como o resultado de um filtro linear aplicado em ruído branco $a_t$. 
+rodapé: Ruído branco é definido como um signal aleatório o qual tem a mesma intensidade para qualquer frequência [fonte].
+
+$$ z_t = \mu + a_t + \psi_1a_{t-1} + \psi_1a_{t-2} + \dots $$
+$$ z_t = \mu + a_t + \sum_{j=1}^{\infty}\psi_1a_{t-1} $$
+
+Ruído branco tem média zero e variância constante. 
+
+\chapter{Regime estacionário}
+
+Um processo estocástico é dito estritamente estacionário se o deslocamento da origem temporal não altera suas propriedades, ou seja, a distribuição conjunta de probabilidades calculada para o sequência de $m$ medições $z_1,z_2,\dots,z_m$ tomadas nos tempos $t_1, t_2, \dots, t_m$ é a mesma àquela calculada em $t_{1+k}, t_{2+k}, \dots, t_{m+k}$ para as m medições $z_{1+k},z_{1+k},\dots,z_{m+k}$. $k\in\mathbb{Z}$ pode assumir tanto valores positivos quanto negativos, isto é, o deslocamento temporal pode ser tanto positivo quanto negativo. Dessa forma, 
+um processo estacionário é caracterizado por uma distribuição de probabilidades que não varia no tempo. O modelo autoregressivo com média móvel utilizado neste trabalho toma essa propriedade como hipótese para o seu desenvolvimento, portanto, se faz fundamental garantir que a série de entrada satisfaça tal hipótese.
+
+\chapter{Janela de dados}
+
+%zoom suficiente para ser estacionário
+%zoom suficiente para eliminar sazonalidade
+
+\chapter{Mensurando a qualidade da previsão}
+
+\chapter{Modelo Autoregressivo (AR)}
+
+\chapter{Forecasting: Principles and Practice}
+
+%R
+%To cite the online version of this book, please use the following: Hyndman, R.J., & Athanasopoulos, G. (2018) Forecasting: principles and practice, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on <current date>.
+
+Qualquer quantidade que seja observada cronologicamente é dita uma série temporal. Exemplos incluem: o preço diário das ações da Google, a quantidade mensal de chuva no Rio Grande do Sul, a produção anual de vinhos na serra gaúcha. Neste trabalho a série de interesse é de velocidade média do vento a 100 m de altura do solo no sul do estado do Ceaŕa. Os dados são coletados por satélite e são disponibilizados em base horária no fuso horário GMT. 
+%O centro responsável pela coleta, processamento e divulgação dos dados tem tempo hábil de disponibilizar apenas 
+%este trabalho concentra-se em séries temporais e não cross-sectional.... Apenas regularmente espaçado
+
+\section{Horizonte de previsão}
+
+O horizonte de previsão é variável. Ele depende do propósito para o qual a previsão será utilizada. Alguns parques eólicos no país fazem acordos mensais sobre a energia que será entregue a rede. Nesse caso é de grande utilidade uma previsão de quanta energia será produzida no mês seguinte. A previsão minutal ou horária é, nesse caso, pouco relevante.
+Ao operador de subestação de distribuição de energia interessa saber quando ocorreram máximos e mínimos de produção de energia em base horária de modo que o sistema possa compensar as faltas e excessos sem perdas. Para ele a previsão minutal ou horária é essencial. Neste trabalho abordou-se tanto a previsão em escala horária quanto mensal.
+
+Quanto mais próximo do último dado medido for a previsão mais certeza se tem do seu valor. A previsão da velocidade do vento 12 meses no futuro é muito menos confiável do que a previsão para o mês seguinte. Por esse motivo, previsões são acompanhados de um intervalo de confiança. Um intervalo de confiança de 95\%, por exemplo, indica, com 95\% de confiança, o intervalo de valores que velocidade medida poderá assumir.
+
+%a região em azul escuro representa um intervalo de confiança de 85% enquanto a região em azul claro um intervalo de 95% de confiança de que o valor medido estará dentro desse intervalo.
+% o cálculo do intervalo de confiança...
+%let the data speak for itself
+%innovation term representa tudo aquilo que não pode ser explicado pelos termos autoregressivos e de média móvel
+%mesmo que houvesse um mecanismo que descrevesse perfeitamente o sistema sob estudo ainda assim ele não produziria previsões adequadas devido ao ruído inerente ao processo
+%Box-Jenkins ARIMA
+
+\section{Métodos}
+
+Existem diversos métodos para previsão de de séries temporais. Ao longo do desenvolvimento deste trabalho os seguintes métodos foram considerados: 
+\begin{itemize}
+\item Suavização exponencial: os valores passados contribuem para o valor atual com um peso que decai exponencialmente quanto mais distante estão do momento da previsão.
+\item Box-Jenkins SARIMA: um modelo robusto que faz uso de valores passados (autoregressão, AR) e erros passados (média móvel, MA), inclui integração (I) para tornar a série estacionária e estabilizar variância e conta com um processo iterativo para estimar parâmetros (Box-Jenkins).
+\item Rede neural de memória curta de longo prazo (LTSM): esse modelo consegue determinar com precisão o peso que deve ser dado a valores muito distantes do momento da previsão.
+\item Máquinas com vetor de suporte: os dados passam por uma transformação não-linear que permite a sua categorização em um espaço de dimensão elevada e posterior transformação reversa para reportar a previsão.
+\end{itemize}
+
+O método escolhido foi o Box-Jenkins SARIMA.
+Cada modelo assume uma série de hipóteses sobre o comportamento do que se deseja prever e possui um conjunto de parâmetros que precisam ser estimados para tal propósito. Para o modelo escolhido uma das hipóteses é de que os dados possuem autocorrelação, isto é, o valor atual depende dos n valores que o antecedem: se a velocidade foi alta um instante atrás é provável que ela seja alta agora, se no momento anterior o regime foi turbulento, é provável que no momento seguinte ele permaneça turbulento. Essa hipótese corresponde ao caráter autoregressivo (AR) do modelo. Outra hipótese do modelo é de que há autocorrelação não apenas em valores passados mas também nos erros passados. Essa hipótese corresponde ao caráter de média móvel (MA) do modelo. A interpretação dessa hipótese não é tão óbvia mas seu uso se justifica pelo fato de que um processo AR com infinitos termos pode ser descrito por um processo MA com finitos termos e vice-versa. No contexto de séries temporais o princípio da parsimônia dita que dentre os modelos que  caracterizem uma série, se escolha aquele com menos parâmetros. Dessa forma a combinação de termos AR e MA permite que a estrutura da série seja capturada com poucos parâmetros.
+
+\section{Análise visual}
+
+A escolha do modelo para prever uma série temporal se dá pelas características dessa série tais como padrões, valores atípicos, tendências, sazonalidade e ciclicidade. Dessa forma o primeiro passo é visualizar a série tanto em sua forma bruta quanto sob outras formas que ressaltem outras características que não sejam visíveis na sua forma bruta. A transformação para o espaço de frequência, por exemplo, permite identificar se há periodicidade na série. Para facilitar a visualização a imagem abaixo apresenta apenas os 2 últimos anos de dados em base horária:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{entire_series_hourly_basis}
+	\caption{Chapada}
+\end{figure}
+\FloatBarrier
+
+%Analisando visualmente apenas o último ano de dados da série percebe-se que esta não é estacionária. Basta perceber que em diferentes períodos a série encontra-se em diferentes níveis (mostra uma tendência, não sendo, portanto, estacionária de primeira ordem) e também apresenta sazonalidade (estacionária de segunda ordem).
+
+
+\section{Medidas de qualidade de previsões}
+
+Para prever e quantificar a qualidade da previsão de uma série temporal é necessário dividi-la em um conjunto de treinamento e outro de teste. A divisão pode ser, por exemplo, 80\% dos dados destinados ao conjunto de treinamento e os 20\% subsequentes ao conjunto de teste. Empiricamente é desejável que o conjunto de teste seja igual ao maior ao tamanho do horizonte de previsão que se deseja obter. O conjunto de treinamento é utilizado para computar os parâmetros do modelo enquanto que o conjunto de teste é utilizado para quantificar o quão bem o modelo é capaz de prever os dados subsequentes.
+Existem diversas maneiras de mensurar o qualidade das previsões geradas por um modelo. Deve-se evitar usar os resíduos como medida pois eles são resultado da estimativa dos parâmetros do modelo aos dados de treinamento. Como qualquer série pode ser aproximada por um modelo com infinitos parâmetros, os resíduos não dão informação sobre o poder preditivo do modelo para valores futuros, desconhecidos. A
+
+% previsão de séries temporais sempre envolve um equilíbrio entre overfitting: aproximar uma série com muitas parâmetros, sendo capaz de prever apenas valores dentro do conjunto de treinamento; e underfitting: não capturar a estrutura da série
+
+O erro de previsão é dado pela diferença entre o valor medido, $y_{t+h}$, e o valor previsto pelo modelo, $\hat{y}_{t+h}$:
+
+$$e_{t+h} = y_{t+h} - \hat{y}_{t+h}$$
+
+Existem muitas maneiras de quantificar o erro de previsão. As seções seguintes abordam as características de cada uma e identificam as que serão usadas para quantificar os resultados deste trabalho.
+
+\subsection{Erro médio absoluto (MAE)}
+
+O erro absoluto médio é dado pela média do módulo do erro de previsão. Essa medida penaliza o resultado tanto por erros negativos quanto positivos. A minimização dessa medida de erro resulta em estimativas que se aproximam da mediana dos dados.
+
+$$\text{MAE} = \frac{1}{T}\sum_{t=1}^{T}\left|e_{t}\right|$$
+
+\subsection{Raíz do quadrado da média do erro (RMSE)}
+
+A raíz do quadrado da média do erro é dada por:
+
+$$\text{RMSE} = \sqrt{\frac{1}{T}\sum_{t=1}^{T}e_{t}^2}$$
+
+A minimização dessa medida de erro resulta em estimativas que se aproximam da média dos dados.
+
+\subsection{Erro absoluto médio escalonado (MASE)}
+
+Ao contrário das medidas anteriores, essa possui a vantagem de que é independente da escala dos dados medidos:
+
+$$\text{MAPE} = \frac{\frac{1}{T}\sum_{t=1}^T\left|e_t\right|}{\frac{1}{T-1}\sum_{t=2}^{T}\left|y_t-y_{t-1}\right|}$$
+
+\subsection{Validação cruzada}
+
+A validação cruzada consiste em usar uma janela de treinamento para calcular o erro de previsão para a próxima medida, expandir a janela em uma medida e calcular o novo erro e assim por diante sob um conjunto de teste. A medida de erro é dada pela média dos erros individuais. Qualquer uma das medidas acima pode ser utilizada no cálculo da validação cruzada. Essa é a maneira mais robusta de quantificar o erro de previsão pois atua efetivamente em dados que não foram utilizados para construir o modelo. A idéia da medida pode ser ilustrada da seguinte forma:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{crossh3}
+	\caption{Chapada}
+\end{figure}
+\FloatBarrier
+
+Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha de baixo, mensura-se o erro de previsão que resulta ao tentar prever três horas a frente da hora atual. A linha acima inclui a medida seguinte ao conjunto de treinamento e tenta prever, novamente, três horas a frente. Isso é feito várias vezes. Os erros resultantes são calculados, por exemplo, por MASE e a sua média é reportada como valor final.
+
+\section{ARIMA}
+
+
+
+\section{Box-Jenkins}
+
+\section{Modelo Autoregressivo AR1}
+
+%hat over predicted
+%T+1|T
+%
+%A velocidade do vento é modelada por meio de um processo estocástico. Uma grandeza que é
+%ideais da economia
+%a diferença entre uma flutuação aleatória que não ocorrerá novamente e um padrão que deve ser modelado e extrapolado para o futuro
+%Uma previsão nunca é estática, ela captura o modo pelo qual os dados estão mudando. Assume-se que esse modo é constante no tempo. É possível ainda reavaliar o modelo para que ele também se adapte a mudanças no modo 
+%quanto mais longinquo o horizonte de previsão, quantas horas, dias, meses, anos no futuro, maior a incerteza na previsão e portanto mais abertos os intervalos de confiança
+
+\cleardoublepage
+\part{Análise de dados de vento}
+
+\chapter{Características de longo prazo}
+
+É interessante exemplificar as discussões subsequentes com dados reais de medição. O Centro Europeu de Previsões Metereológicas de Médio Prazo (ECMWF, sigla em inglês) disponibiliza publicamente dados metereológicos de todo o globo medidos por satélite, incluindo dados de velocidade e direção do vento compilados no banco de dados ERA5 \cite{era5}. Os dados de velocidade do vento são referentes a uma altura de 80 metros e possuem resolução de 30 quilômetros. As unidades de todas as grandezas referenciadas neste trabalho seguem o padrão SI. Em particular velocidade é dada em metros por segundo e o tempo em segundos. A partir de uma posição do globo dada em latitude e longitude como entrada obtém-se da ECMWF uma série temporal com 18 variáveis: 9 de velocidade do vento e 9 de direção referentes aos nove quadrantes que circundam a posição informada: quadrante central, norte, sul, sudeste, etc. 
+
+A figura abaixo mostra esses quadrantes para uma região no norte baiano, na cidade de Sento Sé para a posição 9.8436 S, 41.1912 W.
+
+\begin{figure}[h]
+    \centering
+%	\includegraphics[scale=0.5]{earth}
+	\includegraphics[scale=0.6]{earth}
+	\caption{Localização da região de medição por satélite dos dados de vento discutidos no texto. Fonte: SIO, NOAA, U.S. Navy, NGA, GEBCO. \textcopyright \  2018 Google}
+\end{figure}
+\FloatBarrier
+
+A partir de análises de diversas localidades do Nordeste brasileiro sabe-se que o recurso eólico dessa região é representativo de todo o Nordeste do país, isto é, a velocidade média do vento é alta, predominantemente entre 6 e 8 m/s, fortemente unidirecional a jusante de sudeste a 120º em relação ao norte geográfico, com uma componente significativamente menor, mas relevante, a cerca de 150º como pode ser observado na rosa dos ventos gerada a partir dos dados medidos para o ano de 2017:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.9]{windrose}
+	\caption{Rosa dos ventos do recurso eólico da cidade de Sento Sé no norte da Bahia - característico do Nordeste brasileiro,  a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+\newpage
+Analisando as rosas dos ventos mensais se confirma o comportamento anual e também é possível observar que nos meses de junho a outubro a velocidade do vento é muito alta enquanto que nos demais meses, de Novembro a Maio, ela é muito menor. Com essa informação, é possível, por exemplo, nos meses de baixa velocidade e consequente baixa geração de energia, complementar o suprimento energético do local com outras fontes de energia renovável tal como a energia solar que apresenta o comportamento inverso à energia eólica na região, isto é, nos meses de primavera e verão a elevada altitude solar permite extrair a maior proporção de energia anual ao contrário dos meses de outono e inverno.
+
+\begin{figure}[h]
+    \centering
+  	\hspace*{-1.4cm}   
+	\includegraphics[scale=1]{windrose_monthly}
+	\caption{Rosas dos ventos mensais do recurso eólico da cidade de Sento Sé no norte da Bahia a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+\chapter{Características de curto prazo}
+
+Sabe-se que em períodos curtos, o vento apresenta um comportamento que aparenta ser puramente estocástico, associado ao comportamento turbulento característico da dinâmica de fluídos pouco viscosos tal como o ar. No entanto, observando períodos maiores de tempo, tais como dias, meses e anos observa-se que existem tendências coexistentes com o caráter aleatório, errático do vento. É tarefa da ciência de dados evidenciar a presença desses padrões a partir dos dados medidos, pois, apenas exibindo graficamente a evolução temporal da velocidade do vento leva a crer que não exista qualquer tendência ou padrão nestes dados:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.85]{stochastic_monthly}
+	\caption{Velocidade do vento para cada mês do ano de 2017 da cidade de Sento Sé no norte da Bahia. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+A figura abaixo apresenta a variação horária da velocidade do vento para cada mês do ano para a cidade de Sento Sé.
+Observa-se que o vento no local apresenta um ciclo diário característico e que está presente em todos os meses do ano. De acordo com \cite{art10} o ciclo diário do vento é um fator mais relevante do que a velocidade média do vento para definir a localização de um parque eólico, devido a relação entre a geração horária de energia e a demanda correspondente. Embora a velocidade do vento seja bem mais alta em Julho do que em Janeiro, em ambos os meses tem-se um mínimo de velocidade durante o meio da tarde, uma taxa de variação positiva a medida que a noite se aproxima e uma estabilização durante a madrugada e primeiras horas da manhã. O mesmo vale para os demais meses.
+Pode-se explicar esse fenômeno observado que durante o dia o aquecimento da atmosfera pelo Sol torna o vento turbulento sendo mais difícil o seu aproveitamento para geração de energia, pois sua velocidade direcional é baixa. À noite, por outro lado, a atmosfera se estratifica, o vento fica pouco turbulento e a sua velocidade direcional aumenta. Essa explicação embora válida para este local pode não ser para outro, pois existem diversos fatores, além do aquecimento local da atmosfera, que definem o comportamento do vento. Em regiões desérticas, por exemplo, observa-se uma alta estabilidade na atmosfera devido à baixa umidade. A mesma explicação pode ser estendida para descrever o comportamento mensal: durante meses de inverno e outono a velocidade do vento é alta, enquanto que em meses de verão e primavera ela é baixa. 
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{diurnal}
+	\caption{Velocidade do vento para cada hora do dia e para cada mês do ano de 2017 para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+\part{Embasamento teórico}
+
+\chapter{Embasamento matemático}
+
+A separação entre o que é fundamentalmente aleatório e o que exibe uma tendência em alguma janela temporal é de extrema relevância para a concepção de um modelo matemático que descreva tal fenômeno. Essas contribuições podem ter origens físicas diferentes e a formulação das equações diferenciais estocásticas envolve a distinção entre um termo associado à deriva e outro à difusão o qual não contribui para o valor esperado da variável em questão, isto é, na ausência de deriva, o valor esperado da variável estocástica seria zero, em outras palavras, ele distribui a variância igualmente para mais e para menos.
+
+Um processo estocástico contínuo no tempo, $ W(t) $, definido para $ t>=0 $ com $W(0)=0$ tal que o incremento $ W(t)-W(s)$ é dado por uma distribuição gaussiana com média $0$ e variância $t-s$ para qualquer $ 0<=s<t$ sendo tais incrementos, restritos aos que não se sobrepõem no tempo, independentes, recebe o nome de processo de Wiener \cite{wiener}. O movimento browniano é um exemplo particular de processo de Wiener.
+
+O processo $S_t$ descrito pela equação estocástica abaixo, por exemplo \cite{art27}, possui o termo de deriva $\mu S_t dt$ e o termo de difusão dado por $\sigma S_t dW_t$ o qual está associado a um processo de Wiener representado por $W_t$:
+
+\begin{equation}
+dS_t = \mu(S_t,t) dt + \sigma(S_t,t) dW_t
+\end{equation}
+
+
+Um processo estocástico cujo valor esperado futuro é igual ao valor presente é classificado como um \textit{martingale} \cite{stevens}. Essa é uma característica importante da análise, pois diversos teoremas a tem como hipótese. É claro que a teoria encontraria pouca aplicação prática se não contemplasse processos que envolvem deriva. Para tanto, o teorema de Girsanov \cite{stevens} garante que tal processo, sujeito a algumas hipóteses pouco restritivas, pode tornar-se um \textit{martingale} por meio de uma mudança de escala - uma função multiplicativa apropriada a qual é conhecida como derivada de Radon-Nikodym \cite{stevens}.
+
+\newpage
+A evolução histórica do preço das ações da Google na NASDAQ bolsa, por exemplo, apesar de ter caráter estocástico, apresenta claramente uma tendência de subida (uma deriva, ou \textit{drift} do inglês):
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{stock}
+	\caption{Valor de abertura das ações da Google na NASDAQ. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{nasdaq}.}
+\end{figure}
+\FloatBarrier
+
+%orografia, rugosidade
+%Cada local tem suas muitas características específicas (orografia, rugosidade, posição no globo, entre outras) e qualquer padrão observado para um local pode não apenas não ser válido para outro local mas pode ocorrer o fenômeno oposto.
+
+%coleta de dados de vento: botar umas torres
+
+\chapter{Embasamento físico}
+
+%João e Paulo não gostam de Juriscleide. Este (latter) a acha fedida, aquele (former), desbocada.
+
+\section{Restrições físicas}
+Como fora exposto, a velocidade do vento apresenta várias tendências de longo prazo, comportamentos periódicos - sazonais e até horários e padrões característicos de orografia, clima e latitude. No entanto, essa é uma grandeza fundamentalmente estocástica, isto é, está associada a uma variável aleatória e portanto, a sua previsão está fadada a uma incerteza intrínseca. Antes da formulação da mecânica quântica acreditava-se que se conhecendo perfeitamente o Hamiltoniano de um sistema, isto é, sabendo a posição e momento de todas as partículas que o compõe, seria possível prever com exatidão a sua evolução temporal, ao menos em tese (dado que tal feito é inviável para qualquer sistema moderamente complexo). No entanto, o princípio da incerteza de Heisenberg pôs fim a essa crença, visto que enuncia que não somente é impossível saber simultaneamente a posição e momento exatos de uma particula como não faz sentido falar da simultaneidade das duas grandezas; tampouco é útil a informação sobre velocidade e momento de todas as partículas de um sistema, pois as grandezas de interesse são de natureza estatística, como a temperatura por exemplo. 
+
+A mecânica estatística desenvolveu-se em paralelo ignorando a busca pela determinação exata da evolução temporal de um sistema. Ao invés disso, concentrou-se em determinar valores médios de quantidades de interesse emergentes do comportamento caótico fundamentada na hipótese de que todas as possíveis configurações do sistema ocorrem com igual probabilidade. Apesar do grande sucesso em diversas áreas da física foi incapaz de explicar o comportamento turbulento de fluídos, foi incapaz de explicar como que surge ordem a partir do caos. Relativamente pouco progresso foi feito até então \cite{chaos}. É por esse motivo que frequentemente a previsão do tempo falha, até mesmo em uma escala de horas independente de quantas estações metereológicas sejam utilizadas, já que de acordo com a teoria do caos existe um horizonte de previsão \cite{ian} a partir do qual não é possível obter estimativas confiáveis. A teoria do caos mostrou que a ignorância quanto a natureza da complexidade era muito maior. Tome como exemplo um sistema simples com uma variável discreta $x_t$ e uma regra de evolução temporal não-linear, $x_{t+1}=x_t(1+x_t)$ \cite{NOSRATI2018224}. Conhece-se tudo sobre esse sistema. Ele é perfeitamente determinístico. Ainda assim existe um certo instante de tempo a partir do qual não é possível predizer o seu estado futuro. Esse instante chama-se de transição ao caos \cite{lorenz}.
+
+\section{Abordagem de longo prazo}
+
+Fênomenos fortemente não-lineares como a turbulência, não são, no entanto, completamente imprevisíveis. Acredita-se que dependendo do sistema e sujeito às restrições expostas acima a tarefa seja factível, porém não existe uma única maneira de abordar tal problema. Este trabalho propõe a investigação de qual modelo produz melhores resultados de estimativa de produção de energia, começando por um modelo de evolução temporal de velocidade do vento que faça uso dos dados de medição para encontrar a distribuição de probabilidade associada à essa grandeza.
+
+É prática comum na indústria a determinação da distribuição de probabilidade de energia a partir de simulações de Monte Carlo \cite{portacopos} tendo como hipótese que a velocidade do vento é descrita por uma distribuição de Weibull a qual já foi verificada experimentalmente a partir de muitas análises de dados de vento e tem sólido embasamento teórico conforme o teorema de Fisher–Tippett–Gnedenko, o qual prova que o máximo de um conjunto de variáveis aleatórias independentes, após renormalização, converge apenas para uma de três classes de distribuições: a distribuição de Gumbel, a distribuição de Fréchet ou a distribuição de Weibull \cite{fisher}.
+
+Para a cidade de Sento Sé, por exemplo, a distribuição de velocidades do quadrante central é exibida abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.8]{weibull_histogram}
+	\caption{A distribuição de velocidades pode ser aproximada por uma distribuição de Weibull. Dados do quadrante central dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+Essa distribuição claramente não é gaussiana porque possui uma cauda unilateral. Tal distribuição é representada satisfatoriamente por uma distribuição de Weibull por meio de dois parâmetros: o parâmetro de forma $k$ e o parâmetro de escala $\lambda$. Seus primeiros momentos são definidos por \cite{weibull}:
+
+\begin{equation}
+	\left<v\right> = \lambda\Gamma\left(1+\frac{1}{k}\right)
+\end{equation}
+
+\begin{equation}
+	\sigma^2 = \lambda^2\left\{\Gamma\left(1+\frac{2}{k}\right)-\left[\Gamma\left(1+\frac{1}{k}\right)\right]^2\right\}
+\end{equation}
+
+Avaliando a distribuição de densidade de probabilidade de velocidade para todos os quadrantes dos dados de vento da cidade de Sento Sé, confirma-se que todos seguem uma distribuição do tipo weibull. Sabendo que a direção preferencial do vento é sul-sudeste observa-se, a partir das curvas para norte, nordeste e noroeste, que à medida que flui no local a velocidade média aumenta.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.85]{weibull_freqpoly}
+	\caption{Distribuição de velocidades de todos os quadrantes dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+Os parâmetros $\lambda$ e $k$ são utilizados para caracterizar o recurso eólico em uma dada posição (latitude e longitude) e altura. Para obter o recurso eólico em outra posição ou altura (posição e altura de uma turbina por exemplo) é feito um escalonamento da distribuição: muda-se a sua forma para obter um valor esperado de velocidade correspondente à nova posição.
+
+\section{Desvantagens}
+
+Essa abordagem embora adequada para estimativas de longo prazo e muito utilizada na indústria possui várias desvantagens:
+
+\begin{itemize}
+    \item A hipótese da distribuição de Weibull é completamente inválida a curto prazo, visto que é uma distribuição constante e não pode, portanto, representar as flutuações incessantes características do comportamento turbulento do vento \cite{artmain}. Uma distribuição de probabilidade que descreva adequadamente a velocidade do vento deve ser dependente do tempo. A evolução temporal horária ou até mesmo minuto a minuto é uma informação essencial para operadores de subestações de distribuição de energia elétrica, pois permite adequar oferta de energia a picos e baixas de demanda os quais são conhecidos    
+    \item A simulação é lenta. O Método de Monte Carlo, como aplicado pela indústria, é um método de força bruta, ou seja, lança mão de poder computacional para atingir seu objetivo. E deve ser realizado toda a vez que se deseje obter o mesmo resultado ao passo que um modelo físico permite que o esforço computacional seja empregado apenas uma vez e, além disso, exige menos poder computacional. É impensável refazer tais cálculos a cada hora.
+    \item O método de Monte Carlo, como aplicado nessa problema, é apenas um recurso computacional, não descreve o comportamento físico do sistema e portanto não pode ser empregado em análises sofisticadas tais como mensurar a dependência temporal e espacial entre dois parques eólicos, ou seja, mensurar o efeito de esteira \cite{atlas} em resolução horária, podendo, por exemplo, como resultado conceber uma estratégia de gerenciamente setorial conjunto entre os dois parques, ou seja, orientar as turbinas dos dois parques de maneira mutuamente benéfica. Outro exemplo, seria prever o melhor intervalo de tempo para realizar a manutenção de uma turbina levando em conta o tempo necessário para realizar a manutenção as quais são, via de regra, custosas e demoradas.
+\end{itemize}
+
+\section{Ressalvas}
+
+Existem muitas fontes de incerteza ao longo de todo o processo de estimativa da produção de energia. Incerteza na obtenção dos dados de medição, na conversão entre velocidade e energia, na extrapolação horizontal (do local de medição à posição das turbinas), da extrapolação vertical (da altura da medição à altura das turbinas) entre muitas outras. A consideração dessas fontes de incerteza fogem ao escopo do presente trabalho mas devem ser todas consideradas em qualquer trabalho comercial. Pode-se dizer que este trabalho estuda o caso particular em que a medição do vento é feita a alguns diâmetros de rotor de distância da turbina, exatamente na altura do cubo rotor.
+
+\part{Revisão bibliográfica}
+
+A área de estudo deste trabalho possui vasta literatura. Modelos autoregressivos de média móvel (ARMA) foram utilizados em \cite{art20} para prever tanto a velocidade quanto a direção do vento. 
+
+Uma revisão bibliográfica dos vários métodos de previsão de dados de vento é feita em \cite{art21}. Este trabalho conclui que esses métodos possuem bom desempenho em diferentes resoluções temporais e que o erro de previsão aumenta com o tempo desejado de previsão. 
+
+Modelos para as flutuações da velocidade do vento foram explorados em \cite{art26} com base na solução analítica da equação de Fokker–Planck–Kolmogorov e várias classes de  distribuições de probabilidade são propostas como solução. Neste trabalho, também foi feita uma análise teórica do efeito que tufões de vento causam na geração de energia por turbinas. 
+
+Em \cite{art28} são feitas simulações estocásticas de caminho aleatório multifractal, isto é, um espectro contínuo de expoentes se faz necessário para caracterizar a geometria do objeto de estudo. Usando uma curva de potência experimental os autores produzem uma série temporal de produção de energia. 
+
+As flutuações na velocidade do vento são modelados em \cite{art37} por meio de um processo de Ornstein-Uhlenbeck-Rayleigh bidimensional. Este trabalho observa que o modelo markoviano nele proposto não reproduz a variabilidade de curto-prazo exibida pelo vento. De acordo com \cite{art30} o estudo de equações diferenciais estocásticas para a previsão da velocidade do vento é vasto na literatura, mas o mesmo não é verdade para a estimativa da produção de energia. Apesar da observação, o trabalho não foge à regra e também aborda apenas modelos estocásticos para a velocidade do vento. Somente em \cite{art31} que modelos estocásticos voltados à produção de energia são explorados, com o objetivo de obter uma previsão de até 2 dias.
+
+\part{Planejamento}
+
+O principal objetivo deste trabalho é conceber uma maneira mais rápida, eficiente e que produza melhores resultados para estimar a produção de energia a partir de dados de vento. Existem muitos métodos disponíveis para tentar cumprir este objetivo, como exposto na revisão bibliográfica, entre eles:
+
+\begin{itemize}
+	\item Modelos de autoregressão (ARMA);
+	\item Redes neurais;
+	\item Equações diferenciais estocásticas para velocidade do vento, produção de energia ou ambos;
+	\item Teoria combinatória com peso variável;
+	\item Caminho aleatório multifractal;
+	\item Movimento Browniano geométrico;
+	\item Combinações ou variações entre esses modelos
+ \end{itemize}
+ 
+É parte deste trabalho avaliar qual o método produz a melhor estimativa para a produção de energia. A validação do modelo será feita pela comparação com dados medidos de parques eólicos em operação e os resultados obtidos com o modelo.
+
+A execução desse trabalho consiste em várias etapas. As principais delas são elencadas abaixo:
+
+\begin{itemize}
+	\item Estudar a teoria matemática do cálculo estocástico
+	\item Investigar se ideias da teoria do caos podem ser utilizadas na formulação do modelo
+	\item Investigar o que já foi feito na literatura na área de previsão de geração de energia eólica
+	\item Avaliar os diferentes métodos disponíveis para modelar dados estocásticos
+	\item Formular o modelo com base no método mais promissor
+	\item Obter de permissão para utilizar os dados medidos
+	\item Estudar sobre solução numérica de equações diferenciais estocásticas
+	\item Resolver o problema pelo método tradicional
+	\item Comparar os resultados entre métodos
+	\item Comparar os resultados com dados medidos de energia
+	\item Redigir o texto final
+	\item Apresentar à banca
+ \end{itemize}
+ 
+ No gráfico de Gantt abaixo identifcadas as macro-etapas do trabalho e são estabelecidos durações e prazos para a conclusão dessas etapas
+ 
+\begin{figure}[h]
+	\hspace*{-2.5cm}   
+    \includegraphics[scale=0.65]{gantt}
+    \caption{Gráfico de Gantt do planejamento das etapas de desenvolvimento do presente trabalho. Fonte: autoria própria.}
+    \centering
+\end{figure}
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+%\part{Preparação da pesquisa}
+
+
+% 1. Introdução: Aqui vocês têm que convencer o leitor que o tópico de vocês é interessante, que vale a pena ser explorado. Tem que motivar! Trabalhar com econofísica é legal porque... tem problemas 
+% paralelos na física... vai me ajudar na minha vida profissional porque...
+% 2. Revisão Bibliográfica: Esta seção é para mostrar que vocês leram bastante, estudaram, aprenderam algo novo. Pesquisem tudo que foi feito no tópico de estudo de vocês e contem uma historinha 
+% cronológica com este material;     
+% 3. Problema: Agora que vocês já convenceram o leitor que o assunto é importante e vocês estão por dentro do assunto, mostrem qual é o problema a ser atacado. Por exemplo: 
+% Eu vou aplicar a teoria X para descobrir porque mercados se comportam do jeito Y.
+% 4. Metodologia: Para resolver o problema acima, vocês vão dar uma aula sobre o arsenal teórico. Explicar com detalhes o tópico de vocês: catástrofe, multifractal, resonância, etc.
+% 5. Cronograma: Bom, feito todo este trabalho, agora é hora de contar pra banca como vocês vão organizar o tempo de vocês para que até julho do ano que vem vocês tenham o TCC2 pronto. 
+% Façam um diagrama de Gantt semanal botando metas claras.
+
+% ---
+% Capitulo com exemplos de comandos inseridos de arquivo externo 
+% ---
+%\include{abntex2-modelo-include-comandos}
+% ---
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+%\part{Referenciais teóricos}
+% ----------------------------------------------------------
+
+% ---
+% Capitulo de revisão de literatura
+% ---
+%\chapter{Lorem ipsum dolor sit amet}
+% ---
+
+% ---
+%\section{Aliquam vestibulum fringilla lorem}
+% ---
+
+%\lipsum[1]
+
+%\lipsum[2-3]
+
+% ----------------------------------------------------------
+% PARTE
+% ----------------------------------------------------------
+%\part{Resultados}
+% ----------------------------------------------------------
+
+% ---
+% primeiro capitulo de Resultados
+% ---
+%\chapter{Lectus lobortis condimentum}
+% ---
+
+% ---
+%\section{Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae}
+% ---
+
+%\lipsum[21-22]
+
+% ---
+% segundo capitulo de Resultados
+% ---
+%\chapter{Nam sed tellus sit amet lectus urna ullamcorper tristique interdum elementum}
+% ---
+
+% ---
+%\section{Pellentesque sit amet pede ac sem eleifend consectetuer}
+% ---
+
+%\lipsum[24]
+
+% ----------------------------------------------------------
+% Finaliza a parte no bookmark do PDF
+% para que se inicie o bookmark na raiz
+% e adiciona espaço de parte no Sumário
+% ----------------------------------------------------------
+%\phantompart
+
+% ---
+% Conclusão
+% ---
+%\chapter{Conclusão}
+% ---
+
+%\lipsum[31-33]
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+%\postextual
+% ----------------------------------------------------------
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{abntex2-modelo-references}
+
+% ----------------------------------------------------------
+% Glossário
+% ----------------------------------------------------------
+%
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%
+%\glossary
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+%\begin{apendicesenv}
+%
+%% Imprime uma página indicando o início dos apêndices
+%\partapendices
+%
+%% ----------------------------------------------------------
+%\chapter{Quisque libero justo}
+%% ----------------------------------------------------------
+%
+%\lipsum[50]
+%
+%% ----------------------------------------------------------
+%\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+%ac pretium ante justo a nulla curabitur tristique arcu eu metus}
+%% ----------------------------------------------------------
+%\lipsum[55-57]
+%
+%\end{apendicesenv}
+% ---
+
+
+% ----------------------------------------------------------
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+%\begin{anexosenv}
+
+% Imprime uma página indicando o início dos anexos
+%\partanexos
+
+% ---
+%\chapter{Morbi ultrices rutrum lorem.}
+% ---
+%\lipsum[30]
+
+% ---
+%\chapter{Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus}
+% ---
+
+%\lipsum[31]
+
+% ---
+%\chapter{Fusce facilisis lacinia dui}
+% ---
+
+%\lipsum[32]
+
+%\end{anexosenv}
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+\phantompart
+\printindex
+%---------------------------------------------------------------------
+
+\end{document}

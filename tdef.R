@@ -16,4 +16,3 @@ era5$c_ws %>%
   tail(4*365) %>% 
   msts(seasonal.periods=4*365) %>%
   ggseasonplot(c_ws, polar=T)
-

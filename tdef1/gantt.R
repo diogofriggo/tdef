@@ -1,0 +1,89 @@
+setwd("C:/Users/Diogo Friggo/Google Drive/TDEF/tex/thesis/images")
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(Cairo)
+
+# Alternatively you can put all this in a CSV file with the same columns and
+# then load it with read_csv()
+# tasks <- read_csv("path/to/the/file")
+
+# \item Estudar a teoria matemática do cálculo estocástico
+# \item Investigar se ideias da teoria do caos podem ser utilizadas na formulação do modelo
+# \item Investigar o que já foi feito na literatura na área de previsão de geração de energia eólica
+# \item Avaliar os diferentes métodos disponíveis para modelar dados estocásticos
+# \item Formulação do modelo escolhido
+# \item Obtenção de permissão para utilizar os dados medidos
+# \item Estudo sobre solução numérica de equações diferenciais estocásticas
+# \item Solução numérica de equações diferenciais estocásticas;
+# \item Solução do problema pelo método tradicional
+# \item Comparação dos resultados entre métodos
+# \item Comparação dos resultados com dados medidos de energia
+# \item Redigir o texto final
+# \item Apresentação à banca
+
+tasks <- tribble(
+  ~Start,       ~End,         ~Project,          ~Task,
+  "2018-12-03", "2018-12-31", "Preparação", "Estudar cálculo de Ito",
+  "2018-12-19", "2018-12-31", "Preparação", "Estudar teoria do caos",
+  "2019-01-01", "2019-02-08", "Preparação", "Revisão da literatura",
+  "2019-02-04", "2019-02-08", "Desenvolvimento", "Coleta de dados",
+  "2019-02-09", "2019-02-28", "Desenvolvimento", "Teste de modelos",
+  "2019-02-28", "2019-03-15", "Desenvolvimento", "Desenvolvimento de modelo",
+  "2019-03-01", "2019-03-08", "Preparação", "Estudar solução numérica de SDEs",
+  "2019-03-15", "2019-03-22", "Desenvolvimento", "Replicar o método tradicional",
+  "2019-03-15", "2019-03-17", "Preparação", "Estudar o método de Monte Carlo",
+  "2019-03-22", "2019-04-05", "Desenvolvimento", "Comparação entre modelo e simulação",
+  "2019-04-05", "2019-04-19", "Desenvolvimento", "Comparação com dados medidos",
+  "2019-01-16", "2019-04-19", "Escrita",         "Redação do texto",
+  "2019-04-19", "2019-04-26", "Escrita",         "Elaboração da apresentação"
+)
+
+# Convert data to long for ggplot
+tasks.long <- tasks %>%
+  mutate(Start = ymd(Start),
+         End = ymd(End)) %>%
+  gather(date.type, task.date, -c(Project, Task)) %>%
+  arrange(date.type, task.date) %>%
+  mutate(Task = factor(Task, levels=rev(unique(Task)), ordered=TRUE))
+
+theme_gantt <- function(base_size=11, base_family="Source Sans Pro Light") {
+  ret <- theme_bw(base_size, base_family) %+replace%
+    theme(panel.background = element_rect(fill="#ffffff", colour=NA),
+          axis.title.x=element_text(vjust=-0.2), axis.title.y=element_text(vjust=1.5),
+          title=element_text(vjust=1.2, family="Source Sans Pro Semibold"),
+          panel.border = element_blank(), axis.line=element_blank(),
+          panel.grid.minor=element_blank(),
+          panel.grid.major.y = element_blank(),
+          panel.grid.major.x = element_line(size=0.5, colour="grey80"),
+          axis.ticks=element_blank(),
+          legend.position="bottom", 
+          axis.title=element_text(size=rel(0.8), family="Source Sans Pro Semibold"),
+          strip.text=element_text(size=rel(1), family="Source Sans Pro Semibold"),
+          strip.background=element_rect(fill="#ffffff", colour=NA),
+          panel.spacing.y=unit(1.5, "lines"),
+          legend.key = element_blank())
+  
+  ret
+}
+
+# Calculate where to put the dotted lines that show up every three entries
+x.breaks <- seq(length(tasks$Task) + 0.5 - 3, 0, by=-3)
+
+# Build plot
+timeline <- ggplot(tasks.long, aes(x=Task, y=task.date, colour=Project)) + 
+  geom_line(size=6) + 
+  geom_vline(xintercept=x.breaks, colour="grey80", linetype="dotted") + 
+  guides(colour=guide_legend(title=NULL)) +
+  labs(x=NULL, y=NULL) + coord_flip() +
+  scale_y_date(date_breaks="5 days", labels=date_format("%d %b %y")) +
+  theme_gantt() + theme(axis.text.x=element_text(angle=45, hjust=1))
+timeline
+
+# Save plot as PDF with embedded fonts (the secret is "device=cairo_pdf")
+#ggsave(timeline, filename="~/Downloads/UFRGS TDEF/timeline.pdf",
+#       width=6.5, height=6.5, units="in", device=cairo_pdf)
+
+# Save plot as high resolution PNG (the secret is 'type="cairo", dpi=300')
+ggsave(timeline, filename="gantt.png",
+       width=12, height=6.5, units="in", type="cairo", dpi=300)

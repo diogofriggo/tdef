@@ -1,0 +1,125 @@
+%% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
+%% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-trabalho-academico.tex,
+%% abntex2-modelo-include-comandos and abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Trabalho Academico (tese de doutorado, dissertacao de
+% mestrado e trabalhos monograficos em geral) em conformidade com 
+% ABNT NBR 14724:2011: Informacao e documentacao - Trabalhos academicos -
+% Apresentacao
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+	]{abntex2}
+
+% ---
+% Pacotes básicos 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte. % access \textquotedbl
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}			% Usado pela Ficha catalográfica
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\graphicspath{ {./images/} }
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{placeins}
+\usepackage{amsfonts} %\mathbb{Z}
+\usepackage{siunitx} %\ang for coordinates
+\usepackage{textcomp}     % access \textquotesingle
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+%\tikzstyle{startstop} = [rectangle, rounded corners, text centered, draw=black, fill=red!30]
+%\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
+%%\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
+%\tikzstyle{process} = [rectangle, text centered, text width=8cm, draw=black, fill=orange!30]
+%\tikzstyle{decision} = [diamond, text centered, text width=6cm, draw=black, fill=green!30]
+%\tikzstyle{arrow} = [thick,->,>=stealth]
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=10em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=18em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
+    
+% ---
+		
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+%	 \usepackage[num]{abntex2cite}
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\begin{document}
+\begin{center}
+\begin{tikzpicture}[node distance=2cm]
+%\begin{tikzpicture}[thick,scale=0.6, every node/.style={scale=0.6}]
+%\begin{tikzpicture}[thick,scale=0.6]
+\node (pro1) [process] {Faça um gráfico dos dados \\ Identifique comportamentos atípicos \\ Identifique padrões};
+\node (dec2) [decision,below of=pro1, yshift=-1.25em] {A variância parece ser constante ao longo da série?};
+\node (pro2) [process, right of=dec2] {Aplique uma transformação potência}
+\node (pro3) [process,below of=pro2, yshift=-1em] {Escolha a ordem do método};
+\node (dec2) [decision, below of=pro3, yshift=-2em] {A série aparenta \\ ser estacionária?};
+\node (pro4) [process,below of=dec2] {Analise os gráficos ACF e PACF para identificar prováveis modelos};
+\node (pro5) [process,below of=proc4] {Avalie a qualidade do modelo por meio do seu AICc};
+\node (dec3) [decision, below of=pro5, yshift=-2em] {O valor de AICc é satisfatório?};
+%\node (start) [startstop] {1. Faça um gráfico dos dados};
+%\node (in1) [io, below of=start] {Input};
+%\node (pro1) [process, below of=in1] {Process 1};
+%\node (pro2a) [process, below of=dec1, yshift=-0.5cm] {Process 2a text};
+%\node (pro2b) [process, right of=dec1, xshift=2cm] {Process 2b};
+%\node (out1) [io, below of=pro2a] {Output};
+%\node (stop) [startstop, below of=out1] {Stop};
+%\draw [arrow] (start) -- (in1);
+%\draw [arrow] (in1) -- (pro1);
+%\draw [arrow] (pro1) -- (dec1);
+%\draw [arrow] (dec1) -- node[anchor=east] {yes} (pro2a);
+%\draw [arrow] (dec1) -- node[anchor=south] {no} (pro2b);
+%\draw [arrow] (pro2b) |- (pro1);
+%\draw [arrow] (pro2a) -- (out1);
+%\draw [arrow] (out1) -- (stop);
+\end{tikzpicture}
+\end{center}
+\end{document}

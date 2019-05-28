@@ -1,0 +1,53 @@
+\changetocdepth {4}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Introdu\IeC {\c c}\IeC {\~a}o}{11}{chapter*.6}
+\contentsline {part}{\partnumberline {I}\MakeTextUppercase {TDEF 2}}{13}{part.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {A s\IeC {\'e}rie temporal modelo}}{14}{chapter.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase {Caracteriza\IeC {\c c}\IeC {\~a}o da regi\IeC {\~a}o}}{16}{chapter.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase {Time Series Analysis}}{18}{chapter.3}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase {Regime estacion\IeC {\'a}rio}}{19}{chapter.4}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase {Janela de dados}}{20}{chapter.5}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase {Mensurando a qualidade da previs\IeC {\~a}o}}{21}{chapter.6}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase {Modelo Autoregressivo (AR)}}{22}{chapter.7}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase {Forecasting: Principles and Practice}}{23}{chapter.8}
+\contentsline {section}{\numberline {8.1}Horizonte de previs\IeC {\~a}o}{23}{section.8.1}
+\contentsline {section}{\numberline {8.2}M\IeC {\'e}todos}{23}{section.8.2}
+\contentsline {section}{\numberline {8.3}An\IeC {\'a}lise visual}{24}{section.8.3}
+\contentsline {section}{\numberline {8.4}Medidas de qualidade de previs\IeC {\~o}es}{25}{section.8.4}
+\contentsline {subsection}{\numberline {8.4.1}Erro m\IeC {\'e}dio absoluto (MAE)}{26}{subsection.8.4.1}
+\contentsline {subsection}{\numberline {8.4.2}Ra\IeC {\'\i }z do quadrado da m\IeC {\'e}dia do erro (RMSE)}{26}{subsection.8.4.2}
+\contentsline {subsection}{\numberline {8.4.3}Erro absoluto m\IeC {\'e}dio escalonado (MASE)}{26}{subsection.8.4.3}
+\contentsline {subsection}{\numberline {8.4.4}Valida\IeC {\c c}\IeC {\~a}o cruzada}{26}{subsection.8.4.4}
+\contentsline {section}{\numberline {8.5}ARIMA}{28}{section.8.5}
+\contentsline {section}{\numberline {8.6}Box-Jenkins}{28}{section.8.6}
+\contentsline {section}{\numberline {8.7}Modelo Autoregressivo AR1}{28}{section.8.7}
+\contentsline {part}{\partnumberline {II}\MakeTextUppercase {An\IeC {\'a}lise de dados de vento}}{29}{part.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {9}\MakeTextUppercase {Caracter\IeC {\'\i }sticas de longo prazo}}{30}{chapter.9}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {10}\MakeTextUppercase {Caracter\IeC {\'\i }sticas de curto prazo}}{33}{chapter.10}
+\contentsline {part}{\partnumberline {III}\MakeTextUppercase {Embasamento te\IeC {\'o}rico}}{35}{part.3}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {11}\MakeTextUppercase {Embasamento matem\IeC {\'a}tico}}{36}{chapter.11}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {12}\MakeTextUppercase {Embasamento f\IeC {\'\i }sico}}{38}{chapter.12}
+\contentsline {section}{\numberline {12.1}Restri\IeC {\c c}\IeC {\~o}es f\IeC {\'\i }sicas}{38}{section.12.1}
+\contentsline {section}{\numberline {12.2}Abordagem de longo prazo}{39}{section.12.2}
+\contentsline {section}{\numberline {12.3}Desvantagens}{41}{section.12.3}
+\contentsline {section}{\numberline {12.4}Ressalvas}{41}{section.12.4}
+\contentsline {part}{\partnumberline {IV}\MakeTextUppercase {Revis\IeC {\~a}o bibliogr\IeC {\'a}fica}}{43}{part.4}
+\contentsline {part}{\partnumberline {V}\MakeTextUppercase {Planejamento}}{45}{part.5}
+\vspace {\cftbeforechapterskip }
