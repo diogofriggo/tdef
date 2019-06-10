@@ -149,6 +149,19 @@ ggplot(data=df2, aes(x=time)) +
   scale_color_manual(values = c('gold','black'))
   #scale_color_manual(values=c('#7D7DEF', '#C3C3F6'), name="other")
   #geom_line(aes(y=forecast.speed), color='white')
+
+ggsave('thesis/images/var_result.png')
+
+my_accuracy <- function(forecast, observed){
+  accuracy(forecast, observed[(length(observed)-length(forecast)+1):length(observed)])
+}
+
+my_accuracy(forecast.mean, data)
+#RMSE 	MAE 	MAPE 	MASE
+
+data
+forecast.mean
+
 #green #00BA38
 #red #F8766D
 #95: #C3C3F6
@@ -183,6 +196,8 @@ tibble(time=1:length(p), p=p, d=d, q=q) %>%
   #scale_size_continuous(guide = FALSE) +
   scale_size(range = c(1, 5), guide=F) +
   scale_color_gradientn(colours = rainbow(5))
+
+ggsave('thesis/images/var_arima.png')
 
 test <- c()
 for(k in 1:length(p)){
@@ -360,4 +375,3 @@ fARIMA110 <- function(x, h){forecast(Arima(x, order=c(1,1,0)), h=h)}
 
 x %>% tsCV(fARIMA110, h=1) %>% mean(na.rm=T) %>% .^2 %>% sqrt()
 x %>% fARIMA110(h=1) %>% residuals() %>% mean(na.rm=T) %>% .^2 %>% sqrt()
-

@@ -65,6 +65,7 @@
 \usepackage{siunitx} %\ang for coordinates
 \usepackage{textcomp}     % access \textquotesingle
 \usepackage{tikz}
+\usepackage{hyperref} %links no texto
 \usetikzlibrary{shapes.geometric, arrows}
 %\tikzstyle{startstop} = [rectangle, rounded corners, text centered, draw=black, fill=red!30]
 %\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
@@ -367,18 +368,6 @@
 % ---
 % Epígrafe
 % ---
-%\begin{epigrafe}
-%    \vspace*{\fill}
-%	\begin{flushright}
-%		\textit{``Não vos amoldeis às estruturas deste mundo, \\
-%		mas transformai-vos pela renovação da mente, \\
-%		a fim de distinguir qual é a vontade de Deus: \\
-%		o que é bom, o que Lhe é agradável, o que é perfeito.\\
-%		(Bíblia Sagrada, Romanos 12, 2)}
-%	\end{flushright}
-%\end{epigrafe}
-% ---
-
 % ---
 % RESUMOS
 % ---
@@ -386,13 +375,15 @@
 % resumo em português
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
 \begin{resumo}
-Todos os agentes envolvidos no planejamento de um parque eólico precisam determinar, com um certo nível de certeza, quanta energia este parque poderá gerar. Investidores precisam avaliar o risco associado ao financiamento da construção do parque em relação a um retorno futuro. Produtores precisam garantir a sua viabilidade e maximizar a geração a partir de medições que estão sujeitas às diversas variáveis que definem o comportamento do vento no local tais como orografia, rugosidade e clima. Estes também devem considerar variáveis que afetam o desempenho de turbinas tais como temperatura, salinidade e presença de parques vizinhos. Operadores de subestações, por outro lado, precisam ter uma estimativa da produção em resolução horária para que possam atender adequadamente a demanda por energia a qual sabe-se que varia ao longo do dia de maneira previsível e conhecida a partir de dados históricos de consumo por uma dada região.
+Todos os agentes envolvidos no planejamento de um parque eólico precisam determinar, com um certo nível de certeza, quanta energia este poderá gerar. Investidores precisam avaliar o risco associado ao financiamento da construção do parque em relação a um retorno futuro. Produtores precisam garantir um determinado nível de produção de energia com base em acordos mensais com compradores. Operadores de subestações, por outro lado, precisam ter uma estimativa da produção em resolução horária de modo a evitar perdas elétricas e para que possam atender adequadamente a demanda por energia a qual sabe-se que varia ao longo do dia de maneira previsível e conhecida a partir de dados históricos de consumo por uma dada região.
 
-Atualmente existem metodologias bem estabelecidas na indústria para a estimativa do recurso eólico de longo prazo e da geração de energia de longo prazo. Elas se baseiam no fato de que, a longo prazo, a distribuição de probabilidade da velocidade do vento aproxima-se de uma distribuição de Weibull \cite{weibull} a qual é então convertida em uma distribuição de probabilidade de energia por meio de simulações pelo método de Monte Carlo \cite{portacopos}. Essa distribuição de densidade de probabilidade é a mais difundida na análise de dados de vento \cite{art13},  tendo sido utilizada para estimar tanto o recurso eólico \cite{art14} quanto a produção de energia \cite{art15}.
+%a sua viabilidade e maximizar a geração a partir de medições que estão sujeitas às diversas variáveis que definem o comportamento do vento no local tais como orografia, rugosidade e clima. Estes também devem considerar variáveis que afetam o desempenho de turbinas tais como temperatura, salinidade e presença de parques vizinhos. 
 
-Tais métodos, no entanto, não se aplicam a estimativas de curto prazo, pois, sob essa resolução temporal, o caráter estocástico do vento predomina não sendo possível reduzir o seu comportamento a uma distribuição de probabilidade estática. É necessário recorrer a outra abordagem para tal estimativa. O presente trabalho propõe a modelagem estocástica do processo físico que rege o comportamento do vento por meio de diferentes métodos, conhecidos e aplicados com sucesso na modelagem de outro processos estocásticos, em particular na área financeira. Tal modelagem permitiria obter uma estimativa da geração de energia em alta resolução temporal (horária, de 10 minutos ou até mesmo continua no tempo). Além disso o trabalho propõe a comparação com os valores de longo prazo obtidos por métodos de força bruta, comuns na indústria. A modelagem se baseará no cálculo de Ito, uma extensão dos métodos do cálculo para descrever processos estocásticos. Estudos dessa natureza geralmente recaem em equações diferenciais estocásticas não solúveis analiticamente. Dessa forma, recorre-se à solução numérica para finalmente encontrar a distribuição de probabilidade de produção de energia em alta resolução temporal.
+Atualmente existem metodologias bem estabelecidas na indústria para a estimativa do recurso eólico de longo prazo e da geração de energia de longo prazo, geralmente para um horizonte de 20 anos. Elas se baseiam no fato de que, a longo prazo, a distribuição de probabilidade da velocidade do vento aproxima-se de uma distribuição de Weibull \cite{weibull} a qual é então convertida em uma distribuição de probabilidade de energia por meio de uma curva de potência de uma determinada turbina. Essa distribuição de densidade de probabilidade é a mais difundida na análise de dados de vento \cite{art13},  tendo sido utilizada para estimar tanto o recurso eólico \cite{art14} quanto a produção de energia \cite{art15}.
 
- \textbf{Palavras-chave}: energia eólica, processo estocástico, cálculo de Ito, Monte Carlo, caos, processo de Wiener
+Tais métodos, no entanto, não se aplicam a estimativas de curto prazo, pois, sob essa resolução temporal, o caráter estocástico do vento predomina não sendo possível reduzir o seu comportamento a uma distribuição de probabilidade estática. É necessário recorrer a outra abordagem para tal estimativa. O presente trabalho propõe a modelagem estocástica do processo físico que rege o comportamento do vento por meio de diferentes métodos, conhecidos e aplicados com sucesso na modelagem de outro processos estocásticos, em particular na área financeira. Tal modelagem permite obter uma estimativa da geração de energia em tanto em resolução mensal quanto horária.
+
+ \textbf{Palavras-chave}: energia eólica, processo estocástico, modelos autoregressivos
 \end{resumo}
 
 % resumo em inglês
@@ -485,30 +476,70 @@ Tais métodos, no entanto, não se aplicam a estimativas de curto prazo, pois, s
 \addcontentsline{toc}{chapter}{Introdução}
 % ----------------------------------------------------------
 
-Vamo lá, pra dizer que comecei:
-
-Um modelo que combina tanto um caráter autogressivo quanto de média móvel pode ser descrito da seguinte forma:
-$$ y^{'}_{t} = c + \phi_{1}y^{'}_{t-1} + \dots + \phi_{p}y^{'}_{t-p} + \theta_{1}\varepsilon_{t-1} + \dots + \theta_{q}\varepsilon_{t-q} + \varepsilon_{t}$$
+%Tópicos que quero abordar eventualmente:
+%\begin{itemize}
+%\item Crescimento da energia eólica a nível nacional e mundial
+%\item Fatores que afetam a produção de energia eólica e o fator que será discutido nesse trabalho: velocidade do vento
+%\item Necessidade do cliente: prever em escala mensal, prever em escala horária
+%\item Diversos métodos foram testados
+%\item Visão geral sobre modelos autoregressivos: 
+%\item Períodos de baixa e alta variância (dia/noite) plot: GARCH
+%\item Mostrar uma curva de potência para explicar como será feita a conversão para energia
+%\item Vou analisar um local específico mas o estudo vale para qualquer local
+%\item Vou analisar em escala horária e mensal mas funciona? (testar) em 10 minutos
+%\end{itemize}
 
 %motivação energia renovável
 
-Ao contrário de outras fontes naturais de energia, tais como a energia hídrica ou solar, a energia eólica apresenta grande variabilidade \cite{thomas}, sendo, portanto, de maior dificuldade a sua previsão e
-adequado dimensionamento de recursos tanto para sua captação quanto distribuição. A construção e operação de um parque eólico é um investimento multimilionário. Dessa forma, é de suma 
-importância que o recurso eólico de um determinado local seja determinado com a maior exatidão possível e que se considere todas as restrições que possam ter qualquer efeito significativo sob tal estimativa.
+Ao contrário de fontes de energia tradicionais tais como petróleo ou carvão, o vento é uma fonte de energia limpa e renovável. A energia eólica é, em princípio, inesgotável, pois é função apenas da energia cinética das móleculas presentes na atmosfera, as quais, em última instância, estão em movimento, principalmente, devido a radiação solar e atração gravitacional entre corpos massivos que rege a dinâmica de movimento da Terra e consequentemente sua atmosfera. Ser inesgotável não significa que seja infinita. Existe um limite de quanta energia se pode extrair da atmosfera, no entanto, por ser renovável, essa energia é constante e naturalmente reabastecida.
+
+Diante da finitude das principais fontes de energia em uso no mundo, a geração de energia eólica, assim como de energia solar, tem crescido continuamente ao redor do mundo. Na imagem abaixo é possível constatar a tendência de diminuição do uso de fontes de energia não renováveis e aumento das renováveis, principalmente eólica e solar. Em 2017, na imagem a esquerda, a energia eólica era responsável por 8,1\% da matriz energética do país. Em 2018 esse número subiu para 9\% enquanto que quase todas as outras fontes recuaram.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{abe_2017_2018}
+	\caption{Comparação entre a composição da matriz energética brasileira no ano de 2017 (esquerda) e no ano de 2018 (direita)}
+	%.\\Fonte: Boletim anual de Geração Eólica disponível
+\end{figure}
+\FloatBarrier
+
+O Brasil conta com uma capacidade instalada de energia eólica de 12,76 GW em seus mais de 500 parques eólicos e figura mundialmente como 8º maior produtor, superando países desenvolvidos como o Canadá.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.6]{abe_maiores_produtores}
+	\caption{Ranking de capacidade eólica instalada acumulada}
+	%.\\Fonte: Boletim anual de Geração Eólica disponível
+\end{figure}
+\FloatBarrier
+
+O crescimento da captação de energia eólica no país vem crescendo constatemente, adicionando em média 2GW de capacidade instalada (máxima capacidade de produção) a cada ano desde 2013. Hoje essa fonte de energia é responsável, em média, por 11\% do abastecimento do país e 60\% do Nordeste.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{abe_evolucao_capacidade_instalada}
+	\caption{Evolução da capacidade instalada de parques eólicos no Brasil}
+\end{figure}
+\FloatBarrier
+
+A principal fonte de energia elétrica do país vêm de hidrelétricas. Em períodos de estiagem, essa fonte é complementada por termoelétricas, as quais usam combustíveis fósseis para gerar energia. O seu alto custo tem impacto direto no consumidor final que paga mais pela mesma energia. 
+
+A variabilidade do recurso eólico representa um dos maiores desafios ao seu aproveitamento. A previsão de que a maré será alta ou baixa é aceita como verdade sem mais questionamentos, enquanto que a previsão de que, devido ao movimento de massas de ar, provavelmente irá chover é encarada com forte suspeita, pois, ao contrário de outras fontes naturais de energia, tais como a energia hídrica ou solar, a energia eólica apresenta grande variabilidade \cite{thomas}, sendo, portanto, de maior dificuldade a sua previsão. Dessa forma, é de grande interesse que se entenda o seu comportamento e se desenvolva métodos para sua previsão.
+
+% e adequado dimensionamento de recursos tanto para sua captação quanto distribuição. A construção e operação de um parque eólico é um investimento multimilionário. Dessa forma, é de suma 
+%importância que o recurso eólico de um determinado local seja determinado com a maior exatidão possível e que se considere todas as restrições que possam ter qualquer efeito significativo sob tal estimativa.
 
 % GRÁFICO DA VARIABILIDADE DAS FONTES DE ENERGIA DA BÉLGICA AQUI
 
 % citar o meu livro de monte carlo quando mencionar estocástico ou monte carlo
 % citar referência para densidade do ar
 % imagem de caráter estocástico
-Os principais fatores que influem na geração de energia eólica são a densidade do ar e a velocidade do vento. A potência (em watts) gerada por uma turbina é dada pela equação \cite{atlas}:
+Os principais fatores que influem na geração de energia eólica são a densidade do ar e a velocidade do vento. A potência (em watts) gerada por uma turbina é dada pela equação \cite{atlas} a qual é fornecida por fabricantes de turbinas eólicas:
 
-\begin{equation}
+\begin{equation}\label{eq:1}
 	P = \frac{1}{2}\rho \frac{\pi D^2}{4}\nu^3C_p\eta
 \end{equation}
 
-%\begin{multline*}$$$$\end{multline*}
-%\begin{multline*}$$\end{multline*}
 
 \begin{flalign*}
 P &= \mbox{potência elétrica na altura do cubo rotor}\left[W\right]&&\\
@@ -521,22 +552,84 @@ C_p &= \mbox{coeficiente aerodinâmico de potência do rotor}\left[W\right]&&\\\
 
 O fato de a potência variar com o cubo da velocidade do vento evidencia a importância da determinação precisa dessa grandeza.
 
-Exceto pela velocidade do vento, os demais parâmetros são controlados ou apresentam pouca variabilidade como a densidade do ar, por exemplo, que é relativamente constante para um dado macroclima. A velocidade do vento, por outro lado, 
-tem caráter estocástico, ou seja, seu comportamento esta associado a um processo aleatório. O conhecimento do passado não permite determinar com absoluta certeza o seu comportamento futuro. No entanto, é possível produzir modelos matemáticos pelos quais se obtém estimativas satisfatórias.
+A conversão entre velocidade e potência é feita por uma curva de potência fornecida pelo fabricante da turbina utilizada. Ela representa a potência que seria gerada para cada velocidade incidente perpendicularmente às pás da turbina. Uma vez feita a previsão da velocidade do vento utilizar-se-a, neste trabalho, uma curva de potência genérica como a exibida abaixo para obter a previsão em energia ao invés de velocidade do vento. Observa-se que baixas velocidades de vento resultam em baixa produção de energia e que a velocidades muito altas a produção é constante. Para velocidades muito intensas a turbina é temporariamente desligada para evitar danos estruturais.
 
-Fenômenos estocásticos são comuns na natureza: o movimento errático que uma partícula macroscópica sofre ao ser 
-imersa num fluído (composto por partículas microscópicas) conhecido como movimento Browniano; o decaimento radiotivo de átomos em que não se sabe em qual momento dado átomo emitirá radiação (conhece-se apenas uma taxa característica de emissão). 
-Exemplos associados a atividade humana também são comuns sendo a evolução temporal do valor de ativos econômicos o exemplo mais marcante e para cujo entendimento se desenvolveu um arcabouço matemático sofisticado. Esse conhecimento pode ser utilizado para estudar quaisquer outros fenômenos estocásticos, tal como a velocidade do vento. O gráfico abaixo evidencia esse comportamento. Pode-se intuir que o gráfico segue o comportamento médio representado pela curva ajustada, mas devido ao caráter estocástico do vento não é possível afirmar qual será o valor de velocidade num intervalo de tempo posterior apenas olhando para os valores anteriores.
+% sob as condições às quais a turbina fora exposta para medição da curva de potência
 
 \begin{figure}[h]
     \centering
-	\includegraphics[width=\textwidth]{stochastic}
-	\caption{Série temporal de velocidade do vento que evidencia o caráter estocástico do vento. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{era5}.}
+	\includegraphics[width=\textwidth]{powercurve}
+	\caption{Curva de potência de uma turbina genérica. Fonte: \href{https://upload.wikimedia.org/wikipedia/commons/6/67/Powercurve.png}{Wikimedia Commons}}
 \end{figure}
 \FloatBarrier
 
+Na equação \ref{eq:1}, exceto pela velocidade do vento, os demais parâmetros são controlados ou apresentam pouca variabilidade como a densidade do ar, por exemplo, que é relativamente constante para um dado macroclima. A velocidade do vento, por outro lado, tem caráter fortemente estocástico, ou seja, seu comportamento esta associado a um processo aleatório. A sua previsão demanda o uso de modelos matemáticos que levem em conta tal comportamento.
+
+Fenômenos estocásticos são comuns na natureza: o movimento errático que uma partícula macroscópica sofre ao ser 
+imersa num fluído (composto por partículas microscópicas) conhecido como movimento Browniano; o decaimento radiotivo de átomos em que não se sabe em qual momento dado átomo emitirá radiação (conhece-se apenas uma taxa característica de emissão). 
+
+Exemplos associados a atividade humana também são comuns sendo a evolução temporal do valor de ativos econômicos o exemplo mais marcante e para cujo entendimento se desenvolveu um arcabouço matemático sofisticado. Esse conhecimento pode ser utilizado para estudar quaisquer outros fenômenos estocásticos. A imagem traz dois exemplos de séries estocásticas: uma série de dados de vento (esquerda) e uma série de dados financeira (direita). Os métodos desenvolvidos para estudar séries financeiras podem ser usado com sucesso para séries de velocidade do vento.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{wind_money}
+	\caption{À esquerda velocidade do vento em m/s para uma região no sul do Ceará e à direita o preço de fechamento das ações da google para 120 dias de 2013. Fonte: autoria própria, dados \cite{era5}.}
+\end{figure}
+\FloatBarrier
+
+Yule e Walker representaram uma grandeza estocástica como resultado de choques aleatórios descritos por um filtro linear aplicado em ruído branco:
+
+$$ v_{t} = \mu + a_t + \psi_{1}a_{t-1} + \psi_{2}a_{t-2} + \dots $$
+
+Essa ideia dá origem a modelos autoregressivos que descrevem a estrutura de séries temporais levando em conta termos anteriores da própria série. Box e Jenkins descrevem esse método como "deixar que os dados falem por eles próprios", ou seja, nenhuma variável exógena é empregada, apenas a própria série. Esse método tem sido empregado com sucesso para prever o comportamento futuro de séries temporais em diversas áreas. Diversas variações do modelo original foram desenvolvidas ao longo dos anos. O conjunto de todas essas variações são denominadas modelos ARIMA, um acrônimo do inglês \textit{autogressive integrated moving average}, que significa modelo autogressivo (AR) integrado (I) de média móvel (MA).
+
+%Um modelo que combina tanto um caráter autogressivo quanto de média móvel pode ser descrito da seguinte forma:
+%$$ y^{'}_{t} = c + \phi_{1}y^{'}_{t-1} + \dots + \phi_{p}y^{'}_{t-p} + \theta_{1}\varepsilon_{t-1} + \dots + \theta_{q}\varepsilon_{t-q} + \varepsilon_{t}$$
+
 \cleardoublepage
-\part{TDEF 2}
+\part{Estudo de caso}
+
+\chapter{Caracterização da região}
+
+De modo a desenvolver as ideias desse trabalho escolheu-se arbitrariamente uma região localizada no estado do Ceará. Optou-se pela região nordeste por ser a região onde há mais investimentos em energia eólica e que responde pela maioria dos parques em operação no país. Os métodos desenvolvidos são, no entanto, aplicáveis a qualquer região, pois têm como entrada apenas uma série temporal.
+
+A região de interesse encontra-se numa chapada elevada, um local com topografia muito favorável a instalação de um parque eólico sabe-se da dinâmica de fluídos que o escoamento é acelerado quando exposto a um diferencial de elevação. Na imagem abaixo pode-se perceber o quão elevada a chapada é em relação ao seu redor.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{elevation2}
+	\caption{Chapada}
+\end{figure}
+\FloatBarrier
+
+Detalhes da topografia da região pode ser visualizados na imagem abaixo a qual exibe em detalhes a elevação por meio de linhas de contorno além dos declives e a rosa dos ventos. Uma região plana facilita as simulações computacionais necessárias à extrapolação do recurso eólico nas posições de torres de medição às posições de cada turbina. 
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{arcmap}
+	\caption{Variação da elevação na direção preferencial de escoamento do vento.}
+\end{figure}
+\FloatBarrier
+
+Na camada da atmosfera próxima ao solo, a velocidade do vento aumenta com a altura conforme uma lei de potência empírica:
+
+\begin{equation}
+\frac{v}{v_r} = \left(\frac{h}{h_r}\right)^\alpha
+\end{equation}
+
+\begin{flalign*}
+v &= \mbox{velocidade do vento à altura } h&&\\
+v_r &= \mbox{velocidade do vento à altura de referência } h_r&&\\\nonumber
+\alpha &= \mbox{coeficiente de cisalhamento, parâmetro estimado a partir dos dados}&&\\\nonumber 
+\end{flalign*}
+
+Em suma, a partir da imagem acima, é possível determinar as melhores posições para se colocar turbinas de um parque eólico:
+\begin{itemize}
+\item Na chapada, onde a velocidade do vento é maior devido a sua elevação de acordo com a lei de potência
+\item Nas zonas de baixa declividade para facilitar as simulações computacionais
+\item Nas bordas devido ao diferencial de elevação que causa aceleração do vento
+\item Orientadas a aproximadamente 150º em relação do norte verdadeiro de modo a captar o vendo oriundo de sua direção preferencial
+\end{itemize}
 
 \chapter{A série temporal modelo}
 
@@ -546,15 +639,15 @@ A grandeza de interesse para esse trabalho é a velocidade do vento a 100 m de a
 
 %Quando necessário as previsões de velocidade podem ser extrapoladas verticalmente por meio de uma lei de potência
 
-A série ERA 5, assim como as outras mencionadas, possuem dados para todo o globo, divindo-o em uma rede de nós com resolução de 30 km x 30 km em latitude e longitude respectivamente. A imagem abaixo exemplifica como esses nós são dispostos. 
+A série ERA 5, assim como as outras mencionadas, possuem dados para todo o globo, divindo-o em uma rede de nós com resolução de 30 km x 30 km em latitude e longitude respectivamente. A imagem abaixo exemplifica como esses nós são dispostos na região de interesse. 
 
 %A região nordeste é muito atrativa para construção de parques eólicos devido a alta velocidade média do vento. 
 
 \begin{figure}[h]
     \centering
-	\includegraphics[width=\textwidth]{rs_era5_nodes2}
-	\caption{Alguns nós da série ERA 5 ao sul de Porto Alegre, Brasil.\newline Google earth V 7.3.2.5776. (14 de Dezembro, 2015). Rio Grande do Sul, Brasil.
-\ang{30} 25\textquotesingle\ 50,42\textquotesingle\textquotesingle\ S, \ang{51} 34\textquotesingle\ 47,07\textquotesingle\textquotesingle\ W, Eye alt 195,76 km.\newline Image Landsat / Copernicus \textcopyright\ Google 2018.}
+	\includegraphics[width=\textwidth]{era5nodes}
+	\caption{Alguns nós da série ERA 5 ao sul do Ceará, Brasil.\newline Google earth V 7.3.2.5776. (14 de Dezembro, 2015). Rio Grande do Sul, Brasil.
+\ang{7} 14\textquotesingle\ 11,54\textquotesingle\textquotesingle\ S, \ang{40} 04\textquotesingle\ 12,31\textquotesingle\textquotesingle\ W, Eye alt 1808,45 km.}
 \end{figure}
 \FloatBarrier
 
@@ -562,33 +655,61 @@ Cada nó cobre uma vasta região. A velocidade reportada para cada nó é uma m�
 
 %de tal modo que dados de velocidade do vento, coletados continuamente, .
 
-A maioria dos empreendimentos em energia eólica no país encontra-se na região nordeste, dessa forma, escolheu-se para esse trabalho modelar a previsão do recurso eólico para uma região localizada no sul do estado do Ceará.
 
-Os dados são fornecidos em base horária e compreendem o período de Janeiro de 2000 a Janeiro de 2019. O começo de qualquer análise de séries temporais se dá pelo gráfico dos valores que assume ao longo do tempo. Por meio desse gráfico é possível identificar qualitativamente tendências, sazonalidade, ciclicidade, valores atípicos, caráter estacionário e comportamento da variância:
+Os dados são fornecidos em base horária e compreendem o período de Janeiro de 2000 a Janeiro de 2019. 
 
-%\begin{figure}[h]
-%    \centering
-%	\includegraphics[width=\textwidth]{dados_inicio}
-%	\caption{dados}
-%\end{figure}
-%\FloatBarrier
+\chapter{Caracterização dos dados}
 
-\chapter{Caracterização da região}
-
-O nó escolhido encontra-se numa chapada elevada. Na imagem abaixo pode-se perceber o quão elevada a chapada é em relação ao seu redor.
+O começo de qualquer análise de séries temporais se dá pelo gráfico dos valores que assume ao longo do tempo. Por meio desse gráfico é possível identificar qualitativamente tendências, sazonalidade, ciclicidade, valores atípicos, caráter estacionário e comportamento da variância:
 
 \begin{figure}[h]
     \centering
-	\includegraphics[width=\textwidth]{elevation}
+	\includegraphics[width=\textwidth]{entire_series_hourly_basis.png}
+	\caption{Velocidade do vento registrada por satélite na região de interesse nos anos de 2017 e 2018}
+\end{figure}
+\FloatBarrier
+
+Apenas pela análise visual é possível perceber que a velocidade tem máximos os meses de inverno e mínimos nos de verão, que há sazonalidade anual. A série não aparenta ter deriva, oscila ao longo de um valor médio. Por apresentar sazonalidade a série não é estacionária. Como os métodos apresentados neste trabalho tomam como premissa que a série de entrada é estacionária, é necessário transformá-la previamente em uma série estacionária e ser capaz de fazer o caminho reverso após a sua previsão. Como discutido em REF isso pode ser feito por uma transformação de Box-Cox. Nessa escala não é possível afirmar algo conclusivo sobre a variância da série.
+
+\section{Distribuição de probabilidades}
+
+O histograma de velocidades exibido abaixo indica que a série não segue uma distribuição normal e que uma distribuição de cauda longa à direita seria mais adequada. 
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{normal_overlay}
+	\caption{Histograma de velocidades do nó noroeste da série de dados modelo.}
+\end{figure}
+\FloatBarrier
+
+Por meio de do gráfico de Cullen e Frey é possível afirmar que a distribuição de probabilidades que melhor descreve os dados se aproxima de uma distribuição beta:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{cullen}
+	\caption{Gráfico de Cullen e Frey para os dados do nó noroeste da série de dados modelo.}
+\end{figure}
+\FloatBarrier
+
+\section{Sazonalidade}
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{windrose}
+	\caption{Rosa dos ventos}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{season_plot}
 	\caption{Chapada}
 \end{figure}
 \FloatBarrier
 
-Detalhes da topografia da região pode ser visualizados na imagem abaixo:
-
 \begin{figure}[h]
     \centering
-	\includegraphics[width=\textwidth]{elevation2}
+	\includegraphics[width=\textwidth]{season_plot_polar}
 	\caption{Chapada}
 \end{figure}
 \FloatBarrier
@@ -730,8 +851,6 @@ Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha
 
 \section{Box-Jenkins}
 
-\section{Modelo Autoregressivo AR1}
-
 %hat over predicted
 %T+1|T
 %
@@ -740,6 +859,40 @@ Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha
 %a diferença entre uma flutuação aleatória que não ocorrerá novamente e um padrão que deve ser modelado e extrapolado para o futuro
 %Uma previsão nunca é estática, ela captura o modo pelo qual os dados estão mudando. Assume-se que esse modo é constante no tempo. É possível ainda reavaliar o modelo para que ele também se adapte a mudanças no modo 
 %quanto mais longinquo o horizonte de previsão, quantas horas, dias, meses, anos no futuro, maior a incerteza na previsão e portanto mais abertos os intervalos de confiança
+
+\section{Modelo Autoregressivo Variável}
+
+Ao longo do estudo observou-se que para diferentes períodos da série de dados, diferentes modelos ARIMA apresentavam melhor potencial preditivo não sendo possível elencar um único modelo que capturasse a estrutura da série de forma universal. Duas soluções para esse problema foram exploradas. Uma delas é optar por outro modelo. A outra, abordada nessa seção, é permitir que os parâmetros ARIMA fossem adaptativos, sendo recalculados, a medida que mais dados são coletados.
+%Uma possível solução para 
+Essa é uma estratégia interessante por vários motivos. É possível restimar os parâmetros de um modelo ARIMA rapidamente de forma que a previsão esteja disponível ininterruptamente mesmo em escalas temporais da ordem de minutos. Qualquer mudança estrutural na grandeza física, tal como devido ao aumento da temperatura média do plano, é automaticamente capturada pelo modelo.
+
+A imagem abaixo exibe a evolução temporal dos graus de liberdade do modelo em um espaço de fase sendo possível entender como os parâmetros variam ao longo do tempo e consequentemente como a estrutura dos dados (limitada pela representação por um modelo ARIMA) varia. O tempo é representado pela escala em cor. O parâmetro de diferenciação, d, do modelo assume durante quase todo o período o valor 1 e portanto exibe-se apenas os parâmetros p e q.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{var_arima}
+	\caption{Evolução dos parâmetros p e q de um modelo ARIMA ao longo do tempo.}
+\end{figure}
+\FloatBarrier
+
+Modelos ARIMA são definidos pelos parâmetros $p$,$d$,$q$. O parâmetro $p$ representa o número de termos anteriores da série que influenciam o valor atual. Os pesos com que cada termo anterior contribui para a estimativa do valor seguinte são parâmetros a serem estimados por regressão linear.
+O parâmetro q tem um papel análogo ao do parâmetro q. Ele refere-se a inclusão dos q erros anteriores na estimativa do valor seguinte.
+
+Os parâmetros assumem apenas valores inteiros. Para facilitar a visualização da evolução temporal adicionou-se um ruído aleatório a cada ponto de modo a evitar a sua sobreposição. Fica claro que no início do período de 160 horas o principal modelo ARIMA é o ARIMA(2,1,1) enquanto que ao final do período o modelo preferencial é o ARIMA(1,1,3). Também observa-se que diversos outros modelos são assumidos com menos frequência.
+
+O resultado é superior ao uso de um único modelo ARIMA para toda a série:
+
+%No entanto, apesar do forte apelo intuitivo e melhora no poder preditivo
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{var_result}
+	\caption{Evolução dos parâmetros p e q de um modelo ARIMA ao longo do tempo.}
+\end{figure}
+\FloatBarrier
+
+\section{GARCH}
+
 
 \cleardoublepage
 \part{Análise de dados de vento}

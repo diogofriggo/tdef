@@ -1,6 +1,13 @@
 library(forecast)
 library(tidyverse)
 library(lubridate)
+library(tidyverse)
+library(forecast)
+library(fpp)
+library(fpp2)
+require(gridExtra)
+library(fitdistrplus)
+library(logspline)
 
 setwd('/home/diogo/Jupyter/tdef')
 path <- '/home/diogo/Jupyter/tdef/Res025_ERA5.txt'
@@ -20,6 +27,57 @@ data[(nrow(data)-365*24*2):nrow(data),] %>%
   labs(x = 'Tempo (hora)', y = 'Velocidade (m/s)') +
   ggtitle('Velocidade do vento em base horária')
 ggsave('thesis/images/entire_series_hourly_basis.png')
+
+#<WIND, MONEY PLOT>
+data %>% 
+  group_by(year, month, day) %>% 
+  summarize(speed = mean(speed, na.rm = T)) -> daily.data
+
+money <- goog[(length(goog)-120):length(goog)] %>% ts()
+plot2 <- autoplot(money) +
+  xlab("Dia") + ylab("Preço (US$)") +
+  ggtitle("Ações da Google")
+
+wind <- daily.data$speed
+plot1 <- wind[(length(wind)-length(money)):length(wind)] %>% ts() %>% autoplot() +
+  xlab("Dia") + ylab("Velocidade (m/s)") +
+  ggtitle("Velocidade do Vento")
+
+grid.arrange(plot1, plot2, ncol=2)
+ggsave('thesis/images/wind_money.png', arrangeGrob(plot1, plot2, ncol=2))
+#</WIND, MONEY PLOT>
+
+#<WEIBULL>
+wind <- data$speed
+wind2 <- wind[(length(wind)-365*24):length(wind)]
+
+data %>% 
+  ggplot(aes(ne_ws)) + 
+  geom_histogram(binwidth=0.3, fill="blue", alpha=.2, col='darkgrey') + 
+  xlab('Velocidade (m/s)') + ylab('Frequência')
+ggsave('weibull_histogram.png')
+
+g = data$ne_ws
+m<-mean(g)
+std<-sqrt(var(g))
+hist(g, density=20, breaks=100, prob=TRUE, 
+     xlab="Velocidade (m/s)", ylab='Densidade', ylim=c(0, 0.2), 
+     main='Curva normal superposta ao histograma de velocidades')
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE, yaxt="n")
+ggsave('thesis/images/normal_overlay.png')
+
+descdist(wind2, discrete = FALSE)
+ggsave('thesis/images/cullen.png')
+fit.weibull <- fitdist(wind2, "weibull")
+fit.norm <- fitdist(wind2, "norm")
+plot(fit.norm)
+plot(fit.weibull)
+
+#fit.weibull <- fitdistr(, "weibull")
+#plot(fit.weibull)
+#fit.norm <- fitdist(x, "norm")
+#</WEIBULL>
 
 data[(nrow(data)-365*24*2):nrow(data),] %>% 
   group_by(day) %>% 
@@ -179,6 +237,11 @@ ggsave(paste('thesis/images/crossh', h, '.png', sep=''))
 #o o - - - - * * o o o o
 #o o o o - - - - * * o o
 #o o o o o o - - - - * *
+
+my_accuracy <- function(forecast, observed){
+  accuracy(forecast, observed[(length(observed)-length(forecast)+1):length(observed)])
+}
+
 plot_model <- function(data, order, window.size, test.size=NULL, forecast.horizon=1, singular='hora', plural='horas'){
   if(is.null(test.size)){
     test.size <- length(data)-window.size
@@ -212,6 +275,8 @@ plot_model <- function(data, order, window.size, test.size=NULL, forecast.horizo
                 lower95=c(nans, forecast.lower95), upper95=c(nans, forecast.upper95))
   df2 <- df1[(length(data)+1):length(ggplot.data),]
   
+  print(my_accuracy(forecast.mean, data))
+  
   base <- if (forecast.horizon==1) singular else plural
   model.desc <- paste('ARIMA(', order[1], ',', order[2], ',', order[3], ')', sep='')
   ggplot(data=df2, aes(x=time)) + 
@@ -226,6 +291,9 @@ plot_model <- function(data, order, window.size, test.size=NULL, forecast.horizo
 
 plot_model(data$speed, c(1,1,0), test.size=24*7*2, window.size=24*7, forecast.horizon=2)
 
+#ME      RMSE      MAE     MPE     MAPE
+#Test set 0.03306698 0.7544885 0.538832 3.06541 17.27658
+
 monthly.data <- data %>% group_by(year, month) %>% 
   summarize(speed = mean(speed, na.rm = T))
 
@@ -237,3 +305,4 @@ plot_model(monthly.data$speed, c(1,1,0), window.size=12, forecast.horizon=2, sin
 #do a function like the above that work on a monthly basis CHECK
 #do a function that uses garch DOING
 #todo do cross validation manually (separate function) TODO
+

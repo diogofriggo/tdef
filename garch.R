@@ -68,7 +68,7 @@ hourly.data %>% length() #169
 #forecast <- ugarchforecast(fit, n.roll = 169, out.sample = 30000200)
 #forecast %>% plot(which=1)
 
-forecast.length <- 24*20
+forecast.length <- 24*10
 
 modelroll <- ugarchroll (
   spec=ugarch_spec, data=hourly.data, n.ahead = 1, forecast.length = forecast.length,
@@ -87,10 +87,77 @@ x <- c(1:length(measured), 1:length(myforecast))
 #y <- c(measured, forecast)
 #color <- c(rep('measured', length(measured)), rep('forecast', length(forecast)))
 df <- tibble(x1=1:length(measured),y1=measured,x2=1:length(myforecast),y2=myforecast)
-df %>% ggplot(aes(x)) + 
-  geom_line(aes(x=x1, y=y1, color='measured')) +
-  geom_line(aes(x=x2, y=y2, color='forecast'))
+
+ggplot(data=df) + 
+  geom_line(aes(x=x1, y=y1, color='measured'), size=0.6) +
+  geom_line(aes(x=x2, y=y2, color='forecast'), size=0.9)+
+  #scale_color_manual(values = c('gold','black')) + 
+  labs(x='Tempo', y='Velocidade (m/s)') + 
+  ggtitle('title')
+
+print(my_accuracy(myforecast, measured))
+
 #x %>% ts() %>% autoplot()
 
 #str(modelroll@forecast)
 
+#TODO: make monthly garch 
+#TODO: put garch plot into standard form
+#TODO: make plot of financial data side-by-side with wind data
+#TODO: make function to calculate forecast accuracy
+#TODO: make ar, ma, arima prior to var arima and garch
+#TODO: characterization: distribution, skewness, weibull test
+#TODO: characterization: fourier transform
+#TODO: 
+
+
+
+
+era5 <- read_table2(path, skip=9, comment="--")
+era5 %>% 
+  tail(-3) %>% 
+  mutate(stamp=with_tz(ymd_hms(paste(Date, `Time(UTC)`)), tzone='Brazil/East')) %>% 
+  mutate(year=year(stamp), month=month(stamp,label=TRUE, abbr=FALSE)) %>% 
+  group_by(year, month) %>% 
+  summarize(speed = mean(c_ws, na.rm = T)) -> monthly.data
+monthly.data <- ts(monthly.data$speed, start=c(2000,1), frequency=12)
+monthly.data %>% autoplot()
+
+ugarch_spec <- ugarchspec(variance.model = list(model='gjrGARCH', garchOrder = c(1,1)), 
+                          mean.model = list(armaOrder = c(1,0), include.mean = T),
+                          distribution.model =  "sstd")
+ugarch_spec
+#fit <- ugarchfit(spec = ugarch_spec, data = hourly.data)#, solver = 'hybrid')
+#defaults: ugarchforecast(fitORspec, data = NULL, n.ahead = 10, n.roll = 0, out.sample = 0)
+monthly.data %>% length() #169
+#forecast <- ugarchforecast(fit, n.roll = 169, out.sample = 30000200)
+#forecast %>% plot(which=1)
+
+forecast.length <- 36
+
+modelroll <- ugarchroll (
+  spec=ugarch_spec, data=monthly.data, n.ahead = 1, forecast.length = forecast.length,
+  n.start = NULL, refit.every = 4, refit.window = c("recursive"),
+  window.size = NULL, solver = "hybrid", fit.control = list(),
+  solver.control = list(), calculate.VaR = F, VaR.alpha = c(0.05, 0.01),
+  cluster = NULL, keep.coef = F
+)
+
+#modelroll %>% plot(which=3)
+#str(modelroll)
+measured <- monthly.data[(length(monthly.data)-4*forecast.length):length(monthly.data)-1]
+myforecast <- modelroll@forecast$density[,'Mu']
+myforecast <- c(rep(NA, length(measured)-length(myforecast)), myforecast)
+x <- c(1:length(measured), 1:length(myforecast))
+#y <- c(measured, forecast)
+#color <- c(rep('measured', length(measured)), rep('forecast', length(forecast)))
+df <- tibble(x1=1:length(measured),y1=measured,x2=1:length(myforecast),y2=myforecast)
+
+ggplot(data=df) + 
+  geom_line(aes(x=x1, y=y1, color='measured'), size=0.6) +
+  geom_line(aes(x=x2, y=y2, color='forecast'), size=0.9)+
+  #scale_color_manual(values = c('gold','black')) + 
+  labs(x='Tempo', y='Velocidade (m/s)') + 
+  ggtitle('title')
+
+print(my_accuracy(myforecast, measured))
