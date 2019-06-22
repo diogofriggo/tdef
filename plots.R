@@ -28,6 +28,51 @@ data[(nrow(data)-365*24*2):nrow(data),] %>%
   ggtitle('Velocidade do vento em base horária')
 ggsave('thesis/images/entire_series_hourly_basis.png')
 
+data[(nrow(data)-365*24*2):nrow(data),] %>% 
+  mutate(time=as_date(time), speed=c(0,diff(speed))) %>% 
+  ggplot() + geom_line(aes(time, speed)) + 
+  scale_x_date(date_labels = "%b %y", date_breaks = "month") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  labs(x = 'Tempo (hora)', y = 'Velocidade (m/s)') +
+  ggtitle('Velocidade do vento em base horária')
+ggsave('thesis/images/entire_series_hourly_basis_seasonless.png')
+
+data[(nrow(data)-365*24*2):nrow(data),] %>% 
+  mutate(time=as_date(time), speed=c(rep(0,12),diff(speed, lag=12))) %>% 
+  ggplot() + geom_line(aes(time, speed)) + 
+  scale_x_date(date_labels = "%b %y", date_breaks = "month") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  labs(x = 'Tempo (hora)', y = 'Velocidade (m/s)') +
+  ggtitle('Velocidade do vento em base horária')
+ggsave('thesis/images/entire_series_hourly_basis_seasonless_boxcox.png')
+
+kpss.test(data[(nrow(data)-24*7*3):nrow(data),]$speed)
+data[(nrow(data)-24*7*3):nrow(data),]$speed %>% ndiffs()
+
+data[(nrow(data)-365*24*2):nrow(data),]$speed %>% diff(lag=12) %>% 
+kpss.test(data[(nrow(data)-365*24*2):nrow(data),]$speed)
+adf.test(data[(nrow(data)-365*24*2):nrow(data),]$speed, alternative = "stationary")
+
+data[(nrow(data)-365*24*2):nrow(data),]$speed %>% ndiffs()
+BoxCox.lambda(data[(nrow(data)-365*24*2):nrow(data),]$speed %>% ts())
+
+data[(nrow(data)-365*24*2):nrow(data),]$speed %>% diff(order=2) %>% BoxCox(lambda = 1.18) %>% ts() %>% autoplot()
+ggsave('thesis/images/boxcox.png')
+
+png(file='thesis/images/long_memory.png')
+data[(nrow(data)-365*24*2):nrow(data),]$speed %>% diff() %>% ts %>% ggtsdisplay()
+dev.off()
+data[(nrow(data)-365*24*2):nrow(data),]$speed %>% diff() %>% ts %>% Acf(lag.max=400) %>% autoplot()
+ggsave('thesis/images/long_memory_lagmax.png')
+
+week_data <- data[(nrow(data)-24*7*3):nrow(data),]$speed %>% diff() %>% ts()
+plot1 <- data[(nrow(data)-24*7*3):nrow(data),]$speed %>% ts() %>% autoplot()
+plot2 <- week_data %>% autoplot()
+ggsave('thesis/images/last3weeks.png', arrangeGrob(plot1, plot2))
+
+week_data %>% ggtsdisplay()
+ggsave('thesis/images/last3weeks_acf.png', arrangeGrob(plot1, plot2))
+
 #<WIND, MONEY PLOT>
 data %>% 
   group_by(year, month, day) %>% 
@@ -50,29 +95,40 @@ ggsave('thesis/images/wind_money.png', arrangeGrob(plot1, plot2, ncol=2))
 #<WEIBULL>
 wind <- data$speed
 wind2 <- wind[(length(wind)-365*24):length(wind)]
-
+data
 data %>% 
-  ggplot(aes(ne_ws)) + 
+  ggplot(aes(nw_ws)) + 
   geom_histogram(binwidth=0.3, fill="blue", alpha=.2, col='darkgrey') + 
   xlab('Velocidade (m/s)') + ylab('Frequência')
 ggsave('weibull_histogram.png')
 
-g = data$ne_ws
+png('thesis/images/normal_overlay.png')
+g = data$nw_ws
 m<-mean(g)
 std<-sqrt(var(g))
-hist(g, density=20, breaks=100, prob=TRUE, 
+hist(g, density=20, breaks=20, prob=TRUE, 
      xlab="Velocidade (m/s)", ylab='Densidade', ylim=c(0, 0.2), 
      main='Curva normal superposta ao histograma de velocidades')
 curve(dnorm(x, mean=m, sd=std), 
       col="darkblue", lwd=2, add=TRUE, yaxt="n")
-ggsave('thesis/images/normal_overlay.png')
+dev.off() 
 
 descdist(wind2, discrete = FALSE)
 ggsave('thesis/images/cullen.png')
+
 fit.weibull <- fitdist(wind2, "weibull")
-fit.norm <- fitdist(wind2, "norm")
-plot(fit.norm)
+fit.weibull
+ks.test(wind2, "pweibull", scale=fit.weibull$estimate[2], shape=fit.weibull$estimate[1])
 plot(fit.weibull)
+
+fit.norm <- fitdist(wind2, "norm")
+fit.norm
+ks.test(wind2, "pnorm", mean=mean(wind2), sd=sd(wind2))
+plot(fit.norm)
+
+install.packages('OptInterim')
+library(OptInterim)
+weibull.plot(c(1,2,3,4))
 
 #fit.weibull <- fitdistr(, "weibull")
 #plot(fit.weibull)
@@ -286,10 +342,23 @@ plot_model <- function(data, order, window.size, test.size=NULL, forecast.horizo
     scale_fill_manual(values=c('#7D7DEF', '#C3C3F6'), name="fill") +
     scale_color_manual(values = c('gold','black')) + 
     labs(x='Tempo', y='Velocidade (m/s)') + 
-    ggtitle(paste('Previsão de', test.size, plural, 'com passos de', forecast.horizon, base, 'utilizando', model.desc, 'com janela móvel de', window.size, plural))
+    ggtitle(paste('Previsão de', test.size, plural, 'passo=', forecast.horizon, base, ',', model.desc, 'com janela', window.size, plural))
 }
 
-plot_model(data$speed, c(1,1,0), test.size=24*7*2, window.size=24*7, forecast.horizon=2)
+week_data <- data[(nrow(data)-24*7*3):nrow(data),]$speed %>% diff() %>% ts()
+Arima(week_data, order=c(6,1,3)) %>% autoplot()
+ggsave('thesis/images/conds.png')
+Arima(week_data, order=c(1,1,1)) %>% autoplot()
+Arima(week_data, order=c(1,1,1)) %>% autoplot()
+Arima(week_data, order=c(2,1,2)) %>% autoplot()
+Arima(week_data, order=c(2,1,3)) %>% autoplot()
+
+p1 <- plot_model(data$speed, c(1,1,1), test.size=24*7*2, window.size=24*7, forecast.horizon=1)
+p2 <- plot_model(data$speed, c(2,1,1), test.size=24*7*2, window.size=24*7, forecast.horizon=1)
+ggsave('thesis/images/arima12.png', arrangeGrob(p1, p2))
+p3 <- plot_model(data$speed, c(1,1,2), test.size=24*7*2, window.size=24*7, forecast.horizon=1)
+p4 <- plot_model(data$speed, c(2,1,3), test.size=24*7*2, window.size=24*7, forecast.horizon=1)
+ggsave('thesis/images/arima34.png', arrangeGrob(p3, p4))
 
 #ME      RMSE      MAE     MPE     MAPE
 #Test set 0.03306698 0.7544885 0.538832 3.06541 17.27658

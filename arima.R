@@ -42,7 +42,7 @@ data %>%  diff() %>% ggtsdisplay(lag.max=100)
 data %>%  diff(lag=365.25*24) %>% ggtsdisplay(lag.max=100)
 #data <- msts(data, seasonal.periods=c(24, 168, 8766))
 data <- diff(data, lag=365.25*24)
-BoxCox.lambda(data)
+#BoxCox.lambda(data)
 data <- BoxCox(data, lambda = 1.030897)
 data
 data %>% ggtsdisplay()
@@ -186,7 +186,7 @@ regmatches("ARIMA(2,1,3)",regexpr("ARIMA(\\d,\\d,\\d)",txt))
 
 tibble(time=1:length(p), p=p, d=d, q=q) %>% 
   ggplot(aes(as.integer(p), as.integer(q))) +
-  geom_jitter(aes(colour=time, size=time), width=0.3, height=0.3) +
+  geom_jitter(aes(colour=time), width=0.3, height=0.3, size=2) +
   #geom_jitter(aes(colour=time), width=0.3, height=0.3) + 
   #geom_path(aes(colour=time), position=position_jitter()) +
   #scale_color_gradientn(colours=c("navyblue", "blue", "darkmagenta", "darkorange1"))
@@ -195,7 +195,8 @@ tibble(time=1:length(p), p=p, d=d, q=q) %>%
   #scale_color_gradientn(limits = c(1,170), colours=colours, breaks=b, labels=format(b))
   #scale_size_continuous(guide = FALSE) +
   scale_size(range = c(1, 5), guide=F) +
-  scale_color_gradientn(colours = rainbow(5))
+  scale_color_gradientn(colours = rainbow(5))+
+  labs(x = 'ARIMA p', y='ARIMA q', color='Tempo (h)')
 
 ggsave('thesis/images/var_arima.png')
 

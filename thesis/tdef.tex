@@ -1,4 +1,4 @@
-%% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
+ %% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
 %% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/ 
 %%
 %% This work may be distributed and/or modified under the
@@ -720,44 +720,6 @@ Por meio de do gráfico de Cullen e Frey é possível afirmar que a distribuiç�
 %toda a série 12x24
 %rosa dos ventos
 %ggseasonplot polar
-
-\chapter{Time Series Analysis}
-
-Este trabalho faz uso de um modelo linear estocástico que tem como hipótese que a série temporal sob análise é gerada por uma combinação de choques aleatórios. Essa hipótese foi incialmente proposta por Yule e Walker e extendida por diversos outros autores.
-Na literatura esse modelo é conhecido como modelo autoregressivo com média movel (ARMA, do inglês autoregressive moving-average)
-%parsimony
-
-Um processo estocástico pode ser visto como o resultado de um filtro linear aplicado em ruído branco $a_t$. 
-rodapé: Ruído branco é definido como um signal aleatório o qual tem a mesma intensidade para qualquer frequência [fonte].
-
-$$ z_t = \mu + a_t + \psi_1a_{t-1} + \psi_1a_{t-2} + \dots $$
-$$ z_t = \mu + a_t + \sum_{j=1}^{\infty}\psi_1a_{t-1} $$
-
-Ruído branco tem média zero e variância constante. 
-
-\chapter{Regime estacionário}
-
-Um processo estocástico é dito estritamente estacionário se o deslocamento da origem temporal não altera suas propriedades, ou seja, a distribuição conjunta de probabilidades calculada para o sequência de $m$ medições $z_1,z_2,\dots,z_m$ tomadas nos tempos $t_1, t_2, \dots, t_m$ é a mesma àquela calculada em $t_{1+k}, t_{2+k}, \dots, t_{m+k}$ para as m medições $z_{1+k},z_{1+k},\dots,z_{m+k}$. $k\in\mathbb{Z}$ pode assumir tanto valores positivos quanto negativos, isto é, o deslocamento temporal pode ser tanto positivo quanto negativo. Dessa forma, 
-um processo estacionário é caracterizado por uma distribuição de probabilidades que não varia no tempo. O modelo autoregressivo com média móvel utilizado neste trabalho toma essa propriedade como hipótese para o seu desenvolvimento, portanto, se faz fundamental garantir que a série de entrada satisfaça tal hipótese.
-
-\chapter{Janela de dados}
-
-%zoom suficiente para ser estacionário
-%zoom suficiente para eliminar sazonalidade
-
-\chapter{Mensurando a qualidade da previsão}
-
-\chapter{Modelo Autoregressivo (AR)}
-
-\chapter{Forecasting: Principles and Practice}
-
-%R
-%To cite the online version of this book, please use the following: Hyndman, R.J., & Athanasopoulos, G. (2018) Forecasting: principles and practice, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on <current date>.
-
-Qualquer quantidade que seja observada cronologicamente é dita uma série temporal. Exemplos incluem: o preço diário das ações da Google, a quantidade mensal de chuva no Rio Grande do Sul, a produção anual de vinhos na serra gaúcha. Neste trabalho a série de interesse é de velocidade média do vento a 100 m de altura do solo no sul do estado do Ceaŕa. Os dados são coletados por satélite e são disponibilizados em base horária no fuso horário GMT. 
-%O centro responsável pela coleta, processamento e divulgação dos dados tem tempo hábil de disponibilizar apenas 
-%este trabalho concentra-se em séries temporais e não cross-sectional.... Apenas regularmente espaçado
-
 \section{Horizonte de previsão}
 
 O horizonte de previsão é variável. Ele depende do propósito para o qual a previsão será utilizada. Alguns parques eólicos no país fazem acordos mensais sobre a energia que será entregue a rede. Nesse caso é de grande utilidade uma previsão de quanta energia será produzida no mês seguinte. A previsão minutal ou horária é, nesse caso, pouco relevante.
@@ -785,6 +747,47 @@ Existem diversos métodos para previsão de de séries temporais. Ao longo do de
 O método escolhido foi o Box-Jenkins SARIMA.
 Cada modelo assume uma série de hipóteses sobre o comportamento do que se deseja prever e possui um conjunto de parâmetros que precisam ser estimados para tal propósito. Para o modelo escolhido uma das hipóteses é de que os dados possuem autocorrelação, isto é, o valor atual depende dos n valores que o antecedem: se a velocidade foi alta um instante atrás é provável que ela seja alta agora, se no momento anterior o regime foi turbulento, é provável que no momento seguinte ele permaneça turbulento. Essa hipótese corresponde ao caráter autoregressivo (AR) do modelo. Outra hipótese do modelo é de que há autocorrelação não apenas em valores passados mas também nos erros passados. Essa hipótese corresponde ao caráter de média móvel (MA) do modelo. A interpretação dessa hipótese não é tão óbvia mas seu uso se justifica pelo fato de que um processo AR com infinitos termos pode ser descrito por um processo MA com finitos termos e vice-versa. No contexto de séries temporais o princípio da parsimônia dita que dentre os modelos que  caracterizem uma série, se escolha aquele com menos parâmetros. Dessa forma a combinação de termos AR e MA permite que a estrutura da série seja capturada com poucos parâmetros.
 
+
+\part{Implementação}
+
+Este trabalho faz uso de um modelo linear estocástico que tem como hipótese que a série temporal sob análise é gerada por uma combinação de choques aleatórios. Essa hipótese foi incialmente proposta por Yule e Walker e extendida por diversos outros autores.
+Na literatura esse modelo é conhecido como modelo autoregressivo com média movel (ARMA, do inglês autoregressive moving-average)
+%parsimony
+
+Um processo estocástico pode ser visto como o resultado de um filtro linear aplicado em ruído branco $a_t$. 
+rodapé: Ruído branco é definido como um signal aleatório o qual tem a mesma intensidade para qualquer frequência [fonte].
+
+$$ z_t = \mu + a_t + \psi_1a_{t-1} + \psi_1a_{t-2} + \dots $$
+$$ z_t = \mu + a_t + \sum_{j=1}^{\infty}\psi_1a_{t-1} $$
+
+Ruído branco tem média zero e variância constante. 
+
+%zoom suficiente para ser estacionário
+%zoom suficiente para eliminar sazonalidade
+
+%R
+%To cite the online version of this book, please use the following: Hyndman, R.J., & Athanasopoulos, G. (2018) Forecasting: principles and practice, 2nd edition, OTexts: Melbourne, Australia. OTexts.com/fpp2. Accessed on <current date>.
+
+Qualquer quantidade que seja observada cronologicamente é dita uma série temporal. Exemplos incluem: o preço diário das ações da Google, a quantidade mensal de chuva no Rio Grande do Sul, a produção anual de vinhos na serra gaúcha. Neste trabalho a série de interesse é de velocidade média do vento a 100 m de altura do solo no sul do estado do Ceaŕa. Os dados são coletados por satélite e são disponibilizados em base horária no fuso horário GMT. 
+%O centro responsável pela coleta, processamento e divulgação dos dados tem tempo hábil de disponibilizar apenas 
+%este trabalho concentra-se em séries temporais e não cross-sectional.... Apenas regularmente espaçado
+
+
+\chapter{Box-Jenkins}
+
+Em 1970 George Box e Gwilym Jenkins introduziram um método empírico para abordar a previsão de séries temporais. O método ficou conhecido como método de Box-Jenkins. Ele consiste de uma série de etapas que podem ser resumidas no fluxograma abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[scale=0.7]{boxjenkins}
+	\caption{O método de Box-Jenkins.}
+\end{figure}
+\FloatBarrier
+
+O fluxograma acima inclui algumas mudanças incorporadas por diversos outros autores tais como Hyndman \& Khandakar.
+
+Neste trabalho optou-se por essa abordagem para estimar séries temporais de velocidade do vento e seu uso será demonstrado a seguir.
+
 \section{Análise visual}
 
 A escolha do modelo para prever uma série temporal se dá pelas características dessa série tais como padrões, valores atípicos, tendências, sazonalidade e ciclicidade. Dessa forma o primeiro passo é visualizar a série tanto em sua forma bruta quanto sob outras formas que ressaltem outras características que não sejam visíveis na sua forma bruta. A transformação para o espaço de frequência, por exemplo, permite identificar se há periodicidade na série. Para facilitar a visualização a imagem abaixo apresenta apenas os 2 últimos anos de dados em base horária:
@@ -792,14 +795,139 @@ A escolha do modelo para prever uma série temporal se dá pelas característica
 \begin{figure}[h]
     \centering
 	\includegraphics[width=\textwidth]{entire_series_hourly_basis}
-	\caption{Chapada}
+	\caption{Últimos dois anos da série de vento}
 \end{figure}
 \FloatBarrier
 
-%Analisando visualmente apenas o último ano de dados da série percebe-se que esta não é estacionária. Basta perceber que em diferentes períodos a série encontra-se em diferentes níveis (mostra uma tendência, não sendo, portanto, estacionária de primeira ordem) e também apresenta sazonalidade (estacionária de segunda ordem).
+Por meio da análise visual é possível perceber que a série não é estacionária pois em diferentes períodos a série encontra-se em diferentes níveis (mostra uma tendência, não sendo, portanto, estacionária de primeira ordem) e também apresenta sazonalidade anual (estacionária de segunda ordem).
 
+\section{Regime estacionário}
 
-\section{Medidas de qualidade de previsões}
+Um processo estocástico é dito estritamente estacionário se o deslocamento da origem temporal não altera suas propriedades, ou seja, a distribuição conjunta de probabilidades calculada para o sequência de $m$ medições $z_1,z_2,\dots,z_m$ tomadas nos tempos $t_1, t_2, \dots, t_m$ é a mesma àquela calculada em $t_{1+k}, t_{2+k}, \dots, t_{m+k}$ para as m medições $z_{1+k},z_{1+k},\dots,z_{m+k}$. $k\in\mathbb{Z}$ pode assumir tanto valores positivos quanto negativos, isto é, o deslocamento temporal pode ser tanto positivo quanto negativo. Dessa forma, 
+um processo estacionário é caracterizado por uma distribuição de probabilidades que não varia no tempo. O modelo autoregressivo com média móvel utilizado neste trabalho toma essa propriedade como hipótese para o seu desenvolvimento, portanto, se faz fundamental garantir que a série de entrada satisfaça tal hipótese.
+
+O primeiro passo de modo a tornar a série estacionária é remover a sazonalidade. Isso pode ser feito por uma simples diferença:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{entire_series_hourly_basis_seasonless.png}
+	\caption{Sazonalidade removida}
+\end{figure}
+\FloatBarrier
+
+Antes de remover a sazonalidade não é possível fazer qualquer afirmação sobre o comportamento da variância. Após removê-la por meio de uma simples diferenciação percebe-se que a variância parece ter estabilizado. No entanto essa é uma afirmação qualitativa. Pode-se obter uma confirmação quantitativa por meio de testes estatísticos chamados coletivamente como testes de raiz unitária. Optou-se por utilizar o teste Kwiatkowski-Phillips-Schmidt-Shin (KPSS) cuja hipótese nula é de que a série é estacionária (tanto em relação à tendência quanto à sazonalidade).
+
+Aplicando o teste encontrou-se um p-valor maior que 0.1 com um nível de significância de 0.05 de tal forma que a hipótese nula não pôde ser rejeitada. Aplicando o mesmo teste antes da remoção da sazonalidade o p-valor calculado é menor que 0.01 indicando que a série não é estacionária. 
+
+Alternativamente à simples diferença entre o valor seguinte e o valor atual, pode-se optar por uma transformação de Box-Cox. Essa transformação é definida como:
+
+\begin{equation}
+y_i^{(\lambda)} = 
+	\begin{cases}
+		\sqrt[n]{\prod\limits_{i=1}^{n}x_i}\ln y_i\text{, se $\lambda = 0$}
+		\\
+		\frac{y_i^\lambda-1}{\lambda\left(\sqrt[n]{\prod\limits_{i=1}^{n}x_i}\right)^{\lambda-1}} \text{, se $\lambda > 0$}
+	\end{cases}	
+\end{equation}
+ 
+O valor de lambda calculado para a série acima foi de 1.175388. A aplicação do teste KPSS indica que a série está em regime estacionário. O resultado da transformação é exibido abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{entire_series_hourly_basis_seasonless_boxcox.png}
+	\caption{Sazonalidade removida por meio de uma transformação de Box-Cox}
+\end{figure}
+\FloatBarrier 
+
+A estabilização da variância aparente ter sido mais efetiva utilizando esse método mais sofisticado. Como resultado deste trabalho deseja-se obter um procedimento que possa realizar previsões para um período seguinte em tempo real. Essa exigência impede o uso de uma transformação Box-Cox pois devido a complexidade da operação a sua aplicação em um grande volume de dados é lenta. Além da simplicidade da diferença simples, ela produz resultados similares e ambas abordagens satisfazem testes de estacionaridade.
+
+Dessa forma conlui-se que o parâmetro de integração (I) do modelo ARIMA que buscamos vale $d=1$.
+
+\section{Autocorrelação}
+
+A etapa seguinte do método Box-Jenkins consiste em analisar os gráficos de autocorrelação e autocorrelação parcial de modo a estimar empiricamente quantos termos de autoregressão (AR) incluir e quantos de média móvel (MA).
+
+O gráfico da função de autocorrelação (ACF) exibe o valor da correlação entre o elemento $x_i$ da série com o elemento $x_{i-k}$ para vários valores de $k$ (abcissa). A autocovariância  é definida por:
+
+\begin{equation}
+\rho_{t,t-k} = Corr(x_t, x_{t-k}) = \frac{Cov(x_t, x_{t-k})}{\sqrt{Var(x_t)Var(x_{t-k})}} = \frac{Cov(x_t, x_{t-k})}{\sqrt{Cov(x_t,x_t)Cov(x_{t-k},x_{t-k})}}
+\end{equation}
+
+Onde covariância (Cov) é definida por:
+
+\begin{equation}
+Cov(x,y) = E\left[(x-\mu_x)(y-\mu_y)\right]
+\end{equation}
+
+Onde $E[x]$ é o valor esperado da série temporal $x$ e $\mu_x$ seu valor médio.
+
+Os gráficos das funções ACF e PACF são exibidos abaixo. Os termos que exibem autocorreção significativa encontram-se acima da linha azul.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{long_memory.png}
+	\caption{Gráficos da Função de Autocorrelação (ACF) e Função de Autocorrelação Parcial (PACF)}
+\end{figure}
+\FloatBarrier 
+
+Um pico na função ACF em k=12 pode significar que a série apresenta autocorrelação significativa entre um dado valor e o décimo segundo valor anterior a ele (a cada 12 horas). No entanto, isso pode ser apenas um efeito colateral de uma forte autocorrelação entre um valor e o sexto valor anterior a ele (a cada 6 horas). A função autocorrelação parcial desconta a contribuição de todos os passos calculados anteriormente. Isso é feito mensurando a autocorrelação nos resíduos do passo $k$ após calcular a autocorrelação para o passo $k-1$. Embora o gráfico PACF seja de mais fácil interpretação, o gráfico ACF ainda é útil porque a autocorrelação não é necessariamente linear e não pode, portanto, ser simplesmente subtraída.
+
+\section{Redes neurais recorrentes}
+
+Os gráficos ACF e PACF da sessão anterior indicam que a série possui memória de longo-prazo. A série exibe autocorrelação acima do nível de significância para valores da série muito distantes entre si. Observando poucos termos anteriores pode-se crer que a autocorrelação é atenuada ao longo do tempo, no entanto, quando olha-se para valores mais distantes, percebe-se que a atenuação é muita lenta para permitir um modelo ARIMA.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{long_memory_lagmax.png}
+	\caption{Gráficos da Função de Autocorrelação (ACF) e Função de Autocorrelação Parcial (PACF)}
+\end{figure}
+\FloatBarrier 
+
+Não é possível prosseguir naturalmente com o método de Box-Jenkins cujo próximo passo seria o teste de valores de $p$, $q$ estimados a partir dos gráficos acima. Por exemplo, caso apenas a primeira e segunda componente do gráfico PACF fosse significativa, testar-se-ia um modelo ARIMA(2,1,0).
+
+É necessário uma mudança de abordagem. Duas tentativas foram feitas. A primeira consistiu em abandonar modelos ARIMA e optar por uma modelo de rede neural recorrente. O modelo mais adequado é o modelo LSTM (Long Short-Term Memory) o qual consegue levar em conta a existência de memória de longo prazo na série e utilizar na previsão de curto prazo. Experimentou-se com vários modelos e escolhido contou com 1 camada de entrada, 1 camada oculta com 4 blocos LSTM com uma camada de saída, todas intercaladas com uma camada de descarte para evitar aprendizado em excesso (overfitting). Apesar do esforço empregado, não foi possível encontrar parâmetros adequados para o modelo. O resultado da previsão, mostrado abaixo, foi insatisfatório. Acredita-se que um maior esforço no entendimento e devida configuração pudesse trazer melhores resultados, no entanto, optou-se por abandonar esse modelo devido ao longo tempo de treinamento, isto é, o tempo em que o código leva para olhar para os valores passados da série e estimar os parâmetros utilizado na previsão de valores futuros.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{lstm.png}
+	\caption{Modelo LSTM aplicado a série. Velocidade no eixo y. Tempo em horas no eixo x.}
+\end{figure}
+\FloatBarrier 
+
+\section{Janela de dados}\label{janela}
+
+A segunda abordagem para contornar o problema de memória longa da série consiste em restringir a janela de dados. Por um lado a restrição do intervalo de análise da série resolve o problema de memória de longo-prazo (não há mais longo-prazo). Por outro lado, os parâmetros estimados para um janela de dados pode não ser válido para a janela seguinte, exigindo, dessa forma, o cálculo constante dos novos parâmetros a medida que a janela cobre toda a série. Se o tempo para o cálculo desses parâmetros for menor que o tempo de aquisição dos dados esse torna-se apenas uma questão de ter hardware dedicado a esse cálculo ininterruptamente. Essa abordagem também permite que mudanças na série sejam facilmente incorporadas ao modelo, tal como, por exemplo, trocar a série horária por uma série de 10 minutos ou uma mudança natural de tendência na série devido, por exemplo, ao aumento ou diminuição da temperatura da região.
+
+Dessa forma, decidiu-se por restringir a janela de dados a semanas ao invés de anos. A última semana de dados é exibida abaixo. Aplicando o teste KPSS percebe-se que é necessária uma diferenciação an série para torná-la estacionária.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{last3weeks.png}
+	\caption{3 útimas semanas de dados da série. Antes da diferenciação (superior) e após (inferior).}
+\end{figure}
+\FloatBarrier 
+
+Analisando os gráficos das funções de autocorrelação é possível elencar alguns possíveis modelos ARIMA. O gráfico da função ACF indica quantos termos MA incluir enquanto a função PACF indica quantos termos AR incluir. De acordo com a ACF a influência de autocorrelação se estende apenas até o sexto termo . No entanto valor respectivo está próximo do nível de significância e não é tão simples satisfazer as condições de convergência quando se inclui muitos termos MA, portanto, é interessante testar um modelo MA(3). A função PACF apresenta um valor significativo para o termo imediatamente anterior sugerindo um modelo AR(1). 
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{last3weeks_acf.png}
+	\caption{Gráficos da Função de Autocorrelação e Autocorrelação Parical para 2 semanas de dados da série.}
+\end{figure}
+\FloatBarrier 
+
+Após essas observações empíricas pode-se testar quantitativamente o desempenho de alguns possíveis modelos:
+
+\begin{itemize}
+	\item ARIMA(0,1,1)
+	\item ARIMA(1,1,1)
+	\item ARIMA(1,1,2)
+	\item ARIMA(1,1,3)
+\end{itemize}
+
+Antes de fazer previsões é necessário estabelecer critérios para comparar o desempenho de diferentes modelos.
+
+\section{Medidas de qualidade de previsões}\label{erro}
 
 Para prever e quantificar a qualidade da previsão de uma série temporal é necessário dividi-la em um conjunto de treinamento e outro de teste. A divisão pode ser, por exemplo, 80\% dos dados destinados ao conjunto de treinamento e os 20\% subsequentes ao conjunto de teste. Empiricamente é desejável que o conjunto de teste seja igual ao maior ao tamanho do horizonte de previsão que se deseja obter. O conjunto de treinamento é utilizado para computar os parâmetros do modelo enquanto que o conjunto de teste é utilizado para quantificar o quão bem o modelo é capaz de prever os dados subsequentes.
 Existem diversas maneiras de mensurar o qualidade das previsões geradas por um modelo. Deve-se evitar usar os resíduos como medida pois eles são resultado da estimativa dos parâmetros do modelo aos dados de treinamento. Como qualquer série pode ser aproximada por um modelo com infinitos parâmetros, os resíduos não dão informação sobre o poder preditivo do modelo para valores futuros, desconhecidos. A
@@ -832,7 +960,7 @@ Ao contrário das medidas anteriores, essa possui a vantagem de que é independe
 
 $$\text{MAPE} = \frac{\frac{1}{T}\sum_{t=1}^T\left|e_t\right|}{\frac{1}{T-1}\sum_{t=2}^{T}\left|y_t-y_{t-1}\right|}$$
 
-\subsection{Validação cruzada}
+\subsection{Validação cruzada}\label{cruzada}
 
 A validação cruzada consiste em usar uma janela de treinamento para calcular o erro de previsão para a próxima medida, expandir a janela em uma medida e calcular o novo erro e assim por diante sob um conjunto de teste. A medida de erro é dada pela média dos erros individuais. Qualquer uma das medidas acima pode ser utilizada no cálculo da validação cruzada. Essa é a maneira mais robusta de quantificar o erro de previsão pois atua efetivamente em dados que não foram utilizados para construir o modelo. A idéia da medida pode ser ilustrada da seguinte forma:
 
@@ -843,13 +971,89 @@ A validação cruzada consiste em usar uma janela de treinamento para calcular o
 \end{figure}
 \FloatBarrier
 
-Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha de baixo, mensura-se o erro de previsão que resulta ao tentar prever três horas a frente da hora atual. A linha acima inclui a medida seguinte ao conjunto de treinamento e tenta prever, novamente, três horas a frente. Isso é feito várias vezes. Os erros resultantes são calculados, por exemplo, por MASE e a sua média é reportada como valor final.
+Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha de baixo, mensura-se o erro de previsão que resulta ao tentar prever três horas a frente da hora atual. A linha acima inclui a medida seguinte ao conjunto de treinamento e tenta prever, novamente, três horas a frente. Isso é feito várias vezes. Os erros resultantes são calculados, por exemplo, por MASE e a sua média é reportada como valor final. Em todos os testes de modelos que seguem as métricas reportadas são calculadas dessa forma.
 
-\section{ARIMA}
+\section{Estabilidade}
+
+Os parâmetros p, d, q de modelos ARIMA não podem assumir quaisquer valores. Existem critérios de existência e estabilidade que basicamente garantem a convergência do polinômio que representam.
+
+Um modelo ARIMA pode ser escrito da seguinte forma: 
+
+%y^{'}_{t} = c + \phi_{1}y^{'}_{t-1} + \dots + \phi_{p}y^{'}_{t-p} + \theta_{1}\varepsilon_{t-1} + \dots + \theta_{q}\varepsilon_{t-q} + \varepsilon_{t}
+
+\begin{equation}
+\phi(B)(1-B)^dy_t = c + \theta(B)\varepsilon_t
+\end{equation}
+
+Sendo $d$ o grau de diferenciação aplicado, $\phi(B)$ é o polinômio de ordem $p$:
+
+\begin{equation}
+\phi(B) = (1-\phi_1B-\dots-\phi_pB^p)
+\end{equation}
+
+$\theta(B)$ é o polinômio de ordem $q$:
+
+\begin{equation}
+\theta(B) = (1+\theta_1B+\dots+\theta_qB^q)
+\end{equation}
+
+$B$ o operador definido por:
+
+\begin{equation}
+By_{t} = y_{t-1}
+\end{equation}
+
+A condição de regime estacionário de qualquer modelo ARIMA é de que as raízes complexas do polinômio $\phi(B)$ estejam fora do círculo unitário. Enquanto que a condição de invertibilidade é de que as raízes complexas de $\theta(B)$ estejam fora do círculo unitário. Pode-se verificar ambas as condições por meio do gráfico das raízes desses polinômios. Para facilitar a visualização exibe-se o gráfico do respectivo polinômio inverso de tal forma que as condições sejam satisfeitas se as raízes estiverem dentro do círculo unitário.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{conds}
+	\caption{Condições de regime estacionário e invertibilidade para um modelo ARIMA(6,1,0).}
+\end{figure}
+\FloatBarrier
+
+\section{Previsão}
+
+A estabilidade dos modelos propostos na seção \ref{janela} foi verificado e todas as raízes estão fora do círculo unitário. Dessa forma pode-se comparar o desempenho de cada modelo atuando na série de dados. Para isso tomou-se 2 semanas anteriores como conjunto de treino para estimar os parâmetros de cada modelo e a semana seguinte como conjunto de teste para comparar o que os modelos predizem com o que efetivamente foi registrado.
+
+Visualmente a previsão pode ser demonstrada superpondo a curva prevista aos dados medidos. Esses modelos permitem que se calculem também intervalos de confiança. Optou-se por exibir os intervalos de 80\% e 95\% em azul escuro e claro respectivamente. Um intervalo de 95\% indica que o modelo prevê com 95\% de confiança que o valor medido estará entre os limites indicados.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{arima12}
+	\caption{Condições de regime estacionário e invertibilidade para um modelo ARIMA(6,1,0).}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{arima34}
+	\caption{Condições de regime estacionário e invertibilidade para um modelo ARIMA(6,1,0).}
+\end{figure}
+\FloatBarrier
+
+Os valores quantitativas das diversas medidas de erro introduzidas na seção \ref{erro}, usando o procedimento de validação cruzada descrito em \ref{cruzada}.
 
 
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c| } 
+\hline
+ARIMA(p,d,q)&ME&RMSE&MAE&MPE&MAPE \\
+\hline
+1,1,1&-0.007948941&0.2231684&0.161981&0.3817872&5.731274 \\
+\hline
+2,1,1&0.00824027&0.2973698&0.2285103&-0.7558966&7.622429 \\
+\hline
+1,1,2&0.01559968&0.2490103&0.1870849&-0.8393794&6.151953 \\
+\hline
+2,1,3&0.01455176&0.3189862&0.2380204&-0.8382305&7.968127 \\
+\hline
+\end{tabular}
+\end{center}
 
-\section{Box-Jenkins}
+A minimização das métricas RMSE, MAE, MPE e MAPE todas sugerem que o modelo ARIMA(1,1,1) apresenta melhor desempenho para essa janela de dados. No entanto observa-se que esse modelo não fornece sempre os melhores resultados pra toda a extensão da série tampouco isso era esperado. A seção seguinte propõe um método de estimar continuamente os melhores parâmetros ARIMA para uma dada janela de dados.
+
+%Apesar de o tempo de treinamento ser muito longo, mas 
 
 %hat over predicted
 %T+1|T
@@ -858,9 +1062,9 @@ Onde as medidas de treinamento estão em azul e as de teste em amarelo. Na linha
 %ideais da economia
 %a diferença entre uma flutuação aleatória que não ocorrerá novamente e um padrão que deve ser modelado e extrapolado para o futuro
 %Uma previsão nunca é estática, ela captura o modo pelo qual os dados estão mudando. Assume-se que esse modo é constante no tempo. É possível ainda reavaliar o modelo para que ele também se adapte a mudanças no modo 
-%quanto mais longinquo o horizonte de previsão, quantas horas, dias, meses, anos no futuro, maior a incerteza na previsão e portanto mais abertos os intervalos de confiança
+%quanto mais longinquo o horizonte de previsão, quantas horas, dias, meses, anos no futuro, maior a incerteza na previsão e portanto mais abertos os intervalos de confiança'
 
-\section{Modelo Autoregressivo Variável}
+\chapter{Modelo Autoregressivo Variável}
 
 Ao longo do estudo observou-se que para diferentes períodos da série de dados, diferentes modelos ARIMA apresentavam melhor potencial preditivo não sendo possível elencar um único modelo que capturasse a estrutura da série de forma universal. Duas soluções para esse problema foram exploradas. Uma delas é optar por outro modelo. A outra, abordada nessa seção, é permitir que os parâmetros ARIMA fossem adaptativos, sendo recalculados, a medida que mais dados são coletados.
 %Uma possível solução para 
@@ -880,7 +1084,7 @@ O parâmetro q tem um papel análogo ao do parâmetro q. Ele refere-se a inclus�
 
 Os parâmetros assumem apenas valores inteiros. Para facilitar a visualização da evolução temporal adicionou-se um ruído aleatório a cada ponto de modo a evitar a sua sobreposição. Fica claro que no início do período de 160 horas o principal modelo ARIMA é o ARIMA(2,1,1) enquanto que ao final do período o modelo preferencial é o ARIMA(1,1,3). Também observa-se que diversos outros modelos são assumidos com menos frequência.
 
-O resultado é superior ao uso de um único modelo ARIMA para toda a série:
+Apesar do apelo prático, o método não se mostrou satisfatório:
 
 %No entanto, apesar do forte apelo intuitivo e melhora no poder preditivo
 
@@ -891,8 +1095,53 @@ O resultado é superior ao uso de um único modelo ARIMA para toda a série:
 \end{figure}
 \FloatBarrier
 
-\section{GARCH}
+\chapter{GARCH}
 
+Séries de dados de vento possuem uma característica fundamental em comum que não foi modelada até então: sua variância não é constante. Os esforços dispendidos foram no sentido de neutralizar a variância. Além disso, ao contrário de séries financeiras, onde o comportamento da variância é mais complexo, os períodos de maior e menor variância são facilmente previsíveis e possuem uma interpretação física clara. Períodos de variância elevada são observados durante períodos de simultânea alta temperatura do ar, o que o torna mais turbulento e portanto aumenta a variabilidade das medições, enquanto que, à noite por exemplo a atmosfera próxima ao solo se estratifica em camadas bem definidas e comportadas em um regime laminar, longe da turbulência e de tal forma apresentam baixa variabilidade.
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{diurnal}
+	\caption{Evolução dos parâmetros p e q de um modelo ARIMA ao longo do tempo.}
+\end{figure}
+\FloatBarrier
+
+
+O modelo GARCH estende o modelo ARIMA de modo a modelar a variação na variância da série temporal. Este modelo é um acrônimo que significa heterocedasticidade (variância) condicional autoregressiva generalizada. Em um modelo GARCH a variância é modelada por:
+
+\begin{equation}\label{eq61}
+\sigma_t^2 = \underbrace{\beta_1\sigma_{t-1}^2 + \dots + \beta_p\sigma_{t-p}^2}_\text{autoregressão}  + \underbrace{\omega + \alpha_1\varepsilon_{t-1}^2 + \dots + \dots \alpha_q\varepsilon_{t-q}^2}_\text{média móvel} 
+\end{equation}
+
+\begin{equation}
+\sigma_t^2 = \sum\limits_{i=1}^q\beta_i\sigma_{t-i}^2 + \omega + \sum\limits_{i=1}^q\alpha_i\varepsilon_{t-i}^2
+\end{equation}
+
+A equação \ref{eq61} deixa claro a analogia entre um modelo ARIMA e um GARCH. ARIMA aplica um filtro na própria série enquanto GARCH aplica na sua variância. Os resultados desse modelo são exibidos abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{garch_first}
+	\caption{GARCH}
+\end{figure}
+\FloatBarrier
+
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c| } 
+\hline
+Modelo&ME&RMSE&MAE&MPE&MAPE \\
+GARCH(1,1)&-0.04246845&0.06505767&0.05117909&-2.449632&2.592525 \\
+\hline
+ARIMA(1,1,1&-0.007948941&0.2231684&0.161981&0.3817872&5.731274 \\
+\hline
+ARIMA(2,1,1&0.00824027&0.2973698&0.2285103&-0.7558966&7.622429 \\
+\hline
+ARIMA(1,1,2&0.01559968&0.2490103&0.1870849&-0.8393794&6.151953 \\
+\hline
+ARIMA(2,1,3&0.01455176&0.3189862&0.2380204&-0.8382305&7.968127 \\
+\hline
+\end{tabular}
+\end{center}
 
 \cleardoublepage
 \part{Análise de dados de vento}
@@ -1221,8 +1470,8 @@ A execução desse trabalho consiste em várias etapas. As principais delas são
 %
 %\lipsum[50]
 %
-%% ----------------------------------------------------------
-%\chapter{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+%% ---
+{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
 %ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 %% ----------------------------------------------------------
 %\lipsum[55-57]

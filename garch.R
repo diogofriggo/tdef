@@ -89,11 +89,13 @@ x <- c(1:length(measured), 1:length(myforecast))
 df <- tibble(x1=1:length(measured),y1=measured,x2=1:length(myforecast),y2=myforecast)
 
 ggplot(data=df) + 
-  geom_line(aes(x=x1, y=y1, color='measured'), size=0.6) +
   geom_line(aes(x=x2, y=y2, color='forecast'), size=0.9)+
-  #scale_color_manual(values = c('gold','black')) + 
+  geom_line(aes(x=x1, y=y1, color='measured'), size=0.6) +
+  scale_color_manual(values = c('gold','black')) + 
   labs(x='Tempo', y='Velocidade (m/s)') + 
   ggtitle('title')
+
+ggsave('thesis/images/garch_first.png')
 
 print(my_accuracy(myforecast, measured))
 
