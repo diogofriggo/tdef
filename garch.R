@@ -68,36 +68,54 @@ hourly.data %>% length() #169
 #forecast <- ugarchforecast(fit, n.roll = 169, out.sample = 30000200)
 #forecast %>% plot(which=1)
 
-forecast.length <- 24*10
+forecast.length <- 24*7
 
 modelroll <- ugarchroll (
   spec=ugarch_spec, data=hourly.data, n.ahead = 1, forecast.length = forecast.length,
   n.start = NULL, refit.every = 50, refit.window = c("recursive"),
   window.size = NULL, solver = "hybrid", fit.control = list(),
-  solver.control = list(), calculate.VaR = F, VaR.alpha = c(0.01, 0.05),
+  solver.control = list(), calculate.VaR = T, VaR.alpha = c(0.3, 0.7, 0.1, 0.90),
   cluster = NULL, keep.coef = F
 )
 
+
+
 #modelroll %>% plot(which=3)
 #str(modelroll)
-measured <- hourly.data[(length(hourly.data)-2*forecast.length):length(hourly.data)-1]
-myforecast <- modelroll@forecast$density[,'Mu']
-myforecast <- c(rep(NA, length(measured)-length(myforecast)), myforecast)
-x <- c(1:length(measured), 1:length(myforecast))
-#y <- c(measured, forecast)
-#color <- c(rep('measured', length(measured)), rep('forecast', length(forecast)))
-df <- tibble(x1=1:length(measured),y1=measured,x2=1:length(myforecast),y2=myforecast)
 
-ggplot(data=df) + 
-  geom_line(aes(x=x2, y=y2, color='forecast'), size=0.9)+
-  geom_line(aes(x=x1, y=y1, color='measured'), size=0.6) +
-  scale_color_manual(values = c('gold','black')) + 
-  labs(x='Tempo', y='Velocidade (m/s)') + 
-  ggtitle('title')
+garch_plot <- function(hourly.data, modelroll){
+  measured <- hourly.data[(length(hourly.data)-2*forecast.length):length(hourly.data)-1]
+  
+  forecast.lower80 <- modelroll@forecast$VaR[,'alpha(30%)']
+  forecast.lower95 <- modelroll@forecast$VaR[,'alpha(10%)']
+  forecast.mean <- modelroll@forecast$density[,'Mu']
+  forecast.upper80 <- modelroll@forecast$VaR[,'alpha(70%)']
+  forecast.upper95 <- modelroll@forecast$VaR[,'alpha(90%)']
+  
+  ggplot.data <- c(measured[1:length(measured)], forecast.mean)
+  type <- c(rep('measured', length(measured)), rep('forecast', length(forecast.mean)))
+  time <- c(1:length(measured), (length(measured)-length(forecast.mean)+1):length(measured))
+  nans <- rep(NA, length(measured))
+  
+  df1 <- tibble(time=time, speed=ggplot.data, type=type,
+                lower80=c(nans, forecast.lower80), upper80=c(nans, forecast.upper80), 
+                lower95=c(nans, forecast.lower95), upper95=c(nans, forecast.upper95))
+  df2 <- df1[(length(measured)+1):length(ggplot.data),]
+  
+  ggplot(data=df2, aes(x=time)) + 
+    geom_ribbon(aes(ymin=lower95, ymax=upper95, fill='95% level'), alpha=1) + 
+    geom_ribbon(aes(ymin=lower80, ymax=upper80, fill='80% level'), alpha=1) +
+    geom_line(data=df1, aes(y=speed, colour=type), size=0.9) +
+    scale_fill_manual(values=c('#7D7DEF', '#C3C3F6'), name="fill") +
+    scale_color_manual(values = c('gold','black'))
+  
+  #ggsave('thesis/images/garch_first.png')
+  #print(my_accuracy(myforecast, measured))
+}
 
-ggsave('thesis/images/garch_first.png')
+str(modelroll@forecast$VaR)
 
-print(my_accuracy(myforecast, measured))
+garch_plot(hourly.data, modelroll)
 
 #x %>% ts() %>% autoplot()
 
@@ -146,7 +164,9 @@ modelroll <- ugarchroll (
 )
 
 #modelroll %>% plot(which=3)
-#str(modelroll)
+
+str(modelroll)
+
 measured <- monthly.data[(length(monthly.data)-4*forecast.length):length(monthly.data)-1]
 myforecast <- modelroll@forecast$density[,'Mu']
 myforecast <- c(rep(NA, length(measured)-length(myforecast)), myforecast)
