@@ -48,6 +48,11 @@ library(tidyverse)
 library(lubridate)
 library(rugarch)
 library(forecast)
+
+my_accuracy <- function(forecast, observed){
+  accuracy(forecast, observed[(length(observed)-length(forecast)+1):length(observed)])
+}
+
 setwd('/home/diogo/Jupyter/tdef')
 path <- '/home/diogo/Jupyter/tdef/Res025_ERA5.txt'
 data <- read_table2(path, skip=9, comment="--") %>% 
@@ -83,8 +88,8 @@ modelroll <- ugarchroll (
 #modelroll %>% plot(which=3)
 #str(modelroll)
 
-garch_plot <- function(hourly.data, modelroll){
-  measured <- hourly.data[(length(hourly.data)-2*forecast.length):length(hourly.data)-1]
+garch_plot <- function(data, modelroll, title, filename, multiplier=2){
+  measured <- data[(length(data)-multiplier*forecast.length):length(data)-1]
   
   forecast.lower80 <- modelroll@forecast$VaR[,'alpha(30%)']
   forecast.lower95 <- modelroll@forecast$VaR[,'alpha(10%)']
@@ -107,15 +112,17 @@ garch_plot <- function(hourly.data, modelroll){
     geom_ribbon(aes(ymin=lower80, ymax=upper80, fill='80% level'), alpha=1) +
     geom_line(data=df1, aes(y=speed, colour=type), size=0.9) +
     scale_fill_manual(values=c('#7D7DEF', '#C3C3F6'), name="fill") +
-    scale_color_manual(values = c('gold','black'))
+    scale_color_manual(values = c('gold','black'))+
+    labs(x='Tempo', y='Velocidade (m/s)') + 
+    ggtitle(title)
   
-  #ggsave('thesis/images/garch_first.png')
-  #print(my_accuracy(myforecast, measured))
+  ggsave(paste('thesis/images', filename, sep='/'))
+  print(my_accuracy(forecast.mean, measured))
 }
 
 str(modelroll@forecast$VaR)
-
-garch_plot(hourly.data, modelroll)
+title <- paste('GARCH(1,1) com janela de 50 horas e passo de 1 hora')
+garch_plot(hourly.data, modelroll, title, 'garch_first.png')
 
 #x %>% ts() %>% autoplot()
 
@@ -130,8 +137,7 @@ garch_plot(hourly.data, modelroll)
 #TODO: characterization: fourier transform
 #TODO: 
 
-
-
+#GARCH MENSAL
 
 era5 <- read_table2(path, skip=9, comment="--")
 era5 %>% 
@@ -153,19 +159,44 @@ monthly.data %>% length() #169
 #forecast <- ugarchforecast(fit, n.roll = 169, out.sample = 30000200)
 #forecast %>% plot(which=1)
 
-forecast.length <- 36
+forecast.length <- 48
 
 modelroll <- ugarchroll (
   spec=ugarch_spec, data=monthly.data, n.ahead = 1, forecast.length = forecast.length,
   n.start = NULL, refit.every = 4, refit.window = c("recursive"),
   window.size = NULL, solver = "hybrid", fit.control = list(),
-  solver.control = list(), calculate.VaR = F, VaR.alpha = c(0.05, 0.01),
+  solver.control = list(), calculate.VaR = T, VaR.alpha = c(0.3, 0.7, 0.1, 0.90),
   cluster = NULL, keep.coef = F
 )
 
-#modelroll %>% plot(which=3)
+title <- paste('GARCH(1,1) com janela de 4 meses e passo de 1 mês')
+garch_plot(monthly.data, modelroll, title, 'garch_month.png', 4)
+
 
 str(modelroll)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#modelroll %>% plot(which=3)
+
+
 
 measured <- monthly.data[(length(monthly.data)-4*forecast.length):length(monthly.data)-1]
 myforecast <- modelroll@forecast$density[,'Mu']
@@ -182,4 +213,15 @@ ggplot(data=df) +
   labs(x='Tempo', y='Velocidade (m/s)') + 
   ggtitle('title')
 
+ggplot(data=df2, aes(x=time)) + 
+  geom_ribbon(aes(ymin=lower95, ymax=upper95, fill='95% level'), alpha=1) + 
+  geom_ribbon(aes(ymin=lower80, ymax=upper80, fill='80% level'), alpha=1) +
+  geom_line(data=df1, aes(y=speed, colour=type), size=0.9) +
+  scale_fill_manual(values=c('#7D7DEF', '#C3C3F6'), name="fill") +
+  scale_color_manual(values = c('gold','black'))+
+  labs(x='Tempo', y='Velocidade (m/s)') + 
+  ggtitle(title)
+
+ggsave(paste('thesis/images', filename, sep='/'))
 print(my_accuracy(myforecast, measured))
+

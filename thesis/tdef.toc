@@ -36,22 +36,10 @@
 \contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase {Modelo Autoregressivo Vari\IeC {\'a}vel}}{47}{chapter.5}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase {GARCH}}{49}{chapter.6}
-\contentsline {part}{\partnumberline {III}\MakeTextUppercase {An\IeC {\'a}lise de dados de vento}}{51}{part.3}
+\contentsline {section}{\numberline {6.1}Base hor\IeC {\'a}ria}{49}{section.6.1}
+\contentsline {section}{\numberline {6.2}Base mensal}{50}{section.6.2}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase {Caracter\IeC {\'\i }sticas de longo prazo}}{52}{chapter.7}
-\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase {Caracter\IeC {\'\i }sticas de curto prazo}}{55}{chapter.8}
-\contentsline {part}{\partnumberline {IV}\MakeTextUppercase {Embasamento te\IeC {\'o}rico}}{57}{part.4}
-\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {9}\MakeTextUppercase {Embasamento matem\IeC {\'a}tico}}{58}{chapter.9}
-\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {10}\MakeTextUppercase {Embasamento f\IeC {\'\i }sico}}{60}{chapter.10}
-\contentsline {section}{\numberline {10.1}Restri\IeC {\c c}\IeC {\~o}es f\IeC {\'\i }sicas}{60}{section.10.1}
-\contentsline {section}{\numberline {10.2}Abordagem de longo prazo}{61}{section.10.2}
-\contentsline {section}{\numberline {10.3}Desvantagens}{63}{section.10.3}
-\contentsline {section}{\numberline {10.4}Ressalvas}{63}{section.10.4}
-\contentsline {part}{\partnumberline {V}\MakeTextUppercase {Revis\IeC {\~a}o bibliogr\IeC {\'a}fica}}{65}{part.5}
-\contentsline {part}{\partnumberline {VI}\MakeTextUppercase {Planejamento}}{67}{part.6}
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase {Convers\IeC {\~a}o em energia}}{52}{chapter.7}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\uppercase {Refer\^encias}}{70}{section*.14}
+\contentsline {chapter}{\uppercase {Refer\^encias}}{53}{section*.10}
 \vspace {\cftbeforechapterskip }

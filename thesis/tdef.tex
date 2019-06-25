@@ -1097,7 +1097,11 @@ Apesar do apelo prático, o método não se mostrou satisfatório:
 
 \chapter{GARCH}
 
-Séries de dados de vento possuem uma característica fundamental em comum que não foi modelada até então: sua variância não é constante. Os esforços dispendidos foram no sentido de neutralizar a variância. Além disso, ao contrário de séries financeiras, onde o comportamento da variância é mais complexo, os períodos de maior e menor variância são facilmente previsíveis e possuem uma interpretação física clara. Períodos de variância elevada são observados durante períodos de simultânea alta temperatura do ar, o que o torna mais turbulento e portanto aumenta a variabilidade das medições, enquanto que, à noite por exemplo a atmosfera próxima ao solo se estratifica em camadas bem definidas e comportadas em um regime laminar, longe da turbulência e de tal forma apresentam baixa variabilidade.
+Séries de dados de vento possuem uma característica fundamental em comum que não foi modelada até então: sua variância não é constante. Os esforços dispendidos foram no sentido de neutralizar a variância. Além disso o comportamento da variância em séries de velocidade do vento é mais simples, ao contrário de séries financeiras.
+
+\section{Base horária}
+
+Em base horária os períodos de maior e menor variância são facilmente previsíveis e possuem uma interpretação física clara. Períodos de variância elevada são observados durante períodos de simultânea alta temperatura do ar, o que o torna mais turbulento e portanto aumenta a variabilidade das medições, enquanto que, à noite por exemplo a atmosfera próxima ao solo se estratifica em camadas bem definidas e comportadas em um regime laminar, longe da turbulência e de tal forma apresentam baixa variabilidade.
 
 \begin{figure}[h]
     \centering
@@ -1105,7 +1109,6 @@ Séries de dados de vento possuem uma característica fundamental em comum que n
 	\caption{Evolução dos parâmetros p e q de um modelo ARIMA ao longo do tempo.}
 \end{figure}
 \FloatBarrier
-
 
 O modelo GARCH estende o modelo ARIMA de modo a modelar a variação na variância da série temporal. Este modelo é um acrônimo que significa heterocedasticidade (variância) condicional autoregressiva generalizada. Em um modelo GARCH a variância é modelada por:
 
@@ -1130,6 +1133,7 @@ A equação \ref{eq61} deixa claro a analogia entre um modelo ARIMA e um GARCH. 
 \begin{tabular}{ |c|c|c|c|c|c| } 
 \hline
 Modelo&ME&RMSE&MAE&MPE&MAPE \\
+\hline
 GARCH(1,1)&-0.04246845&0.06505767&0.05117909&-2.449632&2.592525 \\
 \hline
 ARIMA(1,1,1&-0.007948941&0.2231684&0.161981&0.3817872&5.731274 \\
@@ -1143,209 +1147,232 @@ ARIMA(2,1,3&0.01455176&0.3189862&0.2380204&-0.8382305&7.968127 \\
 \end{tabular}
 \end{center}
 
-\cleardoublepage
-\part{Análise de dados de vento}
+\section{Base mensal}
 
-\chapter{Características de longo prazo}
-
-É interessante exemplificar as discussões subsequentes com dados reais de medição. O Centro Europeu de Previsões Metereológicas de Médio Prazo (ECMWF, sigla em inglês) disponibiliza publicamente dados metereológicos de todo o globo medidos por satélite, incluindo dados de velocidade e direção do vento compilados no banco de dados ERA5 \cite{era5}. Os dados de velocidade do vento são referentes a uma altura de 80 metros e possuem resolução de 30 quilômetros. As unidades de todas as grandezas referenciadas neste trabalho seguem o padrão SI. Em particular velocidade é dada em metros por segundo e o tempo em segundos. A partir de uma posição do globo dada em latitude e longitude como entrada obtém-se da ECMWF uma série temporal com 18 variáveis: 9 de velocidade do vento e 9 de direção referentes aos nove quadrantes que circundam a posição informada: quadrante central, norte, sul, sudeste, etc. 
-
-A figura abaixo mostra esses quadrantes para uma região no norte baiano, na cidade de Sento Sé para a posição 9.8436 S, 41.1912 W.
+Embora a previsão horária seja de grande utilidade tanto para operadores de parques eólicos quanto para operadores de subestações de distribuição de energia, contratos de produção e entrega de energia são feitos em base mensal. Dessa forma, um acionista de um parque eólico deseja saber em qual nível de produção ele pode arriscar se comprometer em entregar em um acordo fechado um mês antes. O mesmo modelo, GARCH(1,1), se demonstra novamente adequado:
 
 \begin{figure}[h]
     \centering
-%	\includegraphics[scale=0.5]{earth}
-	\includegraphics[scale=0.6]{earth}
-	\caption{Localização da região de medição por satélite dos dados de vento discutidos no texto. Fonte: SIO, NOAA, U.S. Navy, NGA, GEBCO. \textcopyright \  2018 Google}
+	\includegraphics[width=\textwidth]{garch_month}
+	\caption{GARCH}
 \end{figure}
 \FloatBarrier
 
-A partir de análises de diversas localidades do Nordeste brasileiro sabe-se que o recurso eólico dessa região é representativo de todo o Nordeste do país, isto é, a velocidade média do vento é alta, predominantemente entre 6 e 8 m/s, fortemente unidirecional a jusante de sudeste a 120º em relação ao norte geográfico, com uma componente significativamente menor, mas relevante, a cerca de 150º como pode ser observado na rosa dos ventos gerada a partir dos dados medidos para o ano de 2017:
+\begin{center}
+\begin{tabular}{ |c|c|c|c|c|c| } 
+\hline
+Modelo&ME&RMSE&MAE&MPE&MAPE \\
+\hline
+GARCH(1,1)&0.06669541&0.1773425&0.1461843&0.5504064&2.893245\\
+\hline
+\end{tabular}
+\end{center}
 
-\begin{figure}[h]
-    \centering
-	\includegraphics[scale=0.9]{windrose}
-	\caption{Rosa dos ventos do recurso eólico da cidade de Sento Sé no norte da Bahia - característico do Nordeste brasileiro,  a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
+\chapter{Conversão em energia}
 
-\newpage
-Analisando as rosas dos ventos mensais se confirma o comportamento anual e também é possível observar que nos meses de junho a outubro a velocidade do vento é muito alta enquanto que nos demais meses, de Novembro a Maio, ela é muito menor. Com essa informação, é possível, por exemplo, nos meses de baixa velocidade e consequente baixa geração de energia, complementar o suprimento energético do local com outras fontes de energia renovável tal como a energia solar que apresenta o comportamento inverso à energia eólica na região, isto é, nos meses de primavera e verão a elevada altitude solar permite extrair a maior proporção de energia anual ao contrário dos meses de outono e inverno.
-
-\begin{figure}[h]
-    \centering
-  	\hspace*{-1.4cm}   
-	\includegraphics[scale=1]{windrose_monthly}
-	\caption{Rosas dos ventos mensais do recurso eólico da cidade de Sento Sé no norte da Bahia a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
-
-\chapter{Características de curto prazo}
-
-Sabe-se que em períodos curtos, o vento apresenta um comportamento que aparenta ser puramente estocástico, associado ao comportamento turbulento característico da dinâmica de fluídos pouco viscosos tal como o ar. No entanto, observando períodos maiores de tempo, tais como dias, meses e anos observa-se que existem tendências coexistentes com o caráter aleatório, errático do vento. É tarefa da ciência de dados evidenciar a presença desses padrões a partir dos dados medidos, pois, apenas exibindo graficamente a evolução temporal da velocidade do vento leva a crer que não exista qualquer tendência ou padrão nestes dados:
-
-\begin{figure}[h]
-    \centering
-	\includegraphics[scale=0.85]{stochastic_monthly}
-	\caption{Velocidade do vento para cada mês do ano de 2017 da cidade de Sento Sé no norte da Bahia. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
-
-A figura abaixo apresenta a variação horária da velocidade do vento para cada mês do ano para a cidade de Sento Sé.
-Observa-se que o vento no local apresenta um ciclo diário característico e que está presente em todos os meses do ano. De acordo com \cite{art10} o ciclo diário do vento é um fator mais relevante do que a velocidade média do vento para definir a localização de um parque eólico, devido a relação entre a geração horária de energia e a demanda correspondente. Embora a velocidade do vento seja bem mais alta em Julho do que em Janeiro, em ambos os meses tem-se um mínimo de velocidade durante o meio da tarde, uma taxa de variação positiva a medida que a noite se aproxima e uma estabilização durante a madrugada e primeiras horas da manhã. O mesmo vale para os demais meses.
-Pode-se explicar esse fenômeno observado que durante o dia o aquecimento da atmosfera pelo Sol torna o vento turbulento sendo mais difícil o seu aproveitamento para geração de energia, pois sua velocidade direcional é baixa. À noite, por outro lado, a atmosfera se estratifica, o vento fica pouco turbulento e a sua velocidade direcional aumenta. Essa explicação embora válida para este local pode não ser para outro, pois existem diversos fatores, além do aquecimento local da atmosfera, que definem o comportamento do vento. Em regiões desérticas, por exemplo, observa-se uma alta estabilidade na atmosfera devido à baixa umidade. A mesma explicação pode ser estendida para descrever o comportamento mensal: durante meses de inverno e outono a velocidade do vento é alta, enquanto que em meses de verão e primavera ela é baixa. 
-
-\begin{figure}[h]
-    \centering
-	\includegraphics[width=\textwidth]{diurnal}
-	\caption{Velocidade do vento para cada hora do dia e para cada mês do ano de 2017 para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
-
-\part{Embasamento teórico}
-
-\chapter{Embasamento matemático}
-
-A separação entre o que é fundamentalmente aleatório e o que exibe uma tendência em alguma janela temporal é de extrema relevância para a concepção de um modelo matemático que descreva tal fenômeno. Essas contribuições podem ter origens físicas diferentes e a formulação das equações diferenciais estocásticas envolve a distinção entre um termo associado à deriva e outro à difusão o qual não contribui para o valor esperado da variável em questão, isto é, na ausência de deriva, o valor esperado da variável estocástica seria zero, em outras palavras, ele distribui a variância igualmente para mais e para menos.
-
-Um processo estocástico contínuo no tempo, $ W(t) $, definido para $ t>=0 $ com $W(0)=0$ tal que o incremento $ W(t)-W(s)$ é dado por uma distribuição gaussiana com média $0$ e variância $t-s$ para qualquer $ 0<=s<t$ sendo tais incrementos, restritos aos que não se sobrepõem no tempo, independentes, recebe o nome de processo de Wiener \cite{wiener}. O movimento browniano é um exemplo particular de processo de Wiener.
-
-O processo $S_t$ descrito pela equação estocástica abaixo, por exemplo \cite{art27}, possui o termo de deriva $\mu S_t dt$ e o termo de difusão dado por $\sigma S_t dW_t$ o qual está associado a um processo de Wiener representado por $W_t$:
-
-\begin{equation}
-dS_t = \mu(S_t,t) dt + \sigma(S_t,t) dW_t
-\end{equation}
-
-
-Um processo estocástico cujo valor esperado futuro é igual ao valor presente é classificado como um \textit{martingale} \cite{stevens}. Essa é uma característica importante da análise, pois diversos teoremas a tem como hipótese. É claro que a teoria encontraria pouca aplicação prática se não contemplasse processos que envolvem deriva. Para tanto, o teorema de Girsanov \cite{stevens} garante que tal processo, sujeito a algumas hipóteses pouco restritivas, pode tornar-se um \textit{martingale} por meio de uma mudança de escala - uma função multiplicativa apropriada a qual é conhecida como derivada de Radon-Nikodym \cite{stevens}.
-
-\newpage
-A evolução histórica do preço das ações da Google na NASDAQ bolsa, por exemplo, apesar de ter caráter estocástico, apresenta claramente uma tendência de subida (uma deriva, ou \textit{drift} do inglês):
-
-\begin{figure}[h]
-    \centering
-	\includegraphics[width=\textwidth]{stock}
-	\caption{Valor de abertura das ações da Google na NASDAQ. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{nasdaq}.}
-\end{figure}
-\FloatBarrier
-
-%orografia, rugosidade
-%Cada local tem suas muitas características específicas (orografia, rugosidade, posição no globo, entre outras) e qualquer padrão observado para um local pode não apenas não ser válido para outro local mas pode ocorrer o fenômeno oposto.
-
-%coleta de dados de vento: botar umas torres
-
-\chapter{Embasamento físico}
-
-%João e Paulo não gostam de Juriscleide. Este (latter) a acha fedida, aquele (former), desbocada.
-
-\section{Restrições físicas}
-Como fora exposto, a velocidade do vento apresenta várias tendências de longo prazo, comportamentos periódicos - sazonais e até horários e padrões característicos de orografia, clima e latitude. No entanto, essa é uma grandeza fundamentalmente estocástica, isto é, está associada a uma variável aleatória e portanto, a sua previsão está fadada a uma incerteza intrínseca. Antes da formulação da mecânica quântica acreditava-se que se conhecendo perfeitamente o Hamiltoniano de um sistema, isto é, sabendo a posição e momento de todas as partículas que o compõe, seria possível prever com exatidão a sua evolução temporal, ao menos em tese (dado que tal feito é inviável para qualquer sistema moderamente complexo). No entanto, o princípio da incerteza de Heisenberg pôs fim a essa crença, visto que enuncia que não somente é impossível saber simultaneamente a posição e momento exatos de uma particula como não faz sentido falar da simultaneidade das duas grandezas; tampouco é útil a informação sobre velocidade e momento de todas as partículas de um sistema, pois as grandezas de interesse são de natureza estatística, como a temperatura por exemplo. 
-
-A mecânica estatística desenvolveu-se em paralelo ignorando a busca pela determinação exata da evolução temporal de um sistema. Ao invés disso, concentrou-se em determinar valores médios de quantidades de interesse emergentes do comportamento caótico fundamentada na hipótese de que todas as possíveis configurações do sistema ocorrem com igual probabilidade. Apesar do grande sucesso em diversas áreas da física foi incapaz de explicar o comportamento turbulento de fluídos, foi incapaz de explicar como que surge ordem a partir do caos. Relativamente pouco progresso foi feito até então \cite{chaos}. É por esse motivo que frequentemente a previsão do tempo falha, até mesmo em uma escala de horas independente de quantas estações metereológicas sejam utilizadas, já que de acordo com a teoria do caos existe um horizonte de previsão \cite{ian} a partir do qual não é possível obter estimativas confiáveis. A teoria do caos mostrou que a ignorância quanto a natureza da complexidade era muito maior. Tome como exemplo um sistema simples com uma variável discreta $x_t$ e uma regra de evolução temporal não-linear, $x_{t+1}=x_t(1+x_t)$ \cite{NOSRATI2018224}. Conhece-se tudo sobre esse sistema. Ele é perfeitamente determinístico. Ainda assim existe um certo instante de tempo a partir do qual não é possível predizer o seu estado futuro. Esse instante chama-se de transição ao caos \cite{lorenz}.
-
-\section{Abordagem de longo prazo}
-
-Fênomenos fortemente não-lineares como a turbulência, não são, no entanto, completamente imprevisíveis. Acredita-se que dependendo do sistema e sujeito às restrições expostas acima a tarefa seja factível, porém não existe uma única maneira de abordar tal problema. Este trabalho propõe a investigação de qual modelo produz melhores resultados de estimativa de produção de energia, começando por um modelo de evolução temporal de velocidade do vento que faça uso dos dados de medição para encontrar a distribuição de probabilidade associada à essa grandeza.
-
-É prática comum na indústria a determinação da distribuição de probabilidade de energia a partir de simulações de Monte Carlo \cite{portacopos} tendo como hipótese que a velocidade do vento é descrita por uma distribuição de Weibull a qual já foi verificada experimentalmente a partir de muitas análises de dados de vento e tem sólido embasamento teórico conforme o teorema de Fisher–Tippett–Gnedenko, o qual prova que o máximo de um conjunto de variáveis aleatórias independentes, após renormalização, converge apenas para uma de três classes de distribuições: a distribuição de Gumbel, a distribuição de Fréchet ou a distribuição de Weibull \cite{fisher}.
-
-Para a cidade de Sento Sé, por exemplo, a distribuição de velocidades do quadrante central é exibida abaixo:
-
-\begin{figure}[h]
-    \centering
-	\includegraphics[scale=0.8]{weibull_histogram}
-	\caption{A distribuição de velocidades pode ser aproximada por uma distribuição de Weibull. Dados do quadrante central dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
-
-Essa distribuição claramente não é gaussiana porque possui uma cauda unilateral. Tal distribuição é representada satisfatoriamente por uma distribuição de Weibull por meio de dois parâmetros: o parâmetro de forma $k$ e o parâmetro de escala $\lambda$. Seus primeiros momentos são definidos por \cite{weibull}:
-
-\begin{equation}
-	\left<v\right> = \lambda\Gamma\left(1+\frac{1}{k}\right)
-\end{equation}
-
-\begin{equation}
-	\sigma^2 = \lambda^2\left\{\Gamma\left(1+\frac{2}{k}\right)-\left[\Gamma\left(1+\frac{1}{k}\right)\right]^2\right\}
-\end{equation}
-
-Avaliando a distribuição de densidade de probabilidade de velocidade para todos os quadrantes dos dados de vento da cidade de Sento Sé, confirma-se que todos seguem uma distribuição do tipo weibull. Sabendo que a direção preferencial do vento é sul-sudeste observa-se, a partir das curvas para norte, nordeste e noroeste, que à medida que flui no local a velocidade média aumenta.
-
-\begin{figure}[h]
-    \centering
-	\includegraphics[scale=0.85]{weibull_freqpoly}
-	\caption{Distribuição de velocidades de todos os quadrantes dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
-\end{figure}
-\FloatBarrier
-
-Os parâmetros $\lambda$ e $k$ são utilizados para caracterizar o recurso eólico em uma dada posição (latitude e longitude) e altura. Para obter o recurso eólico em outra posição ou altura (posição e altura de uma turbina por exemplo) é feito um escalonamento da distribuição: muda-se a sua forma para obter um valor esperado de velocidade correspondente à nova posição.
-
-\section{Desvantagens}
-
-Essa abordagem embora adequada para estimativas de longo prazo e muito utilizada na indústria possui várias desvantagens:
-
-\begin{itemize}
-    \item A hipótese da distribuição de Weibull é completamente inválida a curto prazo, visto que é uma distribuição constante e não pode, portanto, representar as flutuações incessantes características do comportamento turbulento do vento \cite{artmain}. Uma distribuição de probabilidade que descreva adequadamente a velocidade do vento deve ser dependente do tempo. A evolução temporal horária ou até mesmo minuto a minuto é uma informação essencial para operadores de subestações de distribuição de energia elétrica, pois permite adequar oferta de energia a picos e baixas de demanda os quais são conhecidos    
-    \item A simulação é lenta. O Método de Monte Carlo, como aplicado pela indústria, é um método de força bruta, ou seja, lança mão de poder computacional para atingir seu objetivo. E deve ser realizado toda a vez que se deseje obter o mesmo resultado ao passo que um modelo físico permite que o esforço computacional seja empregado apenas uma vez e, além disso, exige menos poder computacional. É impensável refazer tais cálculos a cada hora.
-    \item O método de Monte Carlo, como aplicado nessa problema, é apenas um recurso computacional, não descreve o comportamento físico do sistema e portanto não pode ser empregado em análises sofisticadas tais como mensurar a dependência temporal e espacial entre dois parques eólicos, ou seja, mensurar o efeito de esteira \cite{atlas} em resolução horária, podendo, por exemplo, como resultado conceber uma estratégia de gerenciamente setorial conjunto entre os dois parques, ou seja, orientar as turbinas dos dois parques de maneira mutuamente benéfica. Outro exemplo, seria prever o melhor intervalo de tempo para realizar a manutenção de uma turbina levando em conta o tempo necessário para realizar a manutenção as quais são, via de regra, custosas e demoradas.
-\end{itemize}
-
-\section{Ressalvas}
-
-Existem muitas fontes de incerteza ao longo de todo o processo de estimativa da produção de energia. Incerteza na obtenção dos dados de medição, na conversão entre velocidade e energia, na extrapolação horizontal (do local de medição à posição das turbinas), da extrapolação vertical (da altura da medição à altura das turbinas) entre muitas outras. A consideração dessas fontes de incerteza fogem ao escopo do presente trabalho mas devem ser todas consideradas em qualquer trabalho comercial. Pode-se dizer que este trabalho estuda o caso particular em que a medição do vento é feita a alguns diâmetros de rotor de distância da turbina, exatamente na altura do cubo rotor.
-
-\part{Revisão bibliográfica}
-
-A área de estudo deste trabalho possui vasta literatura. Modelos autoregressivos de média móvel (ARMA) foram utilizados em \cite{art20} para prever tanto a velocidade quanto a direção do vento. 
-
-Uma revisão bibliográfica dos vários métodos de previsão de dados de vento é feita em \cite{art21}. Este trabalho conclui que esses métodos possuem bom desempenho em diferentes resoluções temporais e que o erro de previsão aumenta com o tempo desejado de previsão. 
-
-Modelos para as flutuações da velocidade do vento foram explorados em \cite{art26} com base na solução analítica da equação de Fokker–Planck–Kolmogorov e várias classes de  distribuições de probabilidade são propostas como solução. Neste trabalho, também foi feita uma análise teórica do efeito que tufões de vento causam na geração de energia por turbinas. 
-
-Em \cite{art28} são feitas simulações estocásticas de caminho aleatório multifractal, isto é, um espectro contínuo de expoentes se faz necessário para caracterizar a geometria do objeto de estudo. Usando uma curva de potência experimental os autores produzem uma série temporal de produção de energia. 
-
-As flutuações na velocidade do vento são modelados em \cite{art37} por meio de um processo de Ornstein-Uhlenbeck-Rayleigh bidimensional. Este trabalho observa que o modelo markoviano nele proposto não reproduz a variabilidade de curto-prazo exibida pelo vento. De acordo com \cite{art30} o estudo de equações diferenciais estocásticas para a previsão da velocidade do vento é vasto na literatura, mas o mesmo não é verdade para a estimativa da produção de energia. Apesar da observação, o trabalho não foge à regra e também aborda apenas modelos estocásticos para a velocidade do vento. Somente em \cite{art31} que modelos estocásticos voltados à produção de energia são explorados, com o objetivo de obter uma previsão de até 2 dias.
-
-\part{Planejamento}
-
-O principal objetivo deste trabalho é conceber uma maneira mais rápida, eficiente e que produza melhores resultados para estimar a produção de energia a partir de dados de vento. Existem muitos métodos disponíveis para tentar cumprir este objetivo, como exposto na revisão bibliográfica, entre eles:
-
-\begin{itemize}
-	\item Modelos de autoregressão (ARMA);
-	\item Redes neurais;
-	\item Equações diferenciais estocásticas para velocidade do vento, produção de energia ou ambos;
-	\item Teoria combinatória com peso variável;
-	\item Caminho aleatório multifractal;
-	\item Movimento Browniano geométrico;
-	\item Combinações ou variações entre esses modelos
- \end{itemize}
- 
-É parte deste trabalho avaliar qual o método produz a melhor estimativa para a produção de energia. A validação do modelo será feita pela comparação com dados medidos de parques eólicos em operação e os resultados obtidos com o modelo.
-
-A execução desse trabalho consiste em várias etapas. As principais delas são elencadas abaixo:
-
-\begin{itemize}
-	\item Estudar a teoria matemática do cálculo estocástico
-	\item Investigar se ideias da teoria do caos podem ser utilizadas na formulação do modelo
-	\item Investigar o que já foi feito na literatura na área de previsão de geração de energia eólica
-	\item Avaliar os diferentes métodos disponíveis para modelar dados estocásticos
-	\item Formular o modelo com base no método mais promissor
-	\item Obter de permissão para utilizar os dados medidos
-	\item Estudar sobre solução numérica de equações diferenciais estocásticas
-	\item Resolver o problema pelo método tradicional
-	\item Comparar os resultados entre métodos
-	\item Comparar os resultados com dados medidos de energia
-	\item Redigir o texto final
-	\item Apresentar à banca
- \end{itemize}
- 
- No gráfico de Gantt abaixo identifcadas as macro-etapas do trabalho e são estabelecidos durações e prazos para a conclusão dessas etapas
- 
-\begin{figure}[h]
-	\hspace*{-2.5cm}   
-    \includegraphics[scale=0.65]{gantt}
-    \caption{Gráfico de Gantt do planejamento das etapas de desenvolvimento do presente trabalho. Fonte: autoria própria.}
-    \centering
-\end{figure}
+%\cleardoublepage
+%\part{Análise de dados de vento}
+%
+%\chapter{Características de longo prazo}
+%
+%É interessante exemplificar as discussões subsequentes com dados reais de medição. O Centro Europeu de Previsões Metereológicas de Médio Prazo (ECMWF, sigla em inglês) disponibiliza publicamente dados metereológicos de todo o globo medidos por satélite, incluindo dados de velocidade e direção do vento compilados no banco de dados ERA5 \cite{era5}. Os dados de velocidade do vento são referentes a uma altura de 80 metros e possuem resolução de 30 quilômetros. As unidades de todas as grandezas referenciadas neste trabalho seguem o padrão SI. Em particular velocidade é dada em metros por segundo e o tempo em segundos. A partir de uma posição do globo dada em latitude e longitude como entrada obtém-se da ECMWF uma série temporal com 18 variáveis: 9 de velocidade do vento e 9 de direção referentes aos nove quadrantes que circundam a posição informada: quadrante central, norte, sul, sudeste, etc. 
+%
+%A figura abaixo mostra esses quadrantes para uma região no norte baiano, na cidade de Sento Sé para a posição 9.8436 S, 41.1912 W.
+%
+%\begin{figure}[h]
+%    \centering
+%%	\includegraphics[scale=0.5]{earth}
+%	\includegraphics[scale=0.6]{earth}
+%	\caption{Localização da região de medição por satélite dos dados de vento discutidos no texto. Fonte: SIO, NOAA, U.S. Navy, NGA, GEBCO. \textcopyright \  2018 Google}
+%\end{figure}
+%\FloatBarrier
+%
+%A partir de análises de diversas localidades do Nordeste brasileiro sabe-se que o recurso eólico dessa região é representativo de todo o Nordeste do país, isto é, a velocidade média do vento é alta, predominantemente entre 6 e 8 m/s, fortemente unidirecional a jusante de sudeste a 120º em relação ao norte geográfico, com uma componente significativamente menor, mas relevante, a cerca de 150º como pode ser observado na rosa dos ventos gerada a partir dos dados medidos para o ano de 2017:
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[scale=0.9]{windrose}
+%	\caption{Rosa dos ventos do recurso eólico da cidade de Sento Sé no norte da Bahia - característico do Nordeste brasileiro,  a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%\newpage
+%Analisando as rosas dos ventos mensais se confirma o comportamento anual e também é possível observar que nos meses de junho a outubro a velocidade do vento é muito alta enquanto que nos demais meses, de Novembro a Maio, ela é muito menor. Com essa informação, é possível, por exemplo, nos meses de baixa velocidade e consequente baixa geração de energia, complementar o suprimento energético do local com outras fontes de energia renovável tal como a energia solar que apresenta o comportamento inverso à energia eólica na região, isto é, nos meses de primavera e verão a elevada altitude solar permite extrair a maior proporção de energia anual ao contrário dos meses de outono e inverno.
+%
+%\begin{figure}[h]
+%    \centering
+%  	\hspace*{-1.4cm}   
+%	\includegraphics[scale=1]{windrose_monthly}
+%	\caption{Rosas dos ventos mensais do recurso eólico da cidade de Sento Sé no norte da Bahia a partir de dados medidos para o ano de 2017. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%\chapter{Características de curto prazo}
+%
+%Sabe-se que em períodos curtos, o vento apresenta um comportamento que aparenta ser puramente estocástico, associado ao comportamento turbulento característico da dinâmica de fluídos pouco viscosos tal como o ar. No entanto, observando períodos maiores de tempo, tais como dias, meses e anos observa-se que existem tendências coexistentes com o caráter aleatório, errático do vento. É tarefa da ciência de dados evidenciar a presença desses padrões a partir dos dados medidos, pois, apenas exibindo graficamente a evolução temporal da velocidade do vento leva a crer que não exista qualquer tendência ou padrão nestes dados:
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[scale=0.85]{stochastic_monthly}
+%	\caption{Velocidade do vento para cada mês do ano de 2017 da cidade de Sento Sé no norte da Bahia. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%A figura abaixo apresenta a variação horária da velocidade do vento para cada mês do ano para a cidade de Sento Sé.
+%Observa-se que o vento no local apresenta um ciclo diário característico e que está presente em todos os meses do ano. De acordo com \cite{art10} o ciclo diário do vento é um fator mais relevante do que a velocidade média do vento para definir a localização de um parque eólico, devido a relação entre a geração horária de energia e a demanda correspondente. Embora a velocidade do vento seja bem mais alta em Julho do que em Janeiro, em ambos os meses tem-se um mínimo de velocidade durante o meio da tarde, uma taxa de variação positiva a medida que a noite se aproxima e uma estabilização durante a madrugada e primeiras horas da manhã. O mesmo vale para os demais meses.
+%Pode-se explicar esse fenômeno observado que durante o dia o aquecimento da atmosfera pelo Sol torna o vento turbulento sendo mais difícil o seu aproveitamento para geração de energia, pois sua velocidade direcional é baixa. À noite, por outro lado, a atmosfera se estratifica, o vento fica pouco turbulento e a sua velocidade direcional aumenta. Essa explicação embora válida para este local pode não ser para outro, pois existem diversos fatores, além do aquecimento local da atmosfera, que definem o comportamento do vento. Em regiões desérticas, por exemplo, observa-se uma alta estabilidade na atmosfera devido à baixa umidade. A mesma explicação pode ser estendida para descrever o comportamento mensal: durante meses de inverno e outono a velocidade do vento é alta, enquanto que em meses de verão e primavera ela é baixa. 
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[width=\textwidth]{diurnal}
+%	\caption{Velocidade do vento para cada hora do dia e para cada mês do ano de 2017 para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%\part{Embasamento teórico}
+%
+%\chapter{Embasamento matemático}
+%
+%A separação entre o que é fundamentalmente aleatório e o que exibe uma tendência em alguma janela temporal é de extrema relevância para a concepção de um modelo matemático que descreva tal fenômeno. Essas contribuições podem ter origens físicas diferentes e a formulação das equações diferenciais estocásticas envolve a distinção entre um termo associado à deriva e outro à difusão o qual não contribui para o valor esperado da variável em questão, isto é, na ausência de deriva, o valor esperado da variável estocástica seria zero, em outras palavras, ele distribui a variância igualmente para mais e para menos.
+%
+%Um processo estocástico contínuo no tempo, $ W(t) $, definido para $ t>=0 $ com $W(0)=0$ tal que o incremento $ W(t)-W(s)$ é dado por uma distribuição gaussiana com média $0$ e variância $t-s$ para qualquer $ 0<=s<t$ sendo tais incrementos, restritos aos que não se sobrepõem no tempo, independentes, recebe o nome de processo de Wiener \cite{wiener}. O movimento browniano é um exemplo particular de processo de Wiener.
+%
+%O processo $S_t$ descrito pela equação estocástica abaixo, por exemplo \cite{art27}, possui o termo de deriva $\mu S_t dt$ e o termo de difusão dado por $\sigma S_t dW_t$ o qual está associado a um processo de Wiener representado por $W_t$:
+%
+%\begin{equation}
+%dS_t = \mu(S_t,t) dt + \sigma(S_t,t) dW_t
+%\end{equation}
+%
+%
+%Um processo estocástico cujo valor esperado futuro é igual ao valor presente é classificado como um \textit{martingale} \cite{stevens}. Essa é uma característica importante da análise, pois diversos teoremas a tem como hipótese. É claro que a teoria encontraria pouca aplicação prática se não contemplasse processos que envolvem deriva. Para tanto, o teorema de Girsanov \cite{stevens} garante que tal processo, sujeito a algumas hipóteses pouco restritivas, pode tornar-se um \textit{martingale} por meio de uma mudança de escala - uma função multiplicativa apropriada a qual é conhecida como derivada de Radon-Nikodym \cite{stevens}.
+%
+%\newpage
+%A evolução histórica do preço das ações da Google na NASDAQ bolsa, por exemplo, apesar de ter caráter estocástico, apresenta claramente uma tendência de subida (uma deriva, ou \textit{drift} do inglês):
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[width=\textwidth]{stock}
+%	\caption{Valor de abertura das ações da Google na NASDAQ. Curva em preto: dados medidos. Curva em azul: curva ajustada aos dados medidos. Fonte: autoria própria, dados \cite{nasdaq}.}
+%\end{figure}
+%\FloatBarrier
+%
+%%orografia, rugosidade
+%%Cada local tem suas muitas características específicas (orografia, rugosidade, posição no globo, entre outras) e qualquer padrão observado para um local pode não apenas não ser válido para outro local mas pode ocorrer o fenômeno oposto.
+%
+%%coleta de dados de vento: botar umas torres
+%
+%\chapter{Embasamento físico}
+%
+%%João e Paulo não gostam de Juriscleide. Este (latter) a acha fedida, aquele (former), desbocada.
+%
+%\section{Restrições físicas}
+%Como fora exposto, a velocidade do vento apresenta várias tendências de longo prazo, comportamentos periódicos - sazonais e até horários e padrões característicos de orografia, clima e latitude. No entanto, essa é uma grandeza fundamentalmente estocástica, isto é, está associada a uma variável aleatória e portanto, a sua previsão está fadada a uma incerteza intrínseca. Antes da formulação da mecânica quântica acreditava-se que se conhecendo perfeitamente o Hamiltoniano de um sistema, isto é, sabendo a posição e momento de todas as partículas que o compõe, seria possível prever com exatidão a sua evolução temporal, ao menos em tese (dado que tal feito é inviável para qualquer sistema moderamente complexo). No entanto, o princípio da incerteza de Heisenberg pôs fim a essa crença, visto que enuncia que não somente é impossível saber simultaneamente a posição e momento exatos de uma particula como não faz sentido falar da simultaneidade das duas grandezas; tampouco é útil a informação sobre velocidade e momento de todas as partículas de um sistema, pois as grandezas de interesse são de natureza estatística, como a temperatura por exemplo. 
+%
+%A mecânica estatística desenvolveu-se em paralelo ignorando a busca pela determinação exata da evolução temporal de um sistema. Ao invés disso, concentrou-se em determinar valores médios de quantidades de interesse emergentes do comportamento caótico fundamentada na hipótese de que todas as possíveis configurações do sistema ocorrem com igual probabilidade. Apesar do grande sucesso em diversas áreas da física foi incapaz de explicar o comportamento turbulento de fluídos, foi incapaz de explicar como que surge ordem a partir do caos. Relativamente pouco progresso foi feito até então \cite{chaos}. É por esse motivo que frequentemente a previsão do tempo falha, até mesmo em uma escala de horas independente de quantas estações metereológicas sejam utilizadas, já que de acordo com a teoria do caos existe um horizonte de previsão \cite{ian} a partir do qual não é possível obter estimativas confiáveis. A teoria do caos mostrou que a ignorância quanto a natureza da complexidade era muito maior. Tome como exemplo um sistema simples com uma variável discreta $x_t$ e uma regra de evolução temporal não-linear, $x_{t+1}=x_t(1+x_t)$ \cite{NOSRATI2018224}. Conhece-se tudo sobre esse sistema. Ele é perfeitamente determinístico. Ainda assim existe um certo instante de tempo a partir do qual não é possível predizer o seu estado futuro. Esse instante chama-se de transição ao caos \cite{lorenz}.
+%
+%\section{Abordagem de longo prazo}
+%
+%Fênomenos fortemente não-lineares como a turbulência, não são, no entanto, completamente imprevisíveis. Acredita-se que dependendo do sistema e sujeito às restrições expostas acima a tarefa seja factível, porém não existe uma única maneira de abordar tal problema. Este trabalho propõe a investigação de qual modelo produz melhores resultados de estimativa de produção de energia, começando por um modelo de evolução temporal de velocidade do vento que faça uso dos dados de medição para encontrar a distribuição de probabilidade associada à essa grandeza.
+%
+%É prática comum na indústria a determinação da distribuição de probabilidade de energia a partir de simulações de Monte Carlo \cite{portacopos} tendo como hipótese que a velocidade do vento é descrita por uma distribuição de Weibull a qual já foi verificada experimentalmente a partir de muitas análises de dados de vento e tem sólido embasamento teórico conforme o teorema de Fisher–Tippett–Gnedenko, o qual prova que o máximo de um conjunto de variáveis aleatórias independentes, após renormalização, converge apenas para uma de três classes de distribuições: a distribuição de Gumbel, a distribuição de Fréchet ou a distribuição de Weibull \cite{fisher}.
+%
+%Para a cidade de Sento Sé, por exemplo, a distribuição de velocidades do quadrante central é exibida abaixo:
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[scale=0.8]{weibull_histogram}
+%	\caption{A distribuição de velocidades pode ser aproximada por uma distribuição de Weibull. Dados do quadrante central dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%Essa distribuição claramente não é gaussiana porque possui uma cauda unilateral. Tal distribuição é representada satisfatoriamente por uma distribuição de Weibull por meio de dois parâmetros: o parâmetro de forma $k$ e o parâmetro de escala $\lambda$. Seus primeiros momentos são definidos por \cite{weibull}:
+%
+%\begin{equation}
+%	\left<v\right> = \lambda\Gamma\left(1+\frac{1}{k}\right)
+%\end{equation}
+%
+%\begin{equation}
+%	\sigma^2 = \lambda^2\left\{\Gamma\left(1+\frac{2}{k}\right)-\left[\Gamma\left(1+\frac{1}{k}\right)\right]^2\right\}
+%\end{equation}
+%
+%Avaliando a distribuição de densidade de probabilidade de velocidade para todos os quadrantes dos dados de vento da cidade de Sento Sé, confirma-se que todos seguem uma distribuição do tipo weibull. Sabendo que a direção preferencial do vento é sul-sudeste observa-se, a partir das curvas para norte, nordeste e noroeste, que à medida que flui no local a velocidade média aumenta.
+%
+%\begin{figure}[h]
+%    \centering
+%	\includegraphics[scale=0.85]{weibull_freqpoly}
+%	\caption{Distribuição de velocidades de todos os quadrantes dos dados ERA5 \cite{era5} para a cidade de Sento Sé no norte da Bahia. Fonte: autoria própria, dados \cite{era5}.}
+%\end{figure}
+%\FloatBarrier
+%
+%Os parâmetros $\lambda$ e $k$ são utilizados para caracterizar o recurso eólico em uma dada posição (latitude e longitude) e altura. Para obter o recurso eólico em outra posição ou altura (posição e altura de uma turbina por exemplo) é feito um escalonamento da distribuição: muda-se a sua forma para obter um valor esperado de velocidade correspondente à nova posição.
+%
+%\section{Desvantagens}
+%
+%Essa abordagem embora adequada para estimativas de longo prazo e muito utilizada na indústria possui várias desvantagens:
+%
+%\begin{itemize}
+%    \item A hipótese da distribuição de Weibull é completamente inválida a curto prazo, visto que é uma distribuição constante e não pode, portanto, representar as flutuações incessantes características do comportamento turbulento do vento \cite{artmain}. Uma distribuição de probabilidade que descreva adequadamente a velocidade do vento deve ser dependente do tempo. A evolução temporal horária ou até mesmo minuto a minuto é uma informação essencial para operadores de subestações de distribuição de energia elétrica, pois permite adequar oferta de energia a picos e baixas de demanda os quais são conhecidos    
+%    \item A simulação é lenta. O Método de Monte Carlo, como aplicado pela indústria, é um método de força bruta, ou seja, lança mão de poder computacional para atingir seu objetivo. E deve ser realizado toda a vez que se deseje obter o mesmo resultado ao passo que um modelo físico permite que o esforço computacional seja empregado apenas uma vez e, além disso, exige menos poder computacional. É impensável refazer tais cálculos a cada hora.
+%    \item O método de Monte Carlo, como aplicado nessa problema, é apenas um recurso computacional, não descreve o comportamento físico do sistema e portanto não pode ser empregado em análises sofisticadas tais como mensurar a dependência temporal e espacial entre dois parques eólicos, ou seja, mensurar o efeito de esteira \cite{atlas} em resolução horária, podendo, por exemplo, como resultado conceber uma estratégia de gerenciamente setorial conjunto entre os dois parques, ou seja, orientar as turbinas dos dois parques de maneira mutuamente benéfica. Outro exemplo, seria prever o melhor intervalo de tempo para realizar a manutenção de uma turbina levando em conta o tempo necessário para realizar a manutenção as quais são, via de regra, custosas e demoradas.
+%\end{itemize}
+%
+%\section{Ressalvas}
+%
+%Existem muitas fontes de incerteza ao longo de todo o processo de estimativa da produção de energia. Incerteza na obtenção dos dados de medição, na conversão entre velocidade e energia, na extrapolação horizontal (do local de medição à posição das turbinas), da extrapolação vertical (da altura da medição à altura das turbinas) entre muitas outras. A consideração dessas fontes de incerteza fogem ao escopo do presente trabalho mas devem ser todas consideradas em qualquer trabalho comercial. Pode-se dizer que este trabalho estuda o caso particular em que a medição do vento é feita a alguns diâmetros de rotor de distância da turbina, exatamente na altura do cubo rotor.
+%
+%\part{Revisão bibliográfica}
+%
+%A área de estudo deste trabalho possui vasta literatura. Modelos autoregressivos de média móvel (ARMA) foram utilizados em \cite{art20} para prever tanto a velocidade quanto a direção do vento. 
+%
+%Uma revisão bibliográfica dos vários métodos de previsão de dados de vento é feita em \cite{art21}. Este trabalho conclui que esses métodos possuem bom desempenho em diferentes resoluções temporais e que o erro de previsão aumenta com o tempo desejado de previsão. 
+%
+%Modelos para as flutuações da velocidade do vento foram explorados em \cite{art26} com base na solução analítica da equação de Fokker–Planck–Kolmogorov e várias classes de  distribuições de probabilidade são propostas como solução. Neste trabalho, também foi feita uma análise teórica do efeito que tufões de vento causam na geração de energia por turbinas. 
+%
+%Em \cite{art28} são feitas simulações estocásticas de caminho aleatório multifractal, isto é, um espectro contínuo de expoentes se faz necessário para caracterizar a geometria do objeto de estudo. Usando uma curva de potência experimental os autores produzem uma série temporal de produção de energia. 
+%
+%As flutuações na velocidade do vento são modelados em \cite{art37} por meio de um processo de Ornstein-Uhlenbeck-Rayleigh bidimensional. Este trabalho observa que o modelo markoviano nele proposto não reproduz a variabilidade de curto-prazo exibida pelo vento. De acordo com \cite{art30} o estudo de equações diferenciais estocásticas para a previsão da velocidade do vento é vasto na literatura, mas o mesmo não é verdade para a estimativa da produção de energia. Apesar da observação, o trabalho não foge à regra e também aborda apenas modelos estocásticos para a velocidade do vento. Somente em \cite{art31} que modelos estocásticos voltados à produção de energia são explorados, com o objetivo de obter uma previsão de até 2 dias.
+%
+%\part{Planejamento}
+%
+%O principal objetivo deste trabalho é conceber uma maneira mais rápida, eficiente e que produza melhores resultados para estimar a produção de energia a partir de dados de vento. Existem muitos métodos disponíveis para tentar cumprir este objetivo, como exposto na revisão bibliográfica, entre eles:
+%
+%\begin{itemize}
+%	\item Modelos de autoregressão (ARMA);
+%	\item Redes neurais;
+%	\item Equações diferenciais estocásticas para velocidade do vento, produção de energia ou ambos;
+%	\item Teoria combinatória com peso variável;
+%	\item Caminho aleatório multifractal;
+%	\item Movimento Browniano geométrico;
+%	\item Combinações ou variações entre esses modelos
+% \end{itemize}
+% 
+%É parte deste trabalho avaliar qual o método produz a melhor estimativa para a produção de energia. A validação do modelo será feita pela comparação com dados medidos de parques eólicos em operação e os resultados obtidos com o modelo.
+%
+%A execução desse trabalho consiste em várias etapas. As principais delas são elencadas abaixo:
+%
+%\begin{itemize}
+%	\item Estudar a teoria matemática do cálculo estocástico
+%	\item Investigar se ideias da teoria do caos podem ser utilizadas na formulação do modelo
+%	\item Investigar o que já foi feito na literatura na área de previsão de geração de energia eólica
+%	\item Avaliar os diferentes métodos disponíveis para modelar dados estocásticos
+%	\item Formular o modelo com base no método mais promissor
+%	\item Obter de permissão para utilizar os dados medidos
+%	\item Estudar sobre solução numérica de equações diferenciais estocásticas
+%	\item Resolver o problema pelo método tradicional
+%	\item Comparar os resultados entre métodos
+%	\item Comparar os resultados com dados medidos de energia
+%	\item Redigir o texto final
+%	\item Apresentar à banca
+% \end{itemize}
+% 
+% No gráfico de Gantt abaixo identifcadas as macro-etapas do trabalho e são estabelecidos durações e prazos para a conclusão dessas etapas
+% 
+%\begin{figure}[h]
+%	\hspace*{-2.5cm}   
+%    \includegraphics[scale=0.65]{gantt}
+%    \caption{Gráfico de Gantt do planejamento das etapas de desenvolvimento do presente trabalho. Fonte: autoria própria.}
+%    \centering
+%\end{figure}
 % ----------------------------------------------------------
 % PARTE
 % ----------------------------------------------------------
@@ -1471,7 +1498,7 @@ A execução desse trabalho consiste em várias etapas. As principais delas são
 %\lipsum[50]
 %
 %% ---
-{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
+%{Nullam elementum urna vel imperdiet sodales elit ipsum pharetra ligula
 %ac pretium ante justo a nulla curabitur tristique arcu eu metus}
 %% ----------------------------------------------------------
 %\lipsum[55-57]
