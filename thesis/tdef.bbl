@@ -16,37 +16,17 @@
   weibull-representative wind data.
 \emph{Journal of Wind Engeneering and Industrial Aerodynamics}, 2003.}
 
-\bibitem[Basrak 2011]{fisher}
-\abntrefinfo{Basrak}{BASRAK}{2011}
-{BASRAK, B. Fisher-tippett theorem.
-In:  \underline{\ \ \ \ \ \ \ \ }. \emph{International Encyclopedia of
-  Statistical Science}. Berlin, Heidelberg: Springer Berlin Heidelberg, 2011.
-  p. 525--526.
-ISBN 978-3-642-04898-2.
-Dispon{\'\i}vel em: \url{https://doi.org/10.1007/978-3-642-04898-2\_254}.}
-
 \bibitem[Centro de Pesquisas de Energia Elétrica, CEPEL 2001]{atlas}
 \abntrefinfo{CEPEL}{CEPEL}{2001}
 {CENTRO DE PESQUISAS DE ENERGIA ELéTRICA, CEPEL. \emph{Atlas do Potencial
   Eólico Brasileiro}. Brasíli, 2001. Dispon{\'\i}vel em:
   \url{http://www.cresesb.cepel.br/publicacoes/download/atlas\_eolico/atlas\%20do\%20potencial\%20eolico\%20brasileiro.pdf}.}
 
-\bibitem[E 2011]{art20}
-\abntrefinfo{E}{E}{2011}
-{E, S.~J. E. Arma based approaches for forecasting the tuple of wind speed and
-  direction.
-\emph{Journal of Applied Energy}, 2011.}
-
-\bibitem[E. 2004]{stevens}
-\abntrefinfo{E.}{E.}{2004}
-{E., S.~S. \emph{Stochastic Calculus for Finance II: Continuous-Time Models}.
-  [S.l.]: Springer Finance - Pittsburg, 2004.}
-
-\bibitem[EB Morales~JM e H. 2016]{art30}
-\abntrefinfo{EB Morales~JM e H.}{EB MORALES~JM; H.}{2016}
-{EB MORALES~JM, M.~J. I.; H., M. Short-term probabilistic forecasting of wind
-  speed using stochastic differential equations.
-\emph{International Journal of Forecasting}, 2016.}
+\bibitem[Drobinski e Coulais 2012]{dists}
+\abntrefinfo{Drobinski e Coulais}{DROBINSKI; COULAIS}{2012}
+{DROBINSKI, P.; COULAIS, C. Is the weibull distribution really suited for wind
+  statistics modeling and wind power evaluation?
+11 2012.}
 
 \bibitem[ECMWF 2017]{era5}
 \abntrefinfo{ECMWF}{ECMWF}{2017}
@@ -54,41 +34,6 @@ Dispon{\'\i}vel em: \url{https://doi.org/10.1007/978-3-642-04898-2\_254}.}
 Dispon{\'\i}vel em:
   \url{https://www.ecmwf.int/en/forecasts/datasets/archive-datasets/reanalysis-datasets/era5}.
   Acesso em: 03 nov 2018.}
-
-\bibitem[Finance 2018]{nasdaq}
-\abntrefinfo{Finance}{FINANCE}{2018}
-{FINANCE, G. \emph{Google Finanças}. 2018.
-Dispon{\'\i}vel em: \url{https://www.google.com/search?q=NASDAQ:GOOG&tbm=fin}.
-  Acesso em: 11 nov 2018.}
-
-\bibitem[JK Zugno~M 2016]{art31}
-\abntrefinfo{JK Zugno~M}{JK ZUGNO~M}{2016}
-{JK ZUGNO~M, M.~H. M. Probabilistic forecasts of wind power generation by
-  stochastic differential equation models.
-\emph{International Journal of Forecasting}, 2016.}
-
-\bibitem[K Silva~C e S. 2013]{art10}
-\abntrefinfo{K Silva~C e S.}{K SILVA~C; S.}{2013}
-{K SILVA~C, F.~P. S.; S., C. Wind power design in isolated energy systems:
-  impacts of daily wind pattern.
-\emph{Applied Energy}, n.~1, 2013.}
-
-\bibitem[Kalos e Whitlock 1986]{portacopos}
-\abntrefinfo{Kalos e Whitlock}{KALOS; WHITLOCK}{1986}
-{KALOS, M.; WHITLOCK, P. \emph{Monte Carlo Methods}. New York, NY, USA: John
-  Wiley and Sons, A Wiley-Interscience Publication, 1986.}
-
-\bibitem[Lorenz 1996]{lorenz}
-\abntrefinfo{Lorenz}{LORENZ}{1996}
-{LORENZ, E. \emph{Essence of Chaos}. [S.l.]: University of Washington Press -
-  Nova Iorque, 1996.}
-
-\bibitem[Loukatoua Sydney~Howellb e Duckc 2011]{artmain}
-\abntrefinfo{Loukatoua Sydney~Howellb e Duckc}{LOUKATOUA SYDNEY~HOWELLB;
-  DUCKC}{2011}
-{LOUKATOUA SYDNEY~HOWELLB, P.~J. A.; DUCKC, P. Stochastic wind speed modelling
-  for estimation of expected wind power output.
-\emph{Journal of Applied Energy}, 2011.}
 
 \bibitem[M Hooshmand R-A e A-H 2015]{art15}
 \abntrefinfo{M Hooshmand R-A e A-H}{M HOOSHMAND R-A; A-H}{2015}
@@ -101,62 +46,10 @@ Dispon{\'\i}vel em: \url{https://www.google.com/search?q=NASDAQ:GOOG&tbm=fin}.
 {MENčíK, J. Weibull distribution.
 \emph{Springer, Berlin, Heidelberg}, v.~1, n.~1, p. 71--97, 2016.}
 
-\bibitem[Nosrati e Shafiee 2018]{NOSRATI2018224}
-\abntrefinfo{Nosrati e Shafiee}{NOSRATI; SHAFIEE}{2018}
-{NOSRATI, K.; SHAFIEE, M. Fractional-order singular logistic map: Stability,
-  bifurcation and chaos analysis.
-\emph{Chaos, Solitons \& Fractals}, v.~115, p. 224 -- 238, 2018.
-ISSN 0960-0779.
-Dispon{\'\i}vel em:
-  \url{http://www.sciencedirect.com/science/article/pii/S0960077918308932}.}
-
 \bibitem[P 2003]{art13}
 \abntrefinfo{P}{P}{2003}
 {P, V.~S. R. A review of wind speed probability distributions used in wind
   energy analysis: case studies in the canary islands.
 \emph{Renewable Sustainable Energy Review}, 2003.}
-
-\bibitem[Peitgen 2004]{chaos}
-\abntrefinfo{Peitgen}{PEITGEN}{2004}
-{PEITGEN, J. e.~S. \emph{Chaos and Fractals: New Frontiers of Science 2nd}.
-  [S.l.]: Springer Finance - Bremen, 2004.}
-
-\bibitem[PJ e RB. 2001]{art37}
-\abntrefinfo{PJ e RB.}{PJ; RB.}{2001}
-{PJ, E.; RB., H. Level-crossing statistics of the horizontal wind speed in the
-  planetary surface boundary layer.
-\emph{Chaos: An Interdisciplinary Journal of Nonlinear Science}, 2001.}
-
-\bibitem[R. 2012]{art26}
-\abntrefinfo{R.}{R.}{2012}
-{R., C. Pdf models and synthetic model for the wind speed fluctuations based on
-  the resolution of langevin equation.
-\emph{Journal of Applied Energy}, 2012.}
-
-\bibitem[R. e FG 2012]{art28}
-\abntrefinfo{R. e FG}{R.; FG}{2012}
-{R., C.; FG, S. Modeling of atmospheric wind speed sequence using a lognormal
-  continuous stochastic equation.
-\emph{Journal of Wind Engeneering and Industrial Aerodynamics}, 2012.}
-
-\bibitem[R 2018]{art27}
-\abntrefinfo{R}{R}{2018}
-{R, M.~F. Z.-M. Construction of sde-based wind speed models with exponentially
-  decaying autocorrelation.
-\emph{Journal of Applied Energy}, 2018.}
-
-\bibitem[Stewart 1989]{ian}
-\abntrefinfo{Stewart}{STEWART}{1989}
-{STEWART, I. \emph{Does God Play Dice: The New Mathematics of Chaos}. [S.l.]:
-  Blackwell Publishing - Londres, 1989.}
-
-\bibitem[Wiener 1923]{wiener}
-\abntrefinfo{Wiener}{WIENER}{1923}
-{WIENER, N. \emph{Differential Space}. [S.l.]: Wiley, 1923.}
-
-\bibitem[WY. 2014]{art21}
-\abntrefinfo{WY.}{WY.}{2014}
-{WY., C. A literature review of wind forecasting methods.
-\emph{Journal of Power Energy Engineering}, 2014.}
 
 \end{thebibliography}

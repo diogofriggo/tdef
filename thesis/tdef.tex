@@ -1,4 +1,4 @@
- %% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
+%% abtex2-modelo-trabalho-academico.tex, v-1.9.6 laurocesar
 %% Copyright 2012-2016 by abnTeX2 group at http://www.abntex.net.br/ 
 %%
 %% This work may be distributed and/or modified under the
@@ -11,7 +11,7 @@
 %%
 %% This work has the LPPL maintenance status `maintained'.
 %% 
-%% The Current Maintainer of this work is the abnTeX2 team, led
+%% The Current Maintainer of this work is the abnTeX2 team, led	
 %% by Lauro César Araujo. Further information are available on 
 %% http://www.abntex.net.br/
 %%
@@ -66,7 +66,7 @@
 \usepackage{textcomp}     % access \textquotesingle
 \usepackage{tikz}
 \usepackage{hyperref} %links no texto
-\usetikzlibrary{shapes.geometric, arrows}
+%\usetikzlibrary{shapes.geometric, arrows}
 %\tikzstyle{startstop} = [rectangle, rounded corners, text centered, draw=black, fill=red!30]
 %\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=blue!30]
 %%\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=orange!30]
@@ -74,10 +74,10 @@
 %\tikzstyle{decision} = [diamond, text centered, text width=6cm, draw=black, fill=green!30]
 %\tikzstyle{arrow} = [thick,->,>=stealth]
 
-\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=10em, text badly centered, node distance=3cm, inner sep=0pt]
-\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=18em, text centered, rounded corners, minimum height=4em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
+%\tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=10em, text badly centered, node distance=3cm, inner sep=0pt]
+%\tikzstyle{process} = [rectangle, draw, fill=blue!20, text width=18em, text centered, rounded corners, minimum height=4em]
+%\tikzstyle{line} = [draw, -latex']
+%\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
     
 % ---
 		
@@ -130,7 +130,7 @@
 \tipotrabalho{Graduação}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
 % o nome da instituição e a área de concentração 
-\preambulo{O presente trabalho propõe um modelo que represente a estrutura de séries temporais de velocidade de vento de modo a fazer previsões sobre seu comportamento futuro tendo como objetivo estimar a energia que seria gerada por uma turbina eólica.}
+\preambulo{O presente trabalho propõe um modelo que represente a estrutura de séries temporais de velocidade de vento de modo a fazer previsões sobre seu comportamento futuro tendo como objetivo estimar a energia que seria gerada por uma turbina eólica em um dado período.}
 
 % ---
 
@@ -242,9 +242,9 @@
 	\imprimirdata.}\\
 	
 	\hspace{0.5cm}
-		1. energia eólica.
-		2. processo estocástico.
-		3. cálculo de Ito.
+		1. Energia Eólica.
+		2. Autoregressive Integrated Moving Average (ARIMA).
+		3. Generalized Autoregressive Conditional Heteroscedasticity (GARCH).
 		I. Universidade Federal do Rio Grande do Sul.
 		II. Engenharia Física.
 	\end{minipage}}
@@ -438,7 +438,6 @@ Tais métodos, no entanto, não se aplicam a estimativas de curto prazo, pois, s
 % ---
 \begin{siglas}
   \item[ECMWF] European Center for Medium-Range Weather Forecast
-  \item[NASDAQ] National Association of Securities Dealers Automated Quotations
   \item[ARMA] Autoregressive Moving-Average
 \end{siglas}
 % ---
@@ -631,7 +630,7 @@ Em suma, a partir da imagem acima, é possível determinar as melhores posiçõe
 \item Orientadas a aproximadamente 150º em relação do norte verdadeiro de modo a captar o vendo oriundo de sua direção preferencial
 \end{itemize}
 
-\chapter{A série temporal modelo}
+\chapter{A série temporal modelo}\label{modelo}
 
 Para exemplificar a elaboração do modelo proposto, utilizou-se uma série de dados disponibilizada publicamente pela organização européia ECWMF. Essa série conta com uma vasta gama de grandezas físicas medidas por satélite oriundas de diversas fontes. Esses dados são agregados e tratados de modo a melhorar sua qualidade. Existem diversas outras séries de dados de satélite com o mesmo propósito, tal como a série ERA-Interim (antecessora da ERA 5) ou as séries MERRA e MERRA 2 produzidas pela NASA. No entanto, observa-se que a qualidade da fonte ERA 5 é muito superior. Isso é empiricamente constatado devido a excelente correlação com dados de torres de medição instaladas no solo. Essa melhoria deve-se tanto a melhorias técnicas na assimilação e agregação de dados quanto a maior resolução espacial da série ERA 5: enquanto MERRA e MERRA 2 apresentam uma resolução espacial de 50 km em latitude e longitude, ERA 5 apresenta 30 km. 
 
@@ -688,6 +687,7 @@ Por meio de do gráfico de Cullen e Frey é possível afirmar que a distribuiç�
     \centering
 	\includegraphics[width=\textwidth]{cullen}
 	\caption{Gráfico de Cullen e Frey para os dados do nó noroeste da série de dados modelo.}
+	\label{fig:cullen}
 \end{figure}
 \FloatBarrier
 
@@ -697,6 +697,7 @@ Por meio de do gráfico de Cullen e Frey é possível afirmar que a distribuiç�
     \centering
 	\includegraphics[width=\textwidth]{windrose}
 	\caption{Rosa dos ventos}
+	\label{fig:windrose}
 \end{figure}
 \FloatBarrier
 
@@ -1147,6 +1148,10 @@ ARIMA(2,1,3&0.01455176&0.3189862&0.2380204&-0.8382305&7.968127 \\
 \end{tabular}
 \end{center}
 
+\section{Expansão do horizonte de previsão}
+
+
+
 \section{Base mensal}
 
 Embora a previsão horária seja de grande utilidade tanto para operadores de parques eólicos quanto para operadores de subestações de distribuição de energia, contratos de produção e entrega de energia são feitos em base mensal. Dessa forma, um acionista de um parque eólico deseja saber em qual nível de produção ele pode arriscar se comprometer em entregar em um acordo fechado um mês antes. O mesmo modelo, GARCH(1,1), se demonstra novamente adequado:
@@ -1169,6 +1174,21 @@ GARCH(1,1)&0.06669541&0.1773425&0.1461843&0.5504064&2.893245\\
 \end{center}
 
 \chapter{Conversão em energia}
+
+\chapter{Validação com outras séries}
+
+O modelo que obteve o melhor poder preditivo foi o GARCH(1,1). No entanto, assim como todos os outros modelos discutidos, os testes  de poder preditivo foram feitos apenas sob uma única série, aquela apresentada na seção \ref{modelo}. Há regiões em que a distribuição que melhor descreve o recurso eólico é  a de weibull, em outras é a distribuição Rayleigh, beta, normal ou log-normal \cite{dists}. O vento pode ainda ser unidirecional, bidirecional ter mais de uma direção predominante. Como fora exposto, a série modelo é melhor descrita por uma distribuição beta (Figura ~\ref{fig:cullen}) e é predominantemente unidirecional (Figura ~\ref{fig:windrose}). Dessa forma é interessante validar o modelo aplicando-o em diversas outras séries correspondentes a diferentes regiões cujo recurso eólico seja distinto. 
+
+62 regiões foram escolhidas. 7 na América Central, 1 no Jordão e as demais na América do Sul. A distribuição desigual se deve ao fato de que essas séries correspondem a estudos comerciais ao qual o autor tem acesso. Explica-se dessa forma o fato de a grande maioria das séries localizarem-se no Nordeste do Brasil. Todas as séries utilizadas, no entanto, são oriundas do banco de dados de acesso público ERA5 da ECWMF. Essas localidades são exibidas abaixo:
+
+\begin{figure}[h]
+    \centering
+	\includegraphics[width=\textwidth]{latam}
+	\caption{Regiões correspondentes a dados de velocidade do vento do banco de dados ERA5 da ECWMF. Mapa disponível em \href{https://drive.google.com/open?id=1BhnfX52bhdIj7LbBzX_KbzbSS-oIQXiD&usp=sharing}{TDEF Map}}
+\end{figure}
+\FloatBarrier
+
+O modelo GARCH(1,1) foi aplicado em cada uma das séries cujas localidades correspondentes são exibidas no mapa acima e os resultados são exibidos abaixo:
 
 %\cleardoublepage
 %\part{Análise de dados de vento}

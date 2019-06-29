@@ -37,9 +37,12 @@
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase {GARCH}}{49}{chapter.6}
 \contentsline {section}{\numberline {6.1}Base hor\IeC {\'a}ria}{49}{section.6.1}
-\contentsline {section}{\numberline {6.2}Base mensal}{50}{section.6.2}
+\contentsline {section}{\numberline {6.2}Expans\IeC {\~a}o do horizonte de previs\IeC {\~a}o}{51}{section.6.2}
+\contentsline {section}{\numberline {6.3}Base mensal}{51}{section.6.3}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase {Convers\IeC {\~a}o em energia}}{52}{chapter.7}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase {Valida\IeC {\c c}\IeC {\~a}o com outras s\IeC {\'e}ries}}{53}{chapter.8}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{\uppercase {Refer\^encias}}{53}{section*.10}
+\contentsline {chapter}{\uppercase {Refer\^encias}}{54}{section*.10}
 \vspace {\cftbeforechapterskip }
